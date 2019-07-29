@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.btn-group {
+  /* margin-left: 20px; */
+  margin-right: 20px;
+}
+
+.card-outline-primary {
+  border-color: #222222;
+}

@@ -1,0 +1,67 @@
+{
+  "manifest_version": 2,
+  "short_name": "Mum Boutique",
+  "name": "Mum Boutique",
+  "version": "0.8.2",
+  
+  "browser_action": {
+    "default_icon": "icons/icon128.png",
+    "default_title": "Mum Boutique"
+  },
+
+  "icons": {
+    "128": "icons/icon128.png",
+    "16": "icons/icon16.png"
+  },
+
+  "background": {
+    "scripts": ["Background.js"]
+  },
+
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "<all_urls>"
+  ],
+  
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+
+  "content_scripts": [
+    {
+      "js": [
+        "Scripts/PandaPowerScript.js"
+      ],
+      "matches": [
+        "https://worker.mturk.com/*",
+        "https://www.amazon.com/ap/signin*amzn_mturk_worker*"
+      ],
+      "run_at": "document_end"
+    },
+
+    {
+      "js": [
+        "Scripts/Import/PandaCrazy.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+
+  "externally_connectable": {
+    "matches": [
+      "https://worker.mturk.com/*",
+      "https://turkerhub.com/*",
+      "http://www.mturkcrowd.com/*",
+      "https://prod.uhrs.playmsn.com/*"
+    ]
+  }
+
+}

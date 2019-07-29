@@ -1,0 +1,37 @@
+.menu-header {
+  background: #68C6BF;
+}
+
+.logo {
+  float: left;
+  height: inherit;
+}
+
+.logo > img {
+  height: inherit;
+  vertical-align: unset;
+}
+
+li.slick-active button {
+  background: #7D769C
+}
+
+.ant-carousel .slick-slide {
+  text-align: center;
+  max-height: 300px;
+  background: #F7DC99;
+  overflow: hidden;
+}
+
+.ant-layout-content {
+  overflow-y: hidden;
+}
+
+.slick-slide div, .logo img {
+  width: auto !important;
+  height: -webkit-fill-available !important;
+}
+
+.ant-card-grid {
+  padding: 12px;
+}
