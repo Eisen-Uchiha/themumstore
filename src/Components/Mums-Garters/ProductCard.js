@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Card } from 'antd'
-import { Link, Route } from "react-router-dom";
-import Customization from './Customization'
+import { Link } from "react-router-dom";
 
 const products = {
   xs: {
@@ -36,7 +35,6 @@ const products = {
 }
 
 class ProductCard extends Component {
-  state = {  }
   render() {
     const { name, description, category } = this.props
 
@@ -46,15 +44,14 @@ class ProductCard extends Component {
           <Card style={{ maxWidth: '300px', maxHeight: '311px', minWidth: '290px', float: 'left', margin: '5px' }}>
               <Card.Grid style={{ width: '65%', textAlign: 'center', height: '-webkit-fill-available' }}>
                 <h3>{name}</h3>
-                <img style={{ width: 'inherit', minWidth: '-webkit-fill-available' }} src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_kitty_character_portrait.png/200px-Hello_kitty_character_portrait.png" />
+                <img alt='' style={{ width: 'inherit', minWidth: '-webkit-fill-available' }} src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_kitty_character_portrait.png/200px-Hello_kitty_character_portrait.png" />
               </Card.Grid>
               <Card.Grid style={{ width: 'auto', textAlign: 'center', height: '-webkit-fill-available', maxWidth: '35%' }}>{description}</Card.Grid>
           </Card>
         </Link>
-        <Route exact path={`/${category}/${name.replace(' ', '-').toLowerCase()}`} component={Customization} />
       </div>
     )
   }
 }
  
-export { ProductCard, products };
+export { ProductCard, products }

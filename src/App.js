@@ -7,6 +7,7 @@ import Garters from './Components/Mums-Garters/Garters'
 import Extras1 from './Components/Extras/Extras1'
 import Extras2 from './Components/Extras/Extras2'
 import Gallery from './Components/Gallery'
+import Cart from './Components/Cart'
 import Customization from './Components/Mums-Garters/Customization'
 import './App.css'
 
@@ -15,31 +16,39 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup
 
 class App extends Component {
-  state = {
-    menu: [ window.location.pathname.split('/')[1] ]
-  }
+  constructor(props) {
+    super(props)
+    const cart = JSON.parse(window.localStorage.getItem('cart')) || {}
+    const cartSize = Object.keys(cart).length
 
-  // constructor(props) {
-  //   super(props)
-  // }
+    this.state = {
+      menu: [ window.location.pathname.split('/')[1] ], cartSize
+    }
+  }
 
   componentDidMount() {
     console.log('We Are Live')
   }
 
-  handleMenu = (setting) => {
+  handleMenu = setting => {
     this.setState({ menu: setting })
   }
 
+  handleCart = () => {
+    const cart = JSON.parse(window.localStorage.getItem('cart')) || {}
+    const cartSize = Object.keys(cart).length
+    this.setState({ cartSize })
+  }
+
   render() {
-    const { menu } = this.state
+    const { menu, cartSize } = this.state
 
     return (
       <Router>
         <Layout className="layout">
           <Header className='menu-header'>
             <div className="logo">
-              <Link to="/"><img src="/icons/kitty-square.png" onClick={() => this.handleMenu([])} /></Link>
+              <Link to="/"><img alt='' src="/icons/kitty-square.png" onClick={() => this.handleMenu([])} /></Link>
             </div>
             <Menu
               theme="light"
@@ -50,7 +59,7 @@ class App extends Component {
 
               <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
                 <Link to="/mums">
-                  <Icon type="setting" />
+                  {/* <Icon type="setting" /> */}
                   Mums
                 </Link>
               </Menu.Item>
@@ -64,16 +73,18 @@ class App extends Component {
                 </MenuItemGroup>
               </SubMenu>
               <Menu.Item key="gallery" onClick={() => this.handleMenu(['gallery'])}><Link to="/gallery">Gallery</Link></Menu.Item>
-              <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={5}> <Icon type='shopping' /></Badge>}</Link></Menu.Item>
+              <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}> <Icon type='shopping' /></Badge>}</Link></Menu.Item>
             </Menu>
           </Header>
+
           <Route exact path="/" component={Home} />
           <Route exact path="/gallery" component={Gallery} />
           <Route exact path="/mums" component={Mums} />
-          <Route exact path="/garters" component={Garters} />
+          <Route exact path="/garters" render={props => <Garters {...props} onCart={this.handleCart} isAuthed={true} />} />
           <Route exact path="/extras1" component={Extras1} />
           <Route exact path="/extras2" component={Extras2} />
-          <Route path={['/(mums|garters)/(spirit-badge|mini|small|medium|large|extra-large)']} component={Customization} />
+          <Route exact path="/cart" render={props => <Cart {...props} onCart={this.handleCart} isAuthed={true} />} />
+          <Route path={['/(mums|garters)/(spirit-badge|mini|small|medium|large|extra-large)']} render={props => <Customization {...props} onCart={this.handleCart} isAuthed={true} />} />
           {/* <Layout style={{ background: '#fff', padding: '0 50px', minHeight: 300 }}>
             <Layout style={{ background: '#fff', padding: '0 50px', minHeight: 300 }}>
               <Content>

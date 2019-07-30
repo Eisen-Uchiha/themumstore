@@ -7,8 +7,7 @@ const MenuItemGroup = Menu.ItemGroup
 const { Title, Paragraph, Text } = Typography
 
 class Home extends Component {
-
-  render() { 
+  render() {
     return (
       <Layout style={{ background: '#fff', padding: '0 50px', minHeight: 300 }}>
         <Layout style={{ background: '#fff', padding: '0 50px', minHeight: 300 }}>
