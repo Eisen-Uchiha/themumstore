@@ -1,6 +1,6 @@
 const prices = {
   main: {
-    spiritBadge: {
+    spiritbadge: {
       mums: 10,
       garters: 10,
       loops: 0.01,
@@ -50,7 +50,7 @@ const prices = {
       twoTone: 7.00,
     },
 
-    xl: {
+    extralarge: {
       mums: 85,
       garters: 65,
       loops: 0.01,

@@ -7,19 +7,22 @@ import Garters from './Components/Mums-Garters/Garters'
 import Extras1 from './Components/Extras/Extras1'
 import Extras2 from './Components/Extras/Extras2'
 import Gallery from './Components/Gallery'
-import Cart from './Components/Cart'
+import Cart from './Components/Payments/Cart'
 import Customization from './Components/Mums-Garters/Customization'
 import './App.css'
 
 const { Header, Footer } = Layout
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup
+const oneWeek =  7 * 8.64e+7
 
 class App extends Component {
   constructor(props) {
     super(props)
-    const cart = JSON.parse(window.localStorage.getItem('cart')) || {}
-    const cartSize = Object.keys(cart).length
+    const date = new Date()
+    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
+    const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
+    const cartSize = Object.keys(products).length
 
     this.state = {
       menu: [ window.location.pathname.split('/')[1] ], cartSize
@@ -35,8 +38,10 @@ class App extends Component {
   }
 
   handleCart = () => {
-    const cart = JSON.parse(window.localStorage.getItem('cart')) || {}
-    const cartSize = Object.keys(cart).length
+    const date = new Date()
+    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
+    const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
+    const cartSize = Object.keys(products).length
     this.setState({ cartSize })
   }
 

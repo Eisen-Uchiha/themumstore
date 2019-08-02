@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { List, Button, Divider, Avatar, Icon, Typography } from 'antd'
-import config from './config'
+// import ExpressCheckout from './ExpressCheckout'
+import SmartButtons from './SmartButtons'
+import prices from '../../price-list'
+import config from '../config'
 
 const { Title } = Typography
+const oneWeek =  7 * 8.64e+7
 
 const IconText = ({ type, text }) => (
   <span>
@@ -45,7 +49,10 @@ const title = ({ item }) => {
 class Cart extends Component {
   constructor(props) {
     super(props)
-    const products = JSON.parse(window.localStorage.getItem('cart')) || {}
+    const date = new Date()
+    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
+    const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
+
     this.state = { data: this.dataPush(products), products }
   }
 
@@ -56,35 +63,65 @@ class Cart extends Component {
   cartButtons = ({ id }) => {
     return (
       <span style={{ verticalAlign: 'super' }}>
-        <Button style={{ margin: '0 2px' }} size="small" icon="edit" onClick={() => this.handleCart({ press: 'edit', id })} />
-        <Button style={{ margin: '0 2px' }} size="small" icon="close" onClick={() => this.handleCart({ press: 'delete', id })} />
+        <Button style={{ margin: '0 2px' }} size="small" icon="edit" onClick={() => this.handleCart({ action: 'edit', id })} />
+        <Button style={{ margin: '0 2px' }} size="small" icon="close" onClick={() => this.handleCart({ action: 'delete', id })} />
       </span>
     )
   }
 
-  handleCart = ({ press, id }) => {
-    if (press === 'edit') {
-      console.log(press)
+  handleCart = ({ action, id }) => {
+    if (action === 'edit') {
+      console.log(action)
     }
 
-    if (press === 'delete') {
+    if (action === 'delete') {
       const old = { ...this.state.products }
+      const date = new Date().getTime()
       delete old[id]
-      window.localStorage.setItem('cart', JSON.stringify(old))
-      const products = JSON.parse(window.localStorage.getItem('cart')) || {}
+      const cart = { date, products: old}
+      window.localStorage.setItem('cart', JSON.stringify(cart))
+      const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
+      const products =  cartStorage.products || {}
+      this.setState({ data: this.dataPush(products), products })
+      this.props.onCart()
+    }
+
+    if (action === 'clear') {
+      const date = new Date().getTime()
+      const cart = { date, products: {} }
+      window.localStorage.setItem('cart', JSON.stringify(cart))
+      const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
+      const products =  cartStorage.products || {}
       this.setState({ data: this.dataPush(products), products })
       this.props.onCart()
     }
   }
 
+  totalCost = data => {
+    let total = 0
+    for (let i = 0; i < data.length; i++) {
+      const obj = data[i]
+      const { category, product } = obj
+      const categoryType = category.match(/Mums|Garters/) ? 'main' : 'extras'
+      const currentPrices = prices[categoryType][product.toLowerCase().replace(' ', '')]
+      const baseItem = currentPrices[category.toLowerCase().replace(' ', '')]
+      const extrarray = Object.keys(obj.extras)
+      const totalExtras = extrarray.reduce((acc, curr) => obj.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
+      total = total + baseItem + totalExtras
+    }
+
+    return total
+  }
+
   render() {
     console.log(this.state)
     const { products, data } = this.state
-    const totalCost = data.reduce((acc, obj) => { return acc + obj.Approved + obj.Paid }, 0)
+    const totalCost = this.totalCost(data)
+    const totalCostForm = Number(totalCost.toFixed(2))
 
     return (
       <div style={{ margin: '2%', background: 'white', padding: 20 }}>
-        <h1 style={{ textAlign: 'center', marginTop: '40px' }}>This is Cart Page</h1>
+        <h1 style={{ textAlign: 'center', marginTop: '40px' }}>Shopping Cart</h1>
         <List
           itemLayout="vertical"
           // size="large"
@@ -97,7 +134,7 @@ class Cart extends Component {
           dataSource={data}
           footer={
             <div>
-              <b>Total Amount:</b> [Placeholder]
+              <h3><b>Total Amount:</b> ${totalCostForm.toFixed(2)}</h3>
             </div>
           }
           renderItem={item => (
@@ -128,9 +165,10 @@ class Cart extends Component {
             </List.Item>
           )}
         />
+        <SmartButtons total={totalCostForm} onPayment={this.props.handleCart} />
       </div>
     )
   }
 }
  
-export default Cart;
+export default Cart

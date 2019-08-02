@@ -10,6 +10,8 @@ const colors = [ 'red', 'blue', 'green', 'yellow', 'purple', 'gold', 'silver', '
 const activities = ['Band', 'Choir', 'Cheer', ]
 const sports = ['Basketball', 'Football', 'Soccer', 'Volleyball', 'Tennis']
 const failsafe = ['school', 'colors', 'names', 'activities', 'extras']
+const oneWeek =  7 * 8.64e+7
+
 
 const additions = ({ extra, id }) => (
   <span style={{ color: 'green' }}>+ ${!isNaN(extra) ? extra.toFixed(2) : '#.##'}</span>
@@ -20,40 +22,43 @@ const additions = ({ extra, id }) => (
 class Customization extends Component {
   constructor(props) {
     super(props)
-    const custom = JSON.parse(window.localStorage.getItem('custom')) || Object.assign(...failsafe.map(val => ({[val]: {}})))
+    const date = new Date().getTime()
+    const customStorage = JSON.parse(window.localStorage.getItem('custom')) || { date, details: Object.assign(...failsafe.map(val => ({ [val]: {} }))) }
+    const details = (customStorage.date - date) < oneWeek ? customStorage.details : {}
     const path = props.match.params
     const category = path[0].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
     const product = path[1].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
+    console.log(customStorage, details)
 
     // Set the state directly. Use props if necessary.
     this.state = {
       category: category,
       product: product,
-      toHome: null,
+      toRedirect: null,
       school: {
-        name: custom.school.name || '',
-        mascot: custom.school.mascot || '',
+        name: details.school.name || '',
+        mascot: details.school.mascot || '',
       },
       colors: {
-        primary: custom.colors.primary || null,
-        secondary: custom.colors.secondary || null,
-        accent: custom.colors.accent || null,
+        primary: details.colors.primary || null,
+        secondary: details.colors.secondary || null,
+        accent: details.colors.accent || null,
       },
       names: {
-        first: custom.names.first || '',
-        second: custom.names.second || ''
+        first: details.names.first || '',
+        second: details.names.second || ''
       },
       activities: {
-        first: custom.activities.first || null,
-        second: custom.activities.second || null,
-        third: custom.activities.third || null,
+        first: details.activities.first || null,
+        second: details.activities.second || null,
+        third: details.activities.third || null,
       },
       extras: {
-        loops: custom.extras.loops || false,
-        boa: custom.extras.boa || false,
-        bling: custom.extras.bling || false,
-        extraWidth: custom.extras.extraWidth || false,
-        twoTone: custom.extras.twoTone || false,
+        loops: details.extras.loops || false,
+        boa: details.extras.boa || false,
+        bling: details.extras.bling || false,
+        extraWidth: details.extras.extraWidth || false,
+        twoTone: details.extras.twoTone || false,
       },
     }
   }
@@ -85,12 +90,13 @@ class Customization extends Component {
   handleChange = ({ category, property, value }) => {
     const newState = { ...this.state[category] }
     newState[property] = value
-    this.setState({ [category]: newState }, () => window.localStorage.setItem('custom', JSON.stringify(this.state)))
+    this.setState({ [category]: newState }, () => window.localStorage.setItem('custom', JSON.stringify({ date: new Date().getTime(), details: this.state })))
   }
 
   handleCart = () => {
     const current = this.state
     const name = `${current.product.replace(' ', '-')}${current.category.replace('s', '')}`
+    const date = new Date().getTime()
     let number = 1, id = name + number
 
     const check = this.inputCheck(current)
@@ -99,17 +105,19 @@ class Customization extends Component {
       return
     }
 
-    const cart = JSON.parse(window.localStorage.getItem('cart')) || {}
-    const cartCheck = () => {
-      if (!cart[id]) cart[id] = current
-      else { number++; id = `${name}${number}`; cartCheck() }
+    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date, products: {} }
+    const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
+
+    const productCheck = () => {
+      if (!products[id]) products[id] = current
+      else { number++; id = `${name}${number}`; productCheck() }
     }
 
-    cartCheck()
-    window.localStorage.setItem('cart', JSON.stringify(cart))
+    productCheck()
+    window.localStorage.setItem('cart', JSON.stringify({ date, products }))
     window.localStorage.removeItem('custom')
     this.props.onCart()
-    this.setState({ toHome: true })
+    this.setState({ toRedirect: true })
   }
 
   inputCheck = (current) => {
@@ -124,13 +132,14 @@ class Customization extends Component {
   }
 
   render() {
-    const { school, names, extras, category, product, toHome } = this.state
-    if (toHome) return <Redirect to='/cart' />
+    const { school, names, extras, category, product, toRedirect } = this.state
+    if (toRedirect) return <Redirect to='/cart' />
     const cat = category.toLowerCase()
-    const prod = product === 'Extra Large' ? 'xl' : product === 'Spirit Badge' ? 'spiritBadge' : product.toLowerCase()
+    const prod = product.toLowerCase().replace(' ', '')
     const { loops, boa, bling, extraWidth, twoTone } = prices.main[prod]
     const xtras = ['loops', 'boa', 'bling', 'extraWidth', 'twoTone']
     const totalCost = prices.main[prod][cat] + xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0)
+    const totalCostForm = Number(totalCost.toFixed(2))
 
     return (
       <Layout style={{ minHeight: '100px', background: 'white', padding: '0 4%' }}>
@@ -166,7 +175,7 @@ class Customization extends Component {
           </Sider>
         </Layout>
           <Content style={{ textAlign: 'center', padding: '1%' }}>
-            <h3><b>Total Price:</b> ${totalCost}</h3>
+            <h3><b>Total Price:</b> ${totalCostForm}</h3>
             <Button type='primary' onClick={this.handleCart}>Add To Cart</Button>
           </Content>
       </Layout>
