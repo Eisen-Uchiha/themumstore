@@ -8,7 +8,10 @@ const CLIENT = {
   production: process.env.REACT_APP_PAYPAL_CLIENT_ID_PRODUCTION,
 }
 
-const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
+// const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
+const ENV = 'sandbox'
+console.log(process.env)
+// console.log(ENV)
 
 const CLIENT_ID = CLIENT[ENV]
 
