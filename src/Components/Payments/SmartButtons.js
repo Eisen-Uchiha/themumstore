@@ -10,9 +10,6 @@ const CLIENT = {
 
 // const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
 const ENV = 'sandbox'
-console.log(process.env)
-// console.log(ENV)
-
 const CLIENT_ID = CLIENT[ENV]
 
 let PayPalButton = null;
