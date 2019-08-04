@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link, IndexRoute, hashHistory, browserHistory } from "react-router-dom";
+import React, { Component, useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Link, Switch, Redirect, IndexRoute, hashHistory, browserHistory } from "react-router-dom";
 import { Layout, Icon, Menu, Badge, Breadcrumb, PageHeader, Carousel, Typography } from 'antd'
 import Home from './Components/Home'
 import Mums from './Components/Mums-Garters/Mums'
@@ -15,6 +15,23 @@ const { Header, Footer } = Layout
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup
 const oneWeek =  7 * 8.64e+7
+
+const NoMatch = () => {
+  const [redirect, setredirect] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => setredirect(true), 10000)
+  })
+
+  if (redirect) return <Redirect to='/' />
+  
+  return (
+    <div style={{ background: 'white', textAlign: 'center', padding: '5%' }}>
+      <h1>Sorry, we couldn’t find that page</h1>
+      <h3>You'll be redirected back to the home page</h3>
+  </div>
+  )
+}
 
 class App extends Component {
   constructor(props) {
@@ -82,14 +99,17 @@ class App extends Component {
             </Menu>
           </Header>
 
-          <Route exact path="/" component={Home} />
-          <Route exact path="/gallery" component={Gallery} />
-          <Route exact path="/mums" component={Mums} />
-          <Route exact path="/garters" render={props => <Garters {...props} onCart={this.handleCart} isAuthed={true} />} />
-          <Route exact path="/extras1" component={Extras1} />
-          <Route exact path="/extras2" component={Extras2} />
-          <Route exact path="/cart" render={props => <Cart {...props} onCart={this.handleCart} isAuthed={true} />} />
-          <Route path={['/(mums|garters)/(spirit-badge|mini|small|medium|large|extra-large)']} render={props => <Customization {...props} onCart={this.handleCart} isAuthed={true} />} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/gallery" component={Gallery} />
+            <Route exact path="/mums" component={Mums} />
+            <Route exact path="/garters" render={props => <Garters {...props} onCart={this.handleCart} isAuthed={true} />} />
+            <Route exact path="/extras1" component={Extras1} />
+            <Route exact path="/extras2" component={Extras2} />
+            <Route exact path="/cart" render={props => <Cart {...props} onCart={this.handleCart} isAuthed={true} />} />
+            <Route path={['/(mums|garters)/(spirit-badge|mini|small|medium|large|extra-large)']} render={props => <Customization {...props} onCart={this.handleCart} isAuthed={true} />} />
+            <Route component={NoMatch} />
+          </Switch>
           {/* <Layout style={{ background: '#fff', padding: '0 50px', minHeight: 300 }}>
             <Layout style={{ background: '#fff', padding: '0 50px', minHeight: 300 }}>
               <Content>
