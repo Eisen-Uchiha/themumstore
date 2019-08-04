@@ -20,7 +20,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     const date = new Date()
-    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
+    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date, products: {} }
     const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
     const cartSize = Object.keys(products).length
 
@@ -39,7 +39,7 @@ class App extends Component {
 
   handleCart = () => {
     const date = new Date()
-    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
+    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date, products: {} }
     const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
     const cartSize = Object.keys(products).length
     this.setState({ cartSize })

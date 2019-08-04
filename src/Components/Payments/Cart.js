@@ -50,9 +50,8 @@ class Cart extends Component {
   constructor(props) {
     super(props)
     const date = new Date()
-    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
+    const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date, products: {} }
     const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
-
     this.state = { data: this.dataPush(products), products }
   }
 
