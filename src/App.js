@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Link, Switch, Redirect, IndexRoute, hashHistory, browserHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import { Layout, Icon, Menu, Badge, Breadcrumb, PageHeader, Carousel, Typography } from 'antd'
 import Home from './Components/Home'
 import Mums from './Components/Mums-Garters/Mums'
@@ -20,7 +20,7 @@ const NoMatch = () => {
   const [redirect, setredirect] = useState(false)
 
   useEffect(() => {
-    setTimeout(() => setredirect(true), 10000)
+    setTimeout(() => setredirect(true), 8000)
   })
 
   if (redirect) return <Redirect to='/' />
@@ -78,7 +78,6 @@ class App extends Component {
               selectedKeys={menu}
               style={{ lineHeight: '62px' }}
             >
-
               <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
                 <Link to="/mums">
                   {/* <Icon type="setting" /> */}
