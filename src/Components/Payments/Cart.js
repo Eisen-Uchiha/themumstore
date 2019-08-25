@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { List, Button, Divider, Avatar, Icon, Typography } from 'antd'
+import { Redirect } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
 // import ExpressCheckout from './ExpressCheckout'
 import SmartButtons from './SmartButtons'
 import prices from '../../price-list'
@@ -32,8 +35,8 @@ const dots = ({ colors }) => (
   Object.keys(colors).map(c => colors[c] && <span key={c} style={dotStyle({ color: colors[c] })}></span>)
 )
 
-const icons = ({ activities }) => (
-  Object.keys(activities).map(a => activities[a] && <span key={a} style={{ padding: 5, fontSize: 20 }}>{config[activities[a]]}</span>)
+const icons = ({ activities, color }) => (
+  Object.keys(activities).map(a => activities[a] && <span key={a} style={{ padding: 5, fontSize: 20, color: color }}>{config[activities[a]]}</span>)
 )
 
 const title = ({ item }) => {
@@ -52,7 +55,7 @@ class Cart extends Component {
     const date = new Date()
     const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date, products: {} }
     const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
-    this.state = { data: this.dataPush(products), products }
+    this.state = { data: this.dataPush(products), products, toRedirect: null }
   }
 
   dataPush = (products) => {
@@ -68,9 +71,24 @@ class Cart extends Component {
     )
   }
 
+  addons = ({ extras, id, color, size }) => {
+    const { loops, boa, bling, extraWidth, twoTone } = prices.main[size]
+    return (
+      <span style={{ padding: '5px', fontSize: '20px' }}>
+        {loops !== null && <span style={{ padding: '5px', color: extras.loops && color }} onClick={() => this.handleAddons({ key: 'loops', id })}><FontAwesomeIcon icon={faRibbon} /></span>}
+        {boa !== null && <span style={{ padding: '5px', color: extras.boa && color }} onClick={() => this.handleAddons({ key: 'boa', id })}><FontAwesomeIcon icon={faFeatherAlt} /></span>}
+        {bling !== null && <span style={{ padding: '5px', color: extras.bling && color }} onClick={() => this.handleAddons({ key: 'bling', id })}><FontAwesomeIcon icon={faGem} /></span>}
+        {extraWidth !== null && <span style={{ padding: '5px', color: extras.extraWidth && color }} onClick={() => this.handleAddons({ key: 'extraWidth', id })}><Icon type='column-width' /></span>}
+        {twoTone !== null && <span style={{ padding: '5px' }} onClick={() => this.handleAddons({ key: 'twoTone', id })}><Icon type='switcher' theme={extras.twoTone && 'twoTone'} twoToneColor={extras.twoTone && color} /></span>}
+      </span>
+    )
+  }
+
   handleCart = ({ action, id }) => {
     if (action === 'edit') {
-      console.log(action)
+      const product = { ...this.state.products[id] }
+      window.localStorage.setItem('custom', JSON.stringify({ date: new Date().getTime(), details: product, modify: id }))
+      this.setState({ toRedirect: `/${product.category.toLowerCase()}/${product.product.replace(' ', '-').toLowerCase()}` })
     }
 
     if (action === 'delete') {
@@ -96,6 +114,15 @@ class Cart extends Component {
     }
   }
 
+  handleAddons = ({ id, key }) => {
+    const cart = JSON.parse(window.localStorage.getItem('cart'))
+    const { products } = cart
+    const { extras } = products[id]
+    extras[key] = !extras[key]
+    this.setState({ data: this.dataPush(cart.products), products })
+    window.localStorage.setItem('cart', JSON.stringify({ date: new Date().getTime(), products }))
+  }
+
   totalCost = data => {
     let total = 0
     for (let i = 0; i < data.length; i++) {
@@ -113,8 +140,8 @@ class Cart extends Component {
   }
 
   render() {
-    console.log(this.state)
-    const { products, data } = this.state
+    const { products, data, toRedirect } = this.state
+    if (toRedirect) return <Redirect to={toRedirect} />
     const totalCost = this.totalCost(data)
     const totalCostForm = Number(totalCost.toFixed(2))
 
@@ -122,12 +149,10 @@ class Cart extends Component {
       <div style={{ margin: '2%', background: 'white', padding: 20 }}>
         <h1 style={{ textAlign: 'center', marginTop: '40px' }}>Shopping Cart</h1>
         <List
-          itemLayout="vertical"
+          itemLayout='vertical'
           // size="large"
           pagination={{
-            onChange: page => {
-              console.log(page);
-            },
+            onChange: page => { return null },
             pageSize: 5,
           }}
           dataSource={data}
@@ -141,10 +166,11 @@ class Cart extends Component {
               key={item.title}
               style={{ border: '1px solid #F7DC99', padding: '20px' }}
               actions={[
-                item.activities.first ? icons({ activities: item.activities }) : config.Star,
+                item.activities.first ? icons({ activities: item.activities, color: item.colors.primary }) : config.Star,
                 <span style={{ fontSize: '1.2em' }}>{item.school.name}</span>,
                 <span style={{ fontSize: '1.2em' }}>{item.school.mascot}</span>,
                 dots({ colors: item.colors }),
+                this.addons({ id: item.id, extras: item.extras, color: item.colors.primary, size: item.product.match(/\w+/g).join('').toLowerCase() }),
                 this.cartButtons({ id: item.id }),
               ]}
               extra={

@@ -28,13 +28,13 @@ class Customization extends Component {
     const path = props.match.params
     const category = path[0].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
     const product = path[1].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
-    console.log(customStorage, details)
 
     // Set the state directly. Use props if necessary.
     this.state = {
+      toRedirect: null,
+      modify: customStorage.modify || null,
       category: category,
       product: product,
-      toRedirect: null,
       school: {
         name: details.school.name || '',
         mascot: details.school.mascot || '',
@@ -94,7 +94,7 @@ class Customization extends Component {
   }
 
   handleCart = () => {
-    const current = this.state
+    const { modify, ...current } = this.state
     const name = `${current.product.replace(' ', '-')}${current.category.replace('s', '')}`
     const date = new Date().getTime()
     let number = 1, id = name + number
@@ -109,7 +109,8 @@ class Customization extends Component {
     const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
 
     const productCheck = () => {
-      if (!products[id]) products[id] = current
+      if (modify) products[modify] = current
+      else if (!products[id]) products[id] = current
       else { number++; id = `${name}${number}`; productCheck() }
     }
 
@@ -132,7 +133,7 @@ class Customization extends Component {
   }
 
   render() {
-    const { school, names, extras, category, product, toRedirect } = this.state
+    const { school, names, extras, category, product, toRedirect, modify } = this.state
     if (toRedirect) return <Redirect to='/cart' />
     const cat = category.toLowerCase()
     const prod = product.toLowerCase().replace(' ', '')
@@ -176,11 +177,49 @@ class Customization extends Component {
         </Layout>
           <Content style={{ textAlign: 'center', padding: '1%' }}>
             <h3><b>Total Price:</b> ${totalCostForm}</h3>
-            <Button type='primary' onClick={this.handleCart}>Add To Cart</Button>
+            <Button type='primary' onClick={this.handleCart}>{modify ? 'Save Changes' : 'Add To Cart'}</Button>
           </Content>
       </Layout>
     )
   }
 }
  
-export default Customization;
+export default Customization
+
+
+
+// {
+//   "date": 1566687070488,
+//   "products": {
+//     "MediumMum1": {
+//       "category": "Mums",
+//       "product": "Medium",
+//       "toRedirect": null,
+//       "school": {
+//         "name": "Hogwarts",
+//         "mascot": "Wiz Kids"
+//       },
+//       "colors": {
+//         "primary": "red",
+//         "secondary": "gold",
+//         "accent": "purple"
+//       },
+//       "names": {
+//         "first": "Hairy Potter",
+//         "second": "Professor Xavier"
+//       },
+//       "activities": {
+//         "first": "Cheer",
+//         "second": "Soccer",
+//         "third": "Choir"
+//       },
+//       "extras": {
+//         "loops": true,
+//         "boa": true,
+//         "bling": true,
+//         "extraWidth": true,
+//         "twoTone": true
+//       }
+//     }
+//   }
+// }
