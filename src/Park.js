@@ -13,7 +13,7 @@ const handleClick = api => e => {
   e.preventDefault()
 
   // this.setState({ loading: true })
-  fetch("/.netlify/functions/" + api)
+  fetch("/.netlify/lambda/" + api)
     .then(response => { console.log(response); response.json(); })
     .then(json => console.log(json))
 }
