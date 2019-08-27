@@ -27,7 +27,8 @@
     "build:lambda": "netlify-lambda build src/lambda",
     "min": "react-app-rewired min",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lambda": "netlify-lambda serve src/lambda"
   },
   "eslintConfig": {
     "extends": "react-app"

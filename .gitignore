@@ -10,6 +10,7 @@
 
 # production
 /build
+/lambda
 /min
 firefox.zip
 min.zip

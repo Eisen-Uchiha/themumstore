@@ -14,7 +14,7 @@ const handleClick = api => e => {
 
   // this.setState({ loading: true })
   fetch("/.netlify/functions/" + api)
-    .then(response => { console.log(response); response.json(); })
+    .then(response => { console.log(response); return response.json(); })
     .then(json => console.log(json))
 }
 
