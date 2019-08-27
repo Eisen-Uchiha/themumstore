@@ -23,6 +23,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:lambda": "netlify-lambda build src/lambda",
     "min": "react-app-rewired min",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
