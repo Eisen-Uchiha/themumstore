@@ -9,8 +9,9 @@ const CLIENT = {
 }
 
 console.log(process.env)
-// const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
-const ENV = 'sandbox'
+const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
+// const ENV = 'sandbox'
+console.log(ENV)
 const CLIENT_ID = CLIENT[ENV]
 
 let PayPalButton = null;
@@ -53,6 +54,7 @@ class PaypalButton extends Component {
       }
     }
   }
+
   createOrder = (data, actions) => {
     const { total } = this.props
     return actions.order.create({
@@ -70,20 +72,19 @@ class PaypalButton extends Component {
 
   onApprove = (data, actions) => {
     actions.order.capture().then(details => {
-      const paymentData = {
-        payerID: data.payerID,
-        orderID: data.orderID
+      if (details.status === 'COMPLETED') {
+        const payment = data
+        console.log("Payment Approved: ", payment)
+        console.log(details)
+        this.props.onPayment({ action: 'clear', id: null })
+        this.setState({ showButtons: false, paid: true })
       }
-      console.log("Payment Approved: ", paymentData)
-      console.log(data)
-      console.log(details)
-      this.props.onPayment({ action: 'clear', id: null })
-      this.setState({ showButtons: false, paid: true })
     })
   }
 
   render() {
     const { showButtons, loading, paid } = this.state;
+    console.log(this.props)
 
     return (
       <div className="main">

@@ -190,7 +190,7 @@ class Cart extends Component {
             </List.Item>
           )}
         />
-        <SmartButtons total={totalCostForm} onPayment={this.props.handleCart} />
+        <SmartButtons total={totalCostForm} onPayment={this.handleCart} />
       </div>
     )
   }
