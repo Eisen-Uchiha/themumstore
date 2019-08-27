@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import scriptLoader from 'react-async-script-loader'
 import { Spin } from 'antd'
+import prices from '../../price-list'
 
 const CLIENT = {
   sandbox: process.env.REACT_APP_PAYPAL_CLIENT_ID_SANDBOX,
@@ -55,16 +56,55 @@ class PaypalButton extends Component {
     }
   }
 
+  orderItems = () => {
+    const { products } = this.props
+    const items = Object.keys(products).map(p => {
+      const product = products[p]
+      const item = {}
+      item.name = `${product.product} ${product.category.replace('s', '')}`
+      item.unit_amount = { currency_code: 'USD', value: this.totalCost(product) }
+      item.quantity = 1
+      return item
+    })
+    console.log(items)
+    return items
+  }
+
+  totalCost = item => {
+    let total = 0
+    const { category, product } = item
+    const categoryType = category.match(/Mums|Garters/) ? 'main' : 'extras'
+    const currentPrices = prices[categoryType][product.toLowerCase().replace(' ', '')]
+    const baseItem = currentPrices[category.toLowerCase().replace(' ', '')]
+    const extrarray = Object.keys(item.extras)
+    const totalExtras = extrarray.reduce((acc, curr) => item.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
+    total = total + baseItem + totalExtras
+    console.log(total)
+    return total
+  }
+
   createOrder = (data, actions) => {
-    const { total } = this.props
+    const { total, products } = this.props
+    console.log(total)
+    console.log(products)
+    // Create Order array of items
+    // Add sales tax
+    // Figure out Netlify's AWS Lambda functions to make serverless back end calls to store order information or send emails or manipulate Google Sheets
     return actions.order.create({
       purchase_units: [
         {
           description: "Mum Boutique Custom Order",
           amount: {
             currency_code: "USD",
-            value: total
-          }
+            value: total,
+            breakdown: {
+              item_total: {
+                currency_code: 'USD',
+                value: total,
+              },
+            }
+          },
+          items: this.orderItems(),
         },
       ]
     })
@@ -88,7 +128,7 @@ class PaypalButton extends Component {
 
     return (
       <div className="main">
-        {loading && <Spin />}
+        {loading && <div style={{ textAlign: 'center' }}><Spin size='large' style={{ width: '2em', height: '2em' }} /></div>}
 
         {showButtons && (
           <div style={{ textAlign: 'center' }}>
