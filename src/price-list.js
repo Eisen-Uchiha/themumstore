@@ -1,7 +1,7 @@
 const prices = {
   main: {
     spiritbadge: {
-      mums: 10,
+      mums: 5, // Temporary Testing. Real Value is 10
       garters: 10,
       loops: 0.01,
       boa: 8.00,
