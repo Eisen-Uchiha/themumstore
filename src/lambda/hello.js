@@ -1,6 +1,7 @@
-exports.handler = function(event, context, callback) {
+export function handler(event, context, callback) {
+  console.log('queryStringParameters', event.queryStringParameters)
   callback(null, {
     statusCode: 200,
-    body: "Hello, World"
-  });
-};
+    body: JSON.stringify({ msg: 'Hello, World!' }),
+  })
+}
