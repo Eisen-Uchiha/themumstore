@@ -6,9 +6,9 @@ import prices from '../../price-list'
 
 const { Header, Content, Sider } = Layout
 
-const colors = [ 'red', 'blue', 'green', 'yellow', 'purple', 'gold', 'silver', 'white', 'black']
-const activities = ['Band', 'Choir', 'Cheer', ]
-const sports = ['Basketball', 'Football', 'Soccer', 'Volleyball', 'Tennis']
+const colors = [ 'red', 'blue', 'white', 'yellow', 'gold', 'silver', 'maroon', 'black']
+const activities = ['Band', 'Choir', 'Cheer', 'Theater', 'FFA', 'ROTC']
+const sports = ['Basketball', 'Football', 'Soccer', 'Volleyball', 'Tennis', 'Golf', 'Track', 'Cross Country', 'Baseball', ]
 const failsafe = ['school', 'colors', 'names', 'activities', 'extras']
 const oneWeek =  7 * 8.64e+7
 
@@ -29,6 +29,8 @@ class Customization extends Component {
     const category = path[0].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
     const product = path[1].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
 
+    const prod = product.toLowerCase().replace(' ', '')
+    const { loops, boa, bling, extraWidth, twoTone } = prices.main[prod]
     // Set the state directly. Use props if necessary.
     this.state = {
       toRedirect: null,
@@ -54,11 +56,11 @@ class Customization extends Component {
         third: details.activities.third || null,
       },
       extras: {
-        loops: details.extras.loops || false,
-        boa: details.extras.boa || false,
-        bling: details.extras.bling || false,
-        extraWidth: details.extras.extraWidth || false,
-        twoTone: details.extras.twoTone || false,
+        loops: loops ? details.extras.loops : false || false,
+        boa: boa ? details.extras.boa : false || false,
+        bling: bling ? details.extras.bling : false || false,
+        extraWidth: extraWidth ? details.extras.extraWidth : false || false,
+        // twoTone: twoTone ? details.extras.twoTone : false || false,
       },
     }
   }
@@ -172,7 +174,7 @@ class Customization extends Component {
             <div><Checkbox disabled={boa === null} checked={extras.boa} onChange={() => this.handleChange({ category: 'extras', property: 'boa', value: !extras.boa })}>Add Feather Boa {boa ? additions({ extra: boa }) : ''}</Checkbox></div>
             <div><Checkbox disabled={bling === null} checked={extras.bling} onChange={() => this.handleChange({ category: 'extras', property: 'bling', value: !extras.bling })}>Add Bling Package {bling ? additions({ extra: bling }) : ''}</Checkbox></div>
             <div><Checkbox disabled={extraWidth === null} checked={extras.extraWidth} onChange={() => this.handleChange({ category: 'extras', property: 'extraWidth', value: !extras.extraWidth })}>Add Extra Width {extraWidth ? additions({ extra: extraWidth }) : ''}</Checkbox></div>
-            <div><Checkbox disabled={twoTone === null} checked={extras.twoTone} onChange={() => this.handleChange({ category: 'extras', property: 'twoTone', value: !extras.twoTone })}>Add 2-Tone Die Cut {twoTone ? additions({ extra: twoTone }) : ''}</Checkbox></div>
+            {/* <div><Checkbox disabled={twoTone === null} checked={extras.twoTone} onChange={() => this.handleChange({ category: 'extras', property: 'twoTone', value: !extras.twoTone })}>Add 2-Tone Die Cut {twoTone ? additions({ extra: twoTone }) : ''}</Checkbox></div> */}
           </Sider>
         </Layout>
           <Content style={{ textAlign: 'center', padding: '1%' }}>

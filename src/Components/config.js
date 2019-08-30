@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDrum, faMicrophone, faBullhorn, faBasketballBall, faFootballBall, faFutbol, faVolleyballBall, faBaseballBall, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faDrum, faMicrophone, faBullhorn, faBasketballBall, faFootballBall, faFutbol, faVolleyballBall, faBaseballBall, faGolfBall, faStar } from '@fortawesome/free-solid-svg-icons'
 
 const config = {
   Star: <FontAwesomeIcon icon={faStar} />,
@@ -12,6 +12,7 @@ const config = {
   Soccer: <FontAwesomeIcon icon={faFutbol} />,
   Volleyball: <FontAwesomeIcon icon={faVolleyballBall} />,
   Tennis: <FontAwesomeIcon icon={faBaseballBall} />,
+  Golf: <FontAwesomeIcon icon={faGolfBall} />,
 }
 
 export default config

@@ -79,7 +79,7 @@ class Cart extends Component {
         {boa !== null && <span style={{ padding: '5px', color: extras.boa && color }} onClick={() => this.handleAddons({ key: 'boa', id })}><FontAwesomeIcon icon={faFeatherAlt} /></span>}
         {bling !== null && <span style={{ padding: '5px', color: extras.bling && color }} onClick={() => this.handleAddons({ key: 'bling', id })}><FontAwesomeIcon icon={faGem} /></span>}
         {extraWidth !== null && <span style={{ padding: '5px', color: extras.extraWidth && color }} onClick={() => this.handleAddons({ key: 'extraWidth', id })}><Icon type='column-width' /></span>}
-        {twoTone !== null && <span style={{ padding: '5px' }} onClick={() => this.handleAddons({ key: 'twoTone', id })}><Icon type='switcher' theme={extras.twoTone && 'twoTone'} twoToneColor={extras.twoTone && color} /></span>}
+        {/* {twoTone !== null && <span style={{ padding: '5px' }} onClick={() => this.handleAddons({ key: 'twoTone', id })}><Icon type='switcher' theme={extras.twoTone && 'twoTone'} twoToneColor={extras.twoTone && color} /></span>} */}
       </span>
     )
   }
