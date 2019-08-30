@@ -2,18 +2,18 @@ const prices = {
   main: {
     spiritbadge: {
       mums: 10,
-      garters: 5, // Temporary Testing. Real Value is 10
-      loops: 0.01,
-      boa: 8.00,
+      garters: 10,
+      loops: null,
+      boa: null,
       bling: null,
       extraWidth: null,
-      twoTone: 7.00,
+      twoTone: null,
     },
 
     mini: {
       mums: 15,
       garters: 15,
-      loops: 0.01,
+      loops: 2.00,
       boa: 8.00,
       bling: null,
       extraWidth: null,
@@ -23,7 +23,7 @@ const prices = {
     small: {
       mums: 32,
       garters: 27,
-      loops: 0.01,
+      loops: 2.00,
       boa: 8.00,
       bling: 8.00,
       extraWidth: 5.00,
@@ -33,7 +33,7 @@ const prices = {
     medium: {
       mums: 50,
       garters: 40,
-      loops: 0.01,
+      loops: 3.00,
       boa: 8.00,
       bling: 10.00,
       extraWidth: 7.00,
@@ -43,7 +43,7 @@ const prices = {
     large: {
       mums: 70,
       garters: 55,
-      loops: 0.01,
+      loops: 4.00,
       boa: 8.00,
       bling: 12.00,
       extraWidth: 9.00,
@@ -53,7 +53,7 @@ const prices = {
     extralarge: {
       mums: 85,
       garters: 65,
-      loops: 0.01,
+      loops: null,
       boa: 8.00,
       bling: 15.00,
       extraWidth: null,
