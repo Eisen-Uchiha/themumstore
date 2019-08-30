@@ -1,20 +1,3 @@
-//(1) Make list of activities available to choose
-// DONE football
-// DONE basketball
-// DONE soccer
-// DONE volleyball
-// - track
-// - cross country
-// DONE tennis
-// DONE golf
-// - baseball
-// DONE cheer
-// DONE band
-// DONE choir
-// - theater
-// - ffa
-// - rotc
-
 //(2) Need to pass cell phone number and special instructions for confirming order details, notifying about orders, and arranging pickups/delivery
 
 //(3) Add Privacy Policy Page
