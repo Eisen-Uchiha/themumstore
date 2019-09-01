@@ -60,31 +60,34 @@ li.slick-active button {
 }
 
 /* Contact */
-.contact-wrap {
+/* .contact-wrap {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
-}
+} */
 
-.contact-wrap .contact-left {
-  display: inline-block;
+ .contact-wrap .contact-left {
+  margin: 40px 10px;
+  /* display: inline-block;
   padding-right: 10%;
   vertical-align: top;
   width: 70%;
   line-height: 1.5;
-  text-align: left;
+  text-align: left; */
 }
 
 .contact-wrap .contact-right {
-  text-align: left;
+  margin: 40px 10px;
+  /* text-align: left;
   display: inline-block;
   width: 25%;
-  line-height: 1.5;
+  line-height: 1.5; */
 }
 
 .contact-field {
   margin-bottom: 20px;
-  max-width: 350px !important;
+  max-width: 450px !important;
+  min-width: 300px !important;
 }
 
 .cards {
