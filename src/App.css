@@ -84,4 +84,15 @@ li.slick-active button {
 
 .contact-field {
   margin-bottom: 20px;
+  max-width: 350px !important;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 0 1 26%;
 }
