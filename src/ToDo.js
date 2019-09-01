@@ -1,12 +1,14 @@
 //(1) Add Privacy Policy Page
 
-//(2) Add Contact Page and Contact Form
+//(2) Pass information and send email from contact page
 
 //-----------------------------------------------------------------------------------------------------------------
 
 //(3) Add pictures to website
 
 //(4) Implement a way to cut off orders by a certain date
+
+//(5) Combine Mums and Gaters pages
 
 //(5) Show required fields in customization
 

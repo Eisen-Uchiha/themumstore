@@ -23,8 +23,15 @@ li.slick-active button {
   overflow: hidden;
 }
 
+.ant-layout {
+  min-height: -moz-available;          /* WebKit-based browsers will ignore this. */
+  min-height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  min-height: fill-available
+}
+
 .ant-layout-content {
   overflow-y: hidden;
+  background: white;
 }
 
 .slick-slide div, .logo img {

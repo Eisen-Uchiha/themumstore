@@ -149,9 +149,10 @@ class Cart extends Component {
             pageSize: 5,
           }}
           dataSource={data}
+          locale={{ emptyText: 'Your cart is empty' }}
           footer={
             <div>
-              <h3><b>Total Amount:</b> ${totalCostForm.toFixed(2)}</h3>
+              {totalCost > 0 && <h3><b>Total Amount:</b> ${totalCostForm.toFixed(2)}</h3>}
             </div>
           }
           renderItem={item => (
@@ -183,7 +184,7 @@ class Cart extends Component {
             </List.Item>
           )}
         />
-        <SmartButtons total={totalCostForm} products={products} onPayment={this.handleCart} />
+        {totalCost > 0 && <SmartButtons total={totalCostForm} products={products} onPayment={this.handleCart} />}
       </div>
     )
   }
