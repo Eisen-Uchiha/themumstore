@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Layout, Input, Icon, Select, Checkbox, Button, Breadcrumb, Typography } from 'antd'
-import config from '../config'
+import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip, Breadcrumb, Typography } from 'antd'
+import icons from '../icons'
 import prices from '../../price-list'
 
 const { Header, Content, Sider } = Layout
@@ -81,7 +81,7 @@ class Customization extends Component {
         <Select key={activity} value={this.state.activities[activity] || `Select Activity`} onChange={value => this.handleChange({ category: 'activities', property: activity, value: value })} style={{ width: '100%' }}>
           {activities.concat(sports).map(option => {
             const activity = option.charAt(0).toUpperCase() + option.substring(1)
-            const icon = config[activity]
+            const icon = icons[activity]
            return <Select.Option key={option}>{icon}<span style={{ margin: '0 5px' }}>{activity}</span></Select.Option>
           })}
         </Select>
@@ -153,9 +153,23 @@ class Customization extends Component {
           </Content>
           <Sider width='35%' style={{ margin: '2%' }}>
             <div><b>School Name</b></div>
-            <Input value={school.name} onChange={event => this.handleChange({ category: 'school', property: 'name', value: event.target.value })} placeholder='Rydell, Walkerville, Hogwarts, etc.' />
+            <Input
+              value={school.name}
+              onChange={event => this.handleChange({ category: 'school', property: 'name', value: event.target.value })}
+              placeholder='Rydell, Walkerville, Hogwarts, etc.'
+              suffix={
+                <Tooltip title={'Required Field'}>
+                  <Icon type="info-circle" style={{ color: 'gray' }} />
+                </Tooltip>
+              }
+            />
             <div><b>School Mascot</b></div>
-            <Input value={school.mascot} onChange={event => this.handleChange({ category: 'school', property: 'mascot', value: event.target.value })} placeholder='Lions, Tigers, Bears...' />
+            <Input
+              value={school.mascot}
+              onChange={event => this.handleChange({ category: 'school', property: 'mascot', value: event.target.value })}
+              placeholder='Lions, Tigers, Bears...'
+              suffix={<Tooltip title={'Required Field'}><Icon type="info-circle" style={{ color: 'gray' }} /></Tooltip>}
+            />
             <div><b>School Colors</b></div>
             <Input.Group compact>
               {this.colors({ colors, type: 'Primary' })}
@@ -164,8 +178,19 @@ class Customization extends Component {
             </Input.Group>
             <div><b>Names</b></div>
             <Input.Group compact>
-              <Input value={names.first} onChange={event => this.handleChange({ category: 'names', property: 'first', value: event.target.value })} style={{ width: '50%' }} placeholder="Clark Kent" />
-              <Input value={names.second} onChange={event => this.handleChange({ category: 'names', property: 'second', value: event.target.value })} style={{ width: '50%' }} placeholder="Lois Lane" />
+              <Input
+                value={names.first}
+                onChange={event => this.handleChange({ category: 'names', property: 'first', value: event.target.value })}
+                style={{ width: '50%' }}
+                placeholder="Clark Kent"
+                suffix={<Tooltip title={'Required Field'}><Icon type="info-circle" style={{ color: 'gray' }} /></Tooltip>}
+              />
+              <Input
+                value={names.second}
+                onChange={event => this.handleChange({ category: 'names', property: 'second', value: event.target.value })}
+                style={{ width: '50%' }}
+                placeholder="Lois Lane"
+              />
             </Input.Group>
             <div><b>Activities</b></div>
             {this.activities({ activities, sports })}

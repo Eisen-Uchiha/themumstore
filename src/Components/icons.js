@@ -1,11 +1,13 @@
 import React from 'react'
-import { Icon } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faDrum, faMicrophone, faBullhorn, faBasketballBall, faFootballBall,
   faFutbol, faVolleyballBall, faBaseballBall, faGolfBall, faStar, faRunning,
-  faShoePrints, faTheaterMasks, faTractor, faFlagUsa,
+  faShoePrints, faTheaterMasks, faTractor, faFlagUsa, faMale, faFemale,
 } from '@fortawesome/free-solid-svg-icons'
+
+import { ReactComponent as Man } from './custom-icons/man.svg'
+import { ReactComponent as Woman } from './custom-icons/woman.svg'
 
 const config = {
   Star: <FontAwesomeIcon icon={faStar} />,
@@ -24,6 +26,10 @@ const config = {
   FFA: <FontAwesomeIcon icon={faTractor} />,
   ROTC: <FontAwesomeIcon icon={faFlagUsa} />,
   Baseball: <FontAwesomeIcon icon={faBaseballBall} />,
+  Male: <FontAwesomeIcon icon={faMale} />,
+  Female: <FontAwesomeIcon icon={faFemale} />,
+  Man: <Man style={{ width: '1em', height: '1em', fill: 'currentColor' }} />,
+  Woman: <Woman style={{ width: '1em', height: '1em', fill: 'currentColor' }} />,
 }
 
 export default config

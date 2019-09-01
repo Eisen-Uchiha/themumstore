@@ -51,9 +51,11 @@ const orderEmail = async ({ data, orders }) => {
     let html = `<div>
       <h1>Order Received</h1>
       <div><h2 style="margin: 0;">Customer Name: <span style="font-weight: normal;">${orders[0]['Customer Name']}</span></h2></div>
+      <div><h2 style="margin: 0;">Contact Name: <span style="font-weight: normal;">${orders[0]['Contact Name']}</span>  -  Contact Phone: <span style="font-weight: normal;">${orders[0]['Contact Phone']}</span></h2></div>
       <div><h2 style="margin: 0;">Customer Email: <span style="font-weight: normal;">${orders[0]['Customer Email']}</span></h2></div>
       <div><h2 style="margin: 0;">Customer Address: <span style="font-weight: normal;">${orders[0]['Customer Address']}</span></h2></div>
-      <div><h2 style="margin: 0;">Order ID: <span style="font-weight: normal;">${orders[0]['Order ID']}</span>  -  Order Date: <span style="font-weight: normal;">${orders[0]['Order Date']}</span></h2></div>`
+      <div><h2 style="margin: 0;">Order ID: <span style="font-weight: normal;">${orders[0]['Order ID']}</span>  -  Order Date: <span style="font-weight: normal;">${orders[0]['Order Date']}</span></h2></div>
+      <div><h2 style="margin: 0;">Special Instructions: <span style="font-weight: normal;">${orders[0]['Special Instructions']}</span></h2></div>`
 
     orders.forEach(order => {
       html += `<div><h3 style="margin-bottom: 0;">Item: <span style="font-weight: normal;">${orders[0]['Item']}</span></h2></div>`
@@ -118,23 +120,30 @@ export async function handler(event, context, callback) {
   // console.log('CALLBACK', callback)
 
   // Set up for possible errors with saving/emailing through try/catch
-  const data = JSON.parse(event.body)
+  try {
+    const data = JSON.parse(event.body)
 
-  const message = await saveOrder(data)
-  const errors = errorCheck(message.records)
-  
-  const sendOrder = await orderEmail(data)
-  const sendAppreciation = await appreciationEmail(data)
+    const message = await saveOrder(data)
+    // const errors = errorCheck(message.records)
+    
+    const sendOrder = await orderEmail(data)
+    const sendAppreciation = await appreciationEmail(data)
 
-  const response = { statusCode: 200, data: {}, error: null }
-  if (errors) {
-    response.statusCode = errors.statusCode
-    response.error = { type: 'AirTable Error', ...errors }
+    const response = { statusCode: 200, data: {}, error: null }
+    // if (errors) {
+    //   response.statusCode = errors.statusCode
+    //   response.error = { type: 'AirTable Error', ...errors }
+    // }
+    // else response.data = message
+    response.data = message
+
+    callback(null, {
+      statusCode: response.statusCode,
+      body: JSON.stringify({ response }),
+    })
   }
-  else response.data = message
-
-  callback(null, {
-    statusCode: response.statusCode,
-    body: JSON.stringify({ response }),
-  })
+  catch(e) {
+    console.log(e)
+    return { statusCode: 500, body: e.message }
+  }
 }

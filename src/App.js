@@ -4,11 +4,13 @@ import { Layout, Icon, Menu, Badge, Breadcrumb, PageHeader, Carousel, Typography
 import Home from './Components/Home'
 import Mums from './Components/Mums-Garters/Mums'
 import Garters from './Components/Mums-Garters/Garters'
-import Extras1 from './Components/Extras/Extras1'
-import Extras2 from './Components/Extras/Extras2'
 import Gallery from './Components/Gallery'
+import Contact from './Components/Contact'
+// import Extras1 from './Components/Extras/Extras1'
+// import Extras2 from './Components/Extras/Extras2'
 import Cart from './Components/Payments/Cart'
 import Customization from './Components/Mums-Garters/Customization'
+import icons from './Components/icons'
 import './App.css'
 
 const { Header, Footer } = Layout
@@ -79,32 +81,33 @@ class App extends Component {
               style={{ lineHeight: '62px' }}
             >
               <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
-                <Link to="/mums">
-                  {/* <Icon type="setting" /> */}
-                  Mums
-                </Link>
+                <Link to="/mums">Mums</Link>
               </Menu.Item>
               <Menu.Item key="garters" onClick={() => this.handleMenu(['garters'])}>
                 <Link to="/garters">Garters</Link>
+                {/* <Link to="/garters"><i className='anticon'>{icons.Woman}</i> Garters</Link> */}
               </Menu.Item>
-              <SubMenu title="Extras">
+              {/* <SubMenu title="Extras">
                 <MenuItemGroup>
                   <Menu.Item key="extras1" onClick={() => this.handleMenu(['extras1'])}><Link to="/extras1">Extras 1</Link></Menu.Item>
                   <Menu.Item key="extras2" onClick={() => this.handleMenu(['extras2'])}><Link to="/extras2">Extras 2</Link></Menu.Item>
                 </MenuItemGroup>
-              </SubMenu>
-              <Menu.Item key="gallery" onClick={() => this.handleMenu(['gallery'])}><Link to="/gallery">Gallery</Link></Menu.Item>
-              <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}> <Icon type='shopping' /></Badge>}</Link></Menu.Item>
+              </SubMenu> */}
+              {/* <Menu.Item key="gallery" onClick={() => this.handleMenu(['gallery'])}><Link to="/gallery"><Icon type="picture" />Gallery</Link></Menu.Item> */}
+              <Menu.Item key="contact" onClick={() => this.handleMenu(['contact'])}><Link to="/contact"><Icon type="idcard" />Contact</Link></Menu.Item>
+              <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item>
             </Menu>
           </Header>
+          <div style={{ background: 'white', textAlign: 'center', padding: '10px 0', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
 
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/gallery" component={Gallery} />
             <Route exact path="/mums" component={Mums} />
-            <Route exact path="/garters" render={props => <Garters {...props} onCart={this.handleCart} isAuthed={true} />} />
-            <Route exact path="/extras1" component={Extras1} />
-            <Route exact path="/extras2" component={Extras2} />
+            <Route exact path="/garters" component={Garters} />
+            {/* <Route exact path="/gallery" component={Gallery} /> */}
+            <Route exact path="/contact" component={Contact} />
+            {/* <Route exact path="/extras1" component={Extras1} />
+            <Route exact path="/extras2" component={Extras2} /> */}
             <Route exact path="/cart" render={props => <Cart {...props} onCart={this.handleCart} isAuthed={true} />} />
             <Route path={['/(mums|garters)/(spirit-badge|mini|small|medium|large|extra-large)']} render={props => <Customization {...props} onCart={this.handleCart} isAuthed={true} />} />
             <Route component={NoMatch} />

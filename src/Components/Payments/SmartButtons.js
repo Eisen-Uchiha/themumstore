@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import scriptLoader from 'react-async-script-loader'
-import { Spin } from 'antd'
+import { Spin, Input, Tooltip, Icon } from 'antd'
 import prices from '../../price-list'
 
 const CLIENT = {
@@ -23,7 +23,8 @@ class PaypalButton extends Component {
     this.state = {
       showButtons: false,
       loading: true,
-      paid: false
+      paid: false,
+      filled: { name: false, cell: false },
     };
 
     window.React = React;
@@ -87,13 +88,11 @@ class PaypalButton extends Component {
     const { total, products } = this.props
     console.log(total)
     console.log(products)
-    // Create Order array of items
-    // Add sales tax
-    // Figure out Netlify's AWS Lambda functions to make serverless back end calls to store order information or send emails or manipulate Google Sheets
+
     return actions.order.create({
       purchase_units: [
         {
-          description: "Mum Boutique Custom Order",
+          description: "Boutique Mums Custom Order",
           amount: {
             currency_code: "USD",
             value: total,
@@ -110,8 +109,44 @@ class PaypalButton extends Component {
     })
   }
 
+  nameFilledCheck = event => {
+    const filled = { ...this.state.filled }
+
+    if (event.target.value.length < 2) {
+      if (!filled.name) return
+      filled.name = false
+      this.setState({ filled })
+    }
+
+    else if (!filled.name) {
+      filled.name = true
+      this.setState({ filled })
+    }
+
+    else return
+  }
+
+  cellFilledCheck = event => {
+    const filled = { ...this.state.filled }
+    const value = this.cell.input.value
+    const match = value.match(/\d+/g)
+    if (!match || match.join('').length !== 10) {
+      if (!filled.cell) return
+      filled.cell = false
+      this.setState({ filled })
+    }
+
+    else if (!filled.cell) {
+      filled.cell = true
+      this.setState({ filled })
+    }
+
+    else return
+  }
+
   onApprove = (data, actions) => {
     actions.order.capture().then(details => {
+      console.log(details)
       if (details.status === 'COMPLETED') {
         const payment = data
         console.log("Payment Approved: ", payment)
@@ -136,6 +171,9 @@ class PaypalButton extends Component {
         'Customer Name': `${details.payer.name.given_name} ${details.payer.name.surname}`,
         'Customer Email': details.payer.email_address,
         'Customer Address': formatAddress(details.purchase_units[0].shipping.address),
+        'Contact Name': this.name.input.value,
+        'Contact Phone': formatPhone(this.cell.input.value),
+        'Special Instructions': this.special.textAreaRef.value,
         'Order ID': details.id,
         'Item': `${product} ${category.replace('s','')}`,
         'School Name': school.name,
@@ -167,6 +205,7 @@ class PaypalButton extends Component {
 
   render() {
     const { showButtons, loading, paid } = this.state;
+    const { filled } = this.state
     console.log(this.props)
 
     return (
@@ -176,14 +215,62 @@ class PaypalButton extends Component {
         {showButtons && (
           <div style={{ textAlign: 'center' }}>
             <div>
-              <h2>Checkout</h2>
-              <button onClick={this.saveOrder}>Test Order</button>
+              <h1>Checkout</h1>
+              <div>
+                <div>
+                  <h3>Contact</h3>
+                  <Input
+                    ref={node => this.name = node}
+                    // className={!filled.name ? 'required-shadow' : ''}
+                    onChange ={this.nameFilledCheck}
+                    addonBefore="Name"
+                    style={{ maxWidth: '400px' }}
+                    placeholder="Enter Name"
+                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    suffix={
+                      <Tooltip title={!filled.cell ? 'We need a name for this order' : 'Required Field'}>
+                        <Icon type="info-circle" style={{ color: !filled.name ? 'red' : '#68C6BF' }} />
+                      </Tooltip>
+                    }
+                  />
+                </div>
+                <div>
+                  <Input
+                    ref={node => this.cell = node}
+                    onChange={this.cellFilledCheck}
+                    // className={!filled.cell ? 'required-shadow' : ''}
+                    addonBefore="Cell"
+                    style={{ maxWidth: '400px' }}
+                    placeholder="(254) 555-8822"
+                    prefix={<Icon type="mobile" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    suffix={
+                      <Tooltip title={!filled.cell ? 'Enter a valid cell number' : 'Required Field'}>
+                        <Icon type="info-circle" style={{ color: !filled.cell ? 'red' : '#68C6BF' }} />
+                      </Tooltip>
+                    }
+                  />
+                </div>
+                <br />
+                <div>
+                  <h3>Special Instructions</h3>
+                  <Input.TextArea
+                    ref={node => this.special = node}
+                    autosize={{ minRows: 2, maxRows: 6 }}
+                    style={{ maxWidth: '400px' }}
+                    placeholder="Special Instructions"
+                  />
+                </div>
+              </div>
             </div>
 
-            <PayPalButton
-              createOrder={(data, actions) => this.createOrder(data, actions)}
-              onApprove={(data, actions) => this.onApprove(data, actions)}
-            />
+            <br />
+            <br />
+            <div className={!filled.name || !filled.cell ? 'submit-disabled' : ''}>
+              <PayPalButton
+                createOrder={(data, actions) => this.createOrder(data, actions)}
+                onApprove={(data, actions) => this.onApprove(data, actions)}
+              />
+            </div>
           </div>
         )}
 
@@ -223,6 +310,14 @@ function formatExtras(extras) {
 
   const formattedExtras = Object.keys(extras).filter(e => extras[e] === true).map(e => format[e])
   return formattedExtras
+}
+
+function formatPhone(value) {
+  const first = value.match(/\d{3}/g)[0]
+  const second = value.match(/\d{3}/g)[1]
+  const third = value.match(/\d{4}\b/g)[0]
+  const number = `(${first}) ${second}-${third}`
+  return number
 }
 
 function getDate() {

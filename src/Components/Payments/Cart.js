@@ -1,22 +1,15 @@
 import React, { Component } from 'react'
-import { List, Button, Divider, Avatar, Icon, Typography } from 'antd'
+import { List, Button, Divider, Icon, Typography } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
 // import ExpressCheckout from './ExpressCheckout'
 import SmartButtons from './SmartButtons'
 import prices from '../../price-list'
-import config from '../config'
+import icons from '../icons'
 
 const { Title } = Typography
 const oneWeek =  7 * 8.64e+7
-
-const IconText = ({ type, text }) => (
-  <span>
-    <Icon type={type} style={{ marginRight: 8 }} />
-    {text}
-  </span>
-)
 
 const dotStyle = ({ color }) => {
   return {
@@ -35,8 +28,8 @@ const dots = ({ colors }) => (
   Object.keys(colors).map(c => colors[c] && <span key={c} style={dotStyle({ color: colors[c] })}></span>)
 )
 
-const icons = ({ activities, color }) => (
-  Object.keys(activities).map(a => activities[a] && <span key={a} style={{ padding: 5, fontSize: 20, color: color }}>{config[activities[a]]}</span>)
+const activityIcons = ({ activities, color }) => (
+  Object.keys(activities).map(a => activities[a] && <span key={a} style={{ padding: 5, fontSize: 20, color: color }}>{icons[activities[a]]}</span>)
 )
 
 const title = ({ item }) => {
@@ -166,7 +159,7 @@ class Cart extends Component {
               key={item.title}
               style={{ border: '1px solid #F7DC99', padding: '20px' }}
               actions={[
-                item.activities.first ? icons({ activities: item.activities, color: item.colors.primary }) : config.Star,
+                item.activities.first ? activityIcons({ activities: item.activities, color: item.colors.primary }) : icons.Star,
                 <span style={{ fontSize: '1.2em' }}>{item.school.name}</span>,
                 <span style={{ fontSize: '1.2em' }}>{item.school.mascot}</span>,
                 dots({ colors: item.colors }),
