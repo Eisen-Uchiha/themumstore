@@ -13,7 +13,7 @@ import Customization from './Components/Mums-Garters/Customization'
 import icons from './Components/icons'
 import './App.css'
 
-const { Header, Footer } = Layout
+const { Header, Content, Footer } = Layout
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup
 const oneWeek =  7 * 8.64e+7
@@ -98,45 +98,21 @@ class App extends Component {
               <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item>
             </Menu>
           </Header>
-          <div style={{ background: 'white', textAlign: 'center', padding: '10px 0', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
-
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/mums" component={Mums} />
-            <Route exact path="/garters" component={Garters} />
-            {/* <Route exact path="/gallery" component={Gallery} /> */}
-            <Route exact path="/contact" component={Contact} />
-            {/* <Route exact path="/extras1" component={Extras1} />
-            <Route exact path="/extras2" component={Extras2} /> */}
-            <Route exact path="/cart" render={props => <Cart {...props} onCart={this.handleCart} isAuthed={true} />} />
-            <Route path={['/(mums|garters)/(spirit-badge|mini|small|medium|large|extra-large)']} render={props => <Customization {...props} onCart={this.handleCart} isAuthed={true} />} />
-            <Route component={NoMatch} />
-          </Switch>
-          {/* <Layout style={{ background: '#fff', padding: '0 50px', minHeight: 300 }}>
-            <Layout style={{ background: '#fff', padding: '0 50px', minHeight: 300 }}>
-              <Content>
-                <Carousel style={{ height: '300px', lineHeight: 0 }} autoplay={false}>
-                  <div><img src="/icons/kitty-square.png" style={{ width: 'auto' }} /></div>
-                  <div><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_kitty_character_portrait.png/200px-Hello_kitty_character_portrait.png" style={{ width: 'auto' }} /></div>
-                  <div><img src="https://media.altpress.com/uploads/2018/07/Hello_Kitty.jpg" style={{ width: 'auto' }} /></div>
-                  <div><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs2fXhYIq9Rk0rRk4Y01nAjM49cON-3aLg9tOice4YFEXilfpFvw" style={{ width: 'auto' }} /></div>
-                </Carousel>
-              </Content>
-              <Sider style={{ background: '#FFD4CA', textAlign: "center" }}>
-                <Typography>
-                  <Title level={3}>About Me</Title>
-                  <Paragraph>
-                  Centrally located in Arlington, Awesome Mums has been creating beautiful, quality homecoming mums for over 10 years. We create mums of all sizes, from the single more traditional mums to the larger mega and Texas shaped mums and we're well known for our elegant, and comfortable over the shoulder mums! Take a look at our website for descriptions and pricing of all of our mums and garters. then call to order or ask any questions. 
-                  </Paragraph>
-                </Typography>
-              </Sider>
-            </Layout>
-            <Content>
-                <div style={{ textAlign: "center", height: 100 }}>
-                  <h1 style={{ fontSize: "-webkit-xxx-large" }}>The Mum Store</h1>
-                </div>
-            </Content>
-          </Layout> */}
+          <div style={{ background: 'white', textAlign: 'center', padding: '10px 10%', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
+          <Content>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/mums" component={Mums} />
+              <Route exact path="/garters" component={Garters} />
+              {/* <Route exact path="/gallery" component={Gallery} /> */}
+              <Route exact path="/contact" component={Contact} />
+              {/* <Route exact path="/extras1" component={Extras1} />
+              <Route exact path="/extras2" component={Extras2} /> */}
+              <Route exact path="/cart" render={props => <Cart {...props} onCart={this.handleCart} isAuthed={true} />} />
+              <Route path={['/(mums|garters)/(spirit-badge|mini|small|medium|large|extra-large)']} render={props => <Customization {...props} onCart={this.handleCart} isAuthed={true} />} />
+              <Route component={NoMatch} />
+            </Switch>
+          </Content>
           <Footer style={{ textAlign: 'center' }}>
             Ant Design ©2018 Created by Ant UED
           </Footer>

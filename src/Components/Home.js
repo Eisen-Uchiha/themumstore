@@ -23,7 +23,10 @@ class Home extends Component {
             <Typography>
               <Title level={3}>About Me</Title>
               <Paragraph>
-              Centrally located in Arlington, Awesome Mums has been creating beautiful, quality homecoming mums for over 10 years. We create mums of all sizes, from the single more traditional mums to the larger mega and Texas shaped mums and we're well known for our elegant, and comfortable over the shoulder mums! Take a look at our website for descriptions and pricing of all of our mums and garters. then call to order or ask any questions. 
+              Centrally located in Arlington, Awesome Mums has been creating beautiful,
+              quality homecoming mums for over 10 years.vWe create mums of all sizes,
+              from the single more traditional mums to the larger mega and Texas shaped
+              mums and we're well known for our elegant, and comfortable over the shoulder mums.
               </Paragraph>
             </Typography>
           </Sider>
