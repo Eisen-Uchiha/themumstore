@@ -39,9 +39,9 @@ class ProductCard extends Component {
     const { name, description, category } = this.props
 
     return (
-      <div>
+      <div className='card'>
         <Link to={`/${category}/${name.replace(' ', '-').toLowerCase()}`}>
-          <Card style={{ maxWidth: '300px', maxHeight: '311px', minWidth: '290px', float: 'left', margin: '5px' }}>
+          <Card style={{ maxWidth: '300px', maxHeight: '311px', minWidth: '290px', margin: '5px' }}>
               <Card.Grid style={{ width: '65%', textAlign: 'center', height: '-webkit-fill-available' }}>
                 <h3>{name}</h3>
                 <img alt='' style={{ width: 'inherit', minWidth: '-webkit-fill-available' }} src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_kitty_character_portrait.png/200px-Hello_kitty_character_portrait.png" />
