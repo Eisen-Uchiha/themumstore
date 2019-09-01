@@ -1,8 +1,8 @@
 const prices = {
   main: {
     spiritbadge: {
-      mums: 10,
-      garters: 10,
+      mums: 9.95,
+      garters: 9.95,
       loops: null,
       boa: null,
       bling: null,
@@ -11,8 +11,8 @@ const prices = {
     },
 
     mini: {
-      mums: 15,
-      garters: 15,
+      mums: 14.95,
+      garters: 14.95,
       loops: 2.00,
       boa: 8.00,
       bling: null,
@@ -21,8 +21,8 @@ const prices = {
     },
 
     small: {
-      mums: 32,
-      garters: 27,
+      mums: 34.95,
+      garters: 29.95,
       loops: 2.00,
       boa: 8.00,
       bling: 8.00,
@@ -31,8 +31,8 @@ const prices = {
     },
 
     medium: {
-      mums: 50,
-      garters: 40,
+      mums: 49.95,
+      garters: 39.95,
       loops: 3.00,
       boa: 8.00,
       bling: 10.00,
@@ -41,8 +41,8 @@ const prices = {
     },
 
     large: {
-      mums: 70,
-      garters: 55,
+      mums: 69.95,
+      garters: 54.95,
       loops: 4.00,
       boa: 8.00,
       bling: 12.00,
@@ -51,8 +51,8 @@ const prices = {
     },
 
     extralarge: {
-      mums: 85,
-      garters: 65,
+      mums: 84.95,
+      garters: 64.95,
       loops: null,
       boa: 8.00,
       bling: 15.00,
