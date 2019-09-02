@@ -1,18 +1,14 @@
-//(1) Add Privacy Policy Page
+//(1) Add pictures to website
 
-//-----------------------------------------------------------------------------------------------------------------
+//(2) Implement a way to cut off orders by a certain date
 
-//(3) Add pictures to website
+//(3) Show required fields in customization
 
-//(4) Implement a way to cut off orders by a certain date
+//(4) Combine Mums and Gaters pages
 
-//(5) Show required fields in customization
+//(5) Allow deselect in accent color dropdown
 
-//(5) Combine Mums and Gaters pages
-
-//(6) Allow deselect in accent color dropdown
-
-//(7) Add pop out descriptions of extras, preferrably with pictures
+//(6) Add pop out descriptions of extras, preferrably with pictures
 
 //(7) Style the info in Product Card under the image to save text space in explaining the dimensions and extras
 

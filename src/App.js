@@ -36,6 +36,74 @@ const NoMatch = () => {
   )
 }
 
+// function DeskMenu({ menu, cartSize }) {
+//   const [nav, setNav] = useState([menu])
+//   console.log(nav)
+
+//   return (
+//     // <div className="logo">
+//     //           <Link to="/"><img alt='' src="/icons/kitty-square.png" onClick={() => setNav([])} /></Link>
+//     //         </div>
+//     <Menu
+//       className='nav'
+//       theme="light"
+//       mode="horizontal"
+//       selectedKeys={nav}
+//       style={{ lineHeight: '62px' }}
+//     >
+//       <Menu.Item key="home" onClick={() => setNav(['home'])}>
+//         <Link to="/"><Icon type="home" /></Link>
+//       </Menu.Item>
+//       <Menu.Item key="mums" onClick={() => setNav(['mums'])}>
+//         <Link to="/mums">Mums</Link>
+//       </Menu.Item>
+//       <Menu.Item key="garters" onClick={() => setNav(['garters'])}>
+//         <Link to="/garters">Garters</Link>
+//         {/* <Link to="/garters"><i className='anticon'>{icons.Woman}</i> Garters</Link> */}
+//       </Menu.Item>
+//       {/* <SubMenu title="Extras">
+//         <MenuItemGroup>
+//           <Menu.Item key="extras1" onClick={() => setNav(['extras1'])}><Link to="/extras1">Extras 1</Link></Menu.Item>
+//           <Menu.Item key="extras2" onClick={() => setNav(['extras2'])}><Link to="/extras2">Extras 2</Link></Menu.Item>
+//         </MenuItemGroup>
+//       </SubMenu> */}
+//       {/* <Menu.Item key="gallery" onClick={() => setNav(['gallery'])}><Link to="/gallery"><Icon type="picture" />Gallery</Link></Menu.Item> */}
+//       <Menu.Item key="contact" onClick={() => setNav(['contact'])}><Link to="/contact"><Icon type="mail" /></Link></Menu.Item>
+//       <Menu.Item key="cart" onClick={() => setNav(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item>
+//     </Menu>
+//   )
+// }
+
+// const MobileMenu = (cartSize) => {
+//   const [menu, setmenu] = useState([ window.location.pathname.split('/')[1] ])
+
+//   return (
+//     <Menu
+//       className='nav'
+//       theme="light"
+//       mode="horizontal"
+//       selectedKeys={menu}
+//       style={{ lineHeight: '62px' }}
+//     >
+//       <SubMenu title="Extras">
+//         <MenuItemGroup>
+//           <Menu.Item key="home" onClick={() => setmenu(['home'])}>
+//             <Link to="/"><Icon type="home" /></Link>
+//           </Menu.Item>
+//           <Menu.Item key="mums" onClick={() => setmenu(['mums'])}>
+//             <Link to="/mums">Mums</Link>
+//           </Menu.Item>
+//           <Menu.Item key="garters" onClick={() => setmenu(['garters'])}>
+//             <Link to="/garters">Garters</Link>
+//           </Menu.Item>
+//           <Menu.Item key="contact" onClick={() => setmenu(['contact'])}><Link to="/contact"><Icon type="mail" /></Link></Menu.Item>
+//           <Menu.Item key="cart" onClick={() => setmenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' /></Badge>}</Link></Menu.Item>
+//         </MenuItemGroup>
+//       </SubMenu>
+//     </Menu>
+//   )
+// }
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -61,6 +129,66 @@ class App extends Component {
     this.setState({ cartSize })
   }
 
+  DeskMenu = ({ menu, cartSize }) => {
+    return (
+      <Menu
+        className='nav'
+        theme="light"
+        mode="horizontal"
+        selectedKeys={menu}
+        style={{ lineHeight: '62px' }}
+      >
+        <Menu.Item key="home" onClick={() => this.handleMenu(['home'])}>
+          <Link to="/"><Icon type="home" /></Link>
+        </Menu.Item>
+        <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
+          <Link to="/mums">Mums</Link>
+        </Menu.Item>
+        <Menu.Item key="garters" onClick={() => this.handleMenu(['garters'])}>
+          <Link to="/garters">Garters</Link>
+          {/* <Link to="/garters"><i className='anticon'>{icons.Woman}</i> Garters</Link> */}
+        </Menu.Item>
+        {/* <SubMenu title="Extras">
+          <MenuItemGroup>
+            <Menu.Item key="extras1" onClick={() => this.handleMenu(['extras1'])}><Link to="/extras1">Extras 1</Link></Menu.Item>
+            <Menu.Item key="extras2" onClick={() => this.handleMenu(['extras2'])}><Link to="/extras2">Extras 2</Link></Menu.Item>
+          </MenuItemGroup>
+        </SubMenu> */}
+        {/* <Menu.Item key="gallery" onClick={() => this.handleMenu(['gallery'])}><Link to="/gallery"><Icon type="picture" />Gallery</Link></Menu.Item> */}
+        <Menu.Item key="contact" onClick={() => this.handleMenu(['contact'])}><Link to="/contact"><Icon type="mail" /></Link></Menu.Item>
+        <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item>
+      </Menu>
+    )
+  }
+
+  MobileMenu = ({ menu, cartSize }) => {
+    return (
+      <Menu
+        className='mobile-nav'
+        theme="light"
+        mode="horizontal"
+        selectedKeys={menu}
+        style={{ lineHeight: '62px' }}
+      >
+        <SubMenu title={<Icon type="menu" />}>
+          <MenuItemGroup>
+            <Menu.Item key="home" onClick={() => this.handleMenu(['home'])}>
+              <Link to="/"><Icon type="home" /> Home</Link>
+            </Menu.Item>
+            <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
+              <Link to="/mums" style={{ color: '#c94dbd' }}><Icon type="woman" /> Mums</Link>
+            </Menu.Item>
+            <Menu.Item key="garters" onClick={() => this.handleMenu(['garters'])}>
+              <Link to="/garters" style={{ color: '#507bcc' }}><Icon type="man" /> Garters</Link>
+            </Menu.Item>
+            <Menu.Item key="contact" onClick={() => this.handleMenu(['contact'])}><Link to="/contact"><Icon type="mail" /> Contact</Link></Menu.Item>
+            <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' /> Cart</Badge>}</Link></Menu.Item>
+          </MenuItemGroup>
+        </SubMenu>
+      </Menu>
+    )
+  }
+
   render() {
     const { menu, cartSize } = this.state
 
@@ -71,22 +199,24 @@ class App extends Component {
             {/* <div className="logo">
               <Link to="/"><img alt='' src="/icons/kitty-square.png" onClick={() => this.handleMenu([])} /></Link>
             </div> */}
-            <Menu
+            {this.DeskMenu({ menu, cartSize })}
+            {this.MobileMenu({ menu, cartSize })}
+            {/* <Menu
               theme="light"
               mode="horizontal"
               selectedKeys={menu}
               style={{ lineHeight: '62px' }}
-            >
-              <Menu.Item key="home" onClick={() => this.handleMenu(['home'])}>
-                <Link to="/"><Icon type="home" /></Link>
-              </Menu.Item>
-              <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
-                <Link to="/mums">Mums</Link>
-              </Menu.Item>
-              <Menu.Item key="garters" onClick={() => this.handleMenu(['garters'])}>
-                <Link to="/garters">Garters</Link>
-                {/* <Link to="/garters"><i className='anticon'>{icons.Woman}</i> Garters</Link> */}
-              </Menu.Item>
+            > */}
+              {/* <Menu.Item key="home" onClick={() => this.handleMenu(['home'])}> */}
+                {/* <Link to="/"><Icon type="home" /></Link> */}
+              {/* </Menu.Item> */}
+              {/* <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}> */}
+                {/* <Link to="/mums">Mums</Link> */}
+              {/* </Menu.Item> */}
+              {/* <Menu.Item key="garters" onClick={() => this.handleMenu(['garters'])}> */}
+                {/* <Link to="/garters">Garters</Link> */}
+                {/* <Link to="/garters"><i className='anticon'>{icons.Woman}</i> Garters</Link>*/}
+              {/* </Menu.Item> */}
               {/* <SubMenu title="Extras">
                 <MenuItemGroup>
                   <Menu.Item key="extras1" onClick={() => this.handleMenu(['extras1'])}><Link to="/extras1">Extras 1</Link></Menu.Item>
@@ -94,9 +224,9 @@ class App extends Component {
                 </MenuItemGroup>
               </SubMenu> */}
               {/* <Menu.Item key="gallery" onClick={() => this.handleMenu(['gallery'])}><Link to="/gallery"><Icon type="picture" />Gallery</Link></Menu.Item> */}
-              <Menu.Item key="contact" onClick={() => this.handleMenu(['contact'])}><Link to="/contact"><Icon type="mail" /></Link></Menu.Item>
-              <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item>
-            </Menu>
+              {/* <Menu.Item key="contact" onClick={() => this.handleMenu(['contact'])}><Link to="/contact"><Icon type="mail" /></Link></Menu.Item> */}
+              {/* <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item> */}
+            {/* </Menu> */}
           </Header>
           <div style={{ background: '#F7DC99', textAlign: 'center', padding: '10px 10%', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
           <Content>

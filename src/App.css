@@ -36,6 +36,7 @@ li.slick-active button {
 
 .ant-layout-header {
   height: 63px;
+  padding: 0 5%;
 }
 
 .slick-slide div, .logo img {
@@ -109,4 +110,22 @@ li.slick-active button {
 
 .card {
   flex: 0 1 26%;
+}
+
+@media only screen and (max-width: 500px) {
+  .nav {
+    display: none;
+  }
+  .mobile-nav {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  .nav {
+    display: block;
+  }
+  .mobile-nav {
+    display: none;
+  }
 }
