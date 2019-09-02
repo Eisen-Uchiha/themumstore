@@ -141,7 +141,7 @@ class Customization extends Component {
     const prod = product.toLowerCase().replace(' ', '')
     const { loops, boa, bling, extraWidth, twoTone } = prices.main[prod]
     const xtras = ['loops', 'boa', 'bling', 'extraWidth', 'twoTone']
-    const totalCost = prices.main[prod][cat] + xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0)
+    const totalCost = prices.main[prod][cat].price + xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra].price, 0)
     const totalCostForm = Number(totalCost.toFixed(2))
 
     return (

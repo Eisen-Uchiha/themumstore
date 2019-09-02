@@ -123,7 +123,7 @@ class Cart extends Component {
       const { category, product } = obj
       const categoryType = category.match(/Mums|Garters/) ? 'main' : 'extras'
       const currentPrices = prices[categoryType][product.toLowerCase().replace(' ', '')]
-      const baseItem = currentPrices[category.toLowerCase().replace(' ', '')]
+      const baseItem = currentPrices[category.toLowerCase().replace(' ', '')].price
       const extrarray = Object.keys(obj.extras)
       const totalExtras = extrarray.reduce((acc, curr) => obj.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
       total = total + baseItem + totalExtras

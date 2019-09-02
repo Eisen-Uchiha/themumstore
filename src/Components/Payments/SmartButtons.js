@@ -76,7 +76,7 @@ class PaypalButton extends Component {
     const { category, product } = item
     const categoryType = category.match(/Mums|Garters/) ? 'main' : 'extras'
     const currentPrices = prices[categoryType][product.toLowerCase().replace(' ', '')]
-    const baseItem = currentPrices[category.toLowerCase().replace(' ', '')]
+    const baseItem = currentPrices[category.toLowerCase().replace(' ', '')].price
     const extrarray = Object.keys(item.extras)
     const totalExtras = extrarray.reduce((acc, curr) => item.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
     total = total + baseItem + totalExtras
@@ -206,7 +206,6 @@ class PaypalButton extends Component {
   render() {
     const { showButtons, loading, paid } = this.state;
     const { filled } = this.state
-    console.log(this.props)
 
     return (
       <div className="main">
