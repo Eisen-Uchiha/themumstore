@@ -13,14 +13,20 @@ class Contact extends Component {
   }
 
   handleSubmit = event => {
-    const { name, email, message, sendCart } = this.state.fields
-    const formatted = name.formatted && email.formatted && email.formatted
+    const { fields } = this.state
+    const { name, email, message, sendCart } = fields
+    const formatted = name.formatted && email.formatted && message.formatted
 
     if (formatted) {
-      console.log(name.value)
-      console.log(email.value)
-      console.log(message.value)
-      console.log(sendCart.value)
+      const contact = {}
+      Object.keys(fields).forEach(field => {
+        if (field !== 'sendCart') {
+          contact[field] = fields[field].value
+          console.log(field, fields[field].value)
+        }
+      })
+      if (sendCart.value) contact.cart = fetchCart()
+      sendMessage({ method: 'contact', contact})
     }
   }
 
@@ -34,7 +40,7 @@ class Contact extends Component {
     this.setState({ fields })
   }
 
-  formatCheck = ({id, value }) => {
+  formatCheck = ({ id, value }) => {
     if (id === 'sendCart') return nameCheck(value)
     else if (id === 'name') return nameCheck(value)
     else if (id === 'email') return emailCheck(value)
@@ -48,7 +54,7 @@ class Contact extends Component {
       <div style={{ padding: '1% 2%', background: 'white' }}>
         <h1 style={{ textAlign: 'center' }}>This is the Contact Page</h1>
         <div className='contact-wrap cards'>
-          <div className='contact-left card' style={{ flex: '1 1 26%' }}>
+          <div className='contact-left card' style={{ flex: '0 0 50%' }}>
             <form ref={node => this.form = node}>
               <div>
                 <Input
@@ -125,4 +131,30 @@ function emailCheck(value) {
 
 function messageCheck(value) {
   return value.length > 10
+}
+
+function sendMessage({ contact = {}, method }) {
+  const { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } = process.env
+  const data = { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } // Temporary for testing on local server
+
+  const url = `/.netlify/functions/${method}`
+  const config = {
+    method: 'POST',
+    headers: { 'Content-type': 'application/json' },
+    body: JSON.stringify({ contact, data }),
+  }
+
+  // Now set up to run on local and Netlify backend
+  // Proxy is probably interfering with netlify functions' ability to see environment variables
+  fetch(url, config)
+    .then(response => { console.log(response); return response.json(); })
+    .then(json => console.log(json))
+}
+
+function fetchCart() {
+  const date = new Date()
+  const oneWeek =  7 * 8.64e+7
+  const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date, products: {} }
+  const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
+  return products
 }
