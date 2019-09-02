@@ -12,6 +12,7 @@ import Cart from './Components/Payments/Cart'
 import Customization from './Components/Mums-Garters/Customization'
 import icons from './Components/icons'
 import './App.css'
+import Privacy from './Components/Privacy'
 
 const { Header, Content, Footer } = Layout
 const SubMenu = Menu.SubMenu;
@@ -97,7 +98,7 @@ class App extends Component {
               <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item>
             </Menu>
           </Header>
-          <div style={{ background: 'white', textAlign: 'center', padding: '10px 10%', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
+          <div style={{ background: '#F7DC99', textAlign: 'center', padding: '10px 10%', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
           <Content>
             <Switch>
               <Route exact path="/" component={Home} />
@@ -109,11 +110,12 @@ class App extends Component {
               <Route exact path="/extras2" component={Extras2} /> */}
               <Route exact path="/cart" render={props => <Cart {...props} onCart={this.handleCart} isAuthed={true} />} />
               <Route path={['/(mums|garters)/(spirit-badge|mini|small|medium|large|extra-large)']} render={props => <Customization {...props} onCart={this.handleCart} isAuthed={true} />} />
+              <Route exact path="/privacy" component={Privacy} />
               <Route component={NoMatch} />
             </Switch>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
-            Ant Design ©2018 Created by Ant UED
+            <Link to="/privacy">Privacy Policy</Link>
           </Footer>
         </Layout>
       </Router>
