@@ -48,10 +48,6 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log('We Are Live')
-  }
-
   handleMenu = setting => {
     this.setState({ menu: setting })
   }
@@ -71,15 +67,18 @@ class App extends Component {
       <Router>
         <Layout className="layout">
           <Header className='menu-header'>
-            <div className="logo">
+            {/* <div className="logo">
               <Link to="/"><img alt='' src="/icons/kitty-square.png" onClick={() => this.handleMenu([])} /></Link>
-            </div>
+            </div> */}
             <Menu
               theme="light"
               mode="horizontal"
               selectedKeys={menu}
               style={{ lineHeight: '62px' }}
             >
+              <Menu.Item key="home" onClick={() => this.handleMenu(['home'])}>
+                <Link to="/"><Icon type="home" /></Link>
+              </Menu.Item>
               <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
                 <Link to="/mums">Mums</Link>
               </Menu.Item>
@@ -94,7 +93,7 @@ class App extends Component {
                 </MenuItemGroup>
               </SubMenu> */}
               {/* <Menu.Item key="gallery" onClick={() => this.handleMenu(['gallery'])}><Link to="/gallery"><Icon type="picture" />Gallery</Link></Menu.Item> */}
-              <Menu.Item key="contact" onClick={() => this.handleMenu(['contact'])}><Link to="/contact"><Icon type="idcard" />Contact</Link></Menu.Item>
+              <Menu.Item key="contact" onClick={() => this.handleMenu(['contact'])}><Link to="/contact"><Icon type="mail" /></Link></Menu.Item>
               <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item>
             </Menu>
           </Header>

@@ -18,12 +18,12 @@ li.slick-active button {
 
 .ant-carousel .slick-slide {
   text-align: center;
-  max-height: 300px;
+  /* max-height: 300px; */
   background: #F7DC99;
   overflow: hidden;
 }
 
-.ant-layout {
+.layout.ant-layout {
   min-height: -moz-available;          /* WebKit-based browsers will ignore this. */
   min-height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
   min-height: fill-available
@@ -32,6 +32,10 @@ li.slick-active button {
 .ant-layout-content {
   overflow-y: hidden;
   background: white;
+}
+
+.ant-layout-header {
+  height: 63px;
 }
 
 .slick-slide div, .logo img {
