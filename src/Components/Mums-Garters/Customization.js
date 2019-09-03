@@ -144,7 +144,7 @@ class Customization extends Component {
 
     return (
       <Layout style={{ minHeight: '100px', background: 'white', padding: '0 4%' }}>
-        <Header style={{ textAlign: 'center' }}><span>This is the <b>{product}</b> <b>{category}</b> Order Customization Page</span></Header>
+        <Header style={{ textAlign: 'center' }}><h1>{product} {category.replace('s','')} Customization</h1></Header>
         <Layout style={{ background: 'white' }}>
           <Content style={{ textAlign: 'center', margin: '2%' }}>
             <div><img src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" alt='' style={{ width: 'auto', padding: '5%' }} /></div>

@@ -11,7 +11,7 @@ class Mums extends Component {
     console.log(products)
     return (
       <div style={{ background: 'white' }}>
-        <h1 style={{ textAlign: 'center' }}>This is Mums Page</h1>
+        <h1 style={{ textAlign: 'center' }}>Our Mums</h1>
         <div className='cards'>
           {productOrder.map(type =>
             <ProductCard

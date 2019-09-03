@@ -9,7 +9,7 @@ class Garters extends Component {
   render() {
     return (
       <div style={{ background: 'white' }}>
-        <h1 style={{ textAlign: 'center' }}>This is Garters Page</h1>
+        <h1 style={{ textAlign: 'center' }}>Our Garters</h1>
         <div className='cards'>
         {productOrder.map(type =>
             <ProductCard
