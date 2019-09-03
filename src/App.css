@@ -7,6 +7,7 @@
   font-family: 'Cinzel Decorative', serif;
   font-weight: 900;
   font-style: normal;
+  font-size: large;
   color: #68C6BF;
   white-space: nowrap;
   padding: 0 20%;
@@ -123,7 +124,7 @@ li.slick-active button {
   flex: 0 1 26%;
 }
 
-@media only screen and (max-width: 660px) {
+@media only screen and (max-width: 680px) {
   .nav {
     display: none;
   }
@@ -139,15 +140,15 @@ li.slick-active button {
   .menu-header {
     text-align: center;
   }
-  .ant-col-6 {
+  .ant-col-7 {
     width: 75%
   }
-  .ant-col-18 {
+  .ant-col-17 {
     width: 25%
   }
 }
 
-@media only screen and (min-width: 660px) {
+@media only screen and (min-width: 680px) {
   .nav {
     display: block;
   }
