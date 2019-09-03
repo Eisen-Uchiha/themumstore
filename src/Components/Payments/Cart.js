@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
-import { List, Button, Divider, Icon, Typography } from 'antd'
+import { List, Button, Divider, Icon } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
-// import ExpressCheckout from './ExpressCheckout'
 import SmartButtons from './SmartButtons'
 import prices from '../../price-list'
 import icons from '../icons'
 
-const { Title } = Typography
 const oneWeek =  7 * 8.64e+7
 
 const dotStyle = ({ color }) => {

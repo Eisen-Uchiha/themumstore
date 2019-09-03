@@ -1,11 +1,13 @@
 const Mailgun = require('mailgun-js')
 
-const sendEmail = async ({ data, contact }) => {
+// const sendEmail = async ({ data, contact }) => { // For Testing
+const sendEmail = async ({  contact }) => {
   return new Promise((resolve, reject) => {
     console.log('Sending Contact Email To Admin')
     console.log(contact)
-    // const { MG_API_KEY: apiKey, MG_DOMAIN: domain } = process.env;
-    const mailgun = Mailgun({ apiKey: data.REACT_APP_MG_API_KEY, domain: data.REACT_APP_MG_DOMAIN })
+    const { MG_API_KEY, MG_DOMAIN } = process.env;
+    const mailgun = Mailgun({ apiKey: MG_API_KEY, domain: MG_DOMAIN })
+    // const mailgun = Mailgun({ apiKey: data.REACT_APP_MG_API_KEY, domain: data.REACT_APP_MG_DOMAIN }) // For Testing
 
     let html = `<div>
       <h1>Message Received</h1>
@@ -31,7 +33,7 @@ const sendEmail = async ({ data, contact }) => {
 
     const message = {
       from: 'Boutique Mums <contact@boutiquemums.com>',
-      to: 'alvelaisv@gmail.com',
+      to: 'contact@boutiquemums.com',
       subject: 'Message Received',
       text: 'Message Received',
       html,
@@ -39,7 +41,7 @@ const sendEmail = async ({ data, contact }) => {
 
     mailgun.messages().send(message, err => {
       if (err) return reject(err);
-      resolve({ message: 'Email Sent' })
+      resolve({ message: 'Email Sent', sent: message })
     })
   })
 }
@@ -56,9 +58,9 @@ export async function handler(event, context, callback) {
   }
   catch(e) {
     console.log(e)
-    callback(null, callback(null, {
+    callback(null, {
       statusCode: 500,
       body: JSON.stringify({ message: e.message }),
-    }))
+    })
   }
 }

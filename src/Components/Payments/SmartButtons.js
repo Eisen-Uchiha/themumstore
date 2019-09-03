@@ -5,14 +5,13 @@ import { Spin, Input, Tooltip, Icon } from 'antd'
 import prices from '../../price-list'
 
 const CLIENT = {
-  sandbox: process.env.REACT_APP_PAYPAL_CLIENT_ID_SANDBOX,
-  production: process.env.REACT_APP_PAYPAL_CLIENT_ID_PRODUCTION,
+  // sandbox: process.env.REACT_APP_PAYPAL_CLIENT_ID_SANDBOX, // For Testing
+  // production: process.env.REACT_APP_PAYPAL_CLIENT_ID_PRODUCTION, // For Testing
+  sandbox: process.env.PAYPAL_CLIENT_ID_SANDBOX,
+  production: process.env.PAYPAL_CLIENT_ID_PRODUCTION,
 }
 
-console.log(process.env)
 const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
-// const ENV = 'sandbox'
-console.log(ENV)
 const CLIENT_ID = CLIENT[ENV]
 
 let PayPalButton = null;
@@ -24,6 +23,7 @@ class PaypalButton extends Component {
       showButtons: false,
       loading: true,
       paid: false,
+      order: null,
       filled: { name: false, cell: false },
     };
 
@@ -67,7 +67,6 @@ class PaypalButton extends Component {
       item.quantity = 1
       return item
     })
-    console.log(items)
     return items
   }
 
@@ -85,9 +84,7 @@ class PaypalButton extends Component {
   }
 
   createOrder = (data, actions) => {
-    const { total, products } = this.props
-    console.log(total)
-    console.log(products)
+    const { total } = this.props
 
     return actions.order.create({
       purchase_units: [
@@ -146,19 +143,19 @@ class PaypalButton extends Component {
 
   onApprove = (data, actions) => {
     actions.order.capture().then(details => {
-      console.log(details)
+      // console.log(details)
       if (details.status === 'COMPLETED') {
-        const payment = data
-        console.log("Payment Approved: ", payment)
-        console.log(details)
-        this.saveOrder({ payment, details })
+        // const payment = data
+        // console.log("Payment Approved: ", payment)
+        // console.log(details)
+        this.saveOrder({ details })
         // this.props.onPayment({ action: 'clear', id: null })
-        this.setState({ showButtons: false, paid: true })
+        this.setState({ showButtons: false, paid: true, order: details.id })
       }
     })
   }
 
-  saveOrder = ({ payment = {}, details = {} }) => {
+  saveOrder = ({ details = {} }) => {
     const { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } = process.env
     const data = { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } // Temporary for testing on local server
     const { products } = this.props
@@ -204,7 +201,7 @@ class PaypalButton extends Component {
   }
 
   render() {
-    const { showButtons, loading, paid } = this.state;
+    const { showButtons, loading, paid, order } = this.state;
     const { filled } = this.state
 
     return (
@@ -275,13 +272,8 @@ class PaypalButton extends Component {
 
         {paid && (
           <div className="main">
-            <h2>
-              Congrats! Your order has been submitted!
-              <span role="img" aria-label="emoji">
-                {" "}
-                😉
-              </span>
-            </h2>
+            <div><h2>Congrats! Your order has been submitted!</h2></div>
+            <div><h2>Order ID: {order}</h2></div>
           </div>
         )}
       </div>

@@ -2,12 +2,13 @@ const Airtable = require('airtable')
 const Mailgun = require('mailgun-js')
 
 // Mail Stuff
-const appreciationEmail = async ({ data, orders }) => {
+// const appreciationEmail = async ({ data, orders }) => { // For Testing
+const appreciationEmail = async ({ orders }) => {
   return new Promise((resolve, reject) => {
-    console.log('Sending the email')
-    // const { MG_API_KEY: apiKey, MG_DOMAIN: domain } = process.env;
-    // const mailgun = Mailgun.client({ username: 'api', key: data.REACT_APP_MG_APIKEY })
-    const mailgun = Mailgun({ apiKey: data.REACT_APP_MG_API_KEY, domain: data.REACT_APP_MG_DOMAIN })
+    console.log('Sending appreciation email')
+    const { MG_API_KEY, MG_DOMAIN } = process.env
+    const mailgun = Mailgun({ apiKey: MG_API_KEY, domain: MG_DOMAIN })
+    // const mailgun = Mailgun({ apiKey: data.REACT_APP_MG_API_KEY, domain: data.REACT_APP_MG_DOMAIN }) // For Testing
     
     let html = `<div>
       <h1>Order Confirmation</h1>
@@ -26,27 +27,28 @@ const appreciationEmail = async ({ data, orders }) => {
 
     const message = {
       from: 'Boutique Mums <orders@boutiquemums.com>',
-      to: 'alvelaisv@gmail.com', // orders[0]['Customer Email']
+      to: orders[0]['Customer Email'],
       subject: 'Order Confirmation',
       text: 'Order Confirmation',
       html,
     }
 
     mailgun.messages().send(message, (error, body) => {
-      console.log(error)
-      console.log(body)
+      if (error) console.log(error)
+      if (body) console.log(body)
       if (error) return reject(error)
       resolve()
     })
   })
 }
 
-const orderEmail = async ({ data, orders }) => {
+// const orderEmail = async ({ data, orders }) => { // For Testing
+const orderEmail = async ({ orders }) => {
   return new Promise((resolve, reject) => {
-    console.log('Sending the email')
-    console.log('ORDERS: ', orders)
-    // const { MG_API_KEY: apiKey, MG_DOMAIN: domain } = process.env;
-    const mailgun = Mailgun({ apiKey: data.REACT_APP_MG_API_KEY, domain: data.REACT_APP_MG_DOMAIN })
+    console.log('Sending order email')
+    const { MG_API_KEY, MG_DOMAIN } = process.env
+    const mailgun = Mailgun({ apiKey: MG_API_KEY, domain: MG_DOMAIN })
+    // const mailgun = Mailgun({ apiKey: data.REACT_APP_MG_API_KEY, domain: data.REACT_APP_MG_DOMAIN }) // For Testing
 
     let html = `<div>
       <h1>Order Received</h1>
@@ -68,28 +70,31 @@ const orderEmail = async ({ data, orders }) => {
 
     const message = {
       from: 'Boutique Mums <orders@boutiquemums.com>',
-      to: 'alvelaisv@gmail.com',
+      to: 'orders@boutiquemums.com',
       subject: 'Order Received',
       text: 'Order Received',
       html,
     }
 
     mailgun.messages().send(message, err => {
-      console.log('ERR: ', err)
-      if (err) return reject(err);
-      resolve()
+      if (err) {
+        console.log(err)
+        return reject(err)
+      }
+      resolve({ message: 'Email Sent' })
     });
   });
 }
 
 // Save Order Information
-const saveOrder = async ({ data, orders }) => {
-  console.log(orders)
+// const saveOrder = async ({ data, orders }) => { // For Testing
+const saveOrder = async ({ orders }) => {
   return new Promise(async (resolve, reject) => {
-    // const { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, AT_TABLE } = process.env;
-    const base = new Airtable({ apiKey: data.REACT_APP_AT_API_KEY }).base(data.REACT_APP_AT_BASE); // Change to env method for production
+    console.log('Saving order to airtable')
+    const { AT_API_KEY, AT_BASE } = process.env
+    // const base = new Airtable({ apiKey: data.REACT_APP_AT_API_KEY }).base(data.REACT_APP_AT_BASE); // For Testing
+    const base = new Airtable({ apiKey: AT_API_KEY }).base(AT_BASE)
     const records = await Promise.all(orders.map(order => createRecord({ base, order }).catch(error => error)))
-    console.log(records)
     
     resolve({ orders, records })
   });
@@ -99,7 +104,6 @@ const createRecord = ({ base, order }) => {
   return new Promise(async (resolve, reject) => {
     const date = order['Order Date'].split('-')
     const sheet = `${date[1]}/${date[0]}`
-    console.log('SHEET: ', sheet)
 
     base(sheet).create(order, (err, record) => {
       if (err) return reject(err)
@@ -122,28 +126,34 @@ export async function handler(event, context, callback) {
   // Set up for possible errors with saving/emailing through try/catch
   try {
     const data = JSON.parse(event.body)
+    console.log('DATA: ', data)
+    const run = await Promise.all([ saveOrder(data), orderEmail(data), appreciationEmail(data) ])
+    console.log(run)
 
-    const message = await saveOrder(data)
+    // const message = await saveOrder(data)
     // const errors = errorCheck(message.records)
     
-    const sendOrder = await orderEmail(data)
-    const sendAppreciation = await appreciationEmail(data)
+    // const sendOrder = await orderEmail(data)
+    // const sendAppreciation = await appreciationEmail(data)
 
-    const response = { statusCode: 200, data: {}, error: null }
+    // const response = { statusCode: 200, data: {}, error: null }
     // if (errors) {
     //   response.statusCode = errors.statusCode
     //   response.error = { type: 'AirTable Error', ...errors }
     // }
     // else response.data = message
-    response.data = message
+    // response.data = message
 
     callback(null, {
-      statusCode: response.statusCode,
-      body: JSON.stringify({ response }),
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Order Confirmed' }),
     })
   }
   catch(e) {
     console.log(e)
-    return { statusCode: 500, body: e.message }
+    callback(null, {
+      statusCode: 500,
+      body: JSON.stringify({ message: e.message }),
+    })
   }
 }

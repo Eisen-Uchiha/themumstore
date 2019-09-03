@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip, Breadcrumb, Typography } from 'antd'
+import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip } from 'antd'
 import icons from '../icons'
 import prices from '../../price-list'
 
@@ -16,8 +16,6 @@ const oneWeek =  7 * 8.64e+7
 const additions = ({ extra, id }) => (
   <span style={{ color: 'green' }}>+ ${!isNaN(extra) ? extra.toFixed(2) : '#.##'}</span>
 )
-// Set random id to correspond with the order that goes in the cart.
-// Pull master object from local storage and add id and specs to the master object for the cart and set
 
 class Customization extends Component {
   constructor(props) {
@@ -141,7 +139,7 @@ class Customization extends Component {
     const prod = product.toLowerCase().replace(' ', '')
     const { loops, boa, bling, extraWidth, twoTone } = prices.main[prod]
     const xtras = ['loops', 'boa', 'bling', 'extraWidth', 'twoTone']
-    const totalCost = prices.main[prod][cat].price + xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra].price, 0)
+    const totalCost = prices.main[prod][cat].price + xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0)
     const totalCostForm = Number(totalCost.toFixed(2))
 
     return (
@@ -149,7 +147,7 @@ class Customization extends Component {
         <Header style={{ textAlign: 'center' }}><span>This is the <b>{product}</b> <b>{category}</b> Order Customization Page</span></Header>
         <Layout style={{ background: 'white' }}>
           <Content style={{ textAlign: 'center', margin: '2%' }}>
-            <div><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Hello_kitty_character_portrait.png/200px-Hello_kitty_character_portrait.png" alt='' style={{ width: 'auto', padding: '5%' }} /></div>
+            <div><img src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" alt='' style={{ width: 'auto', padding: '5%' }} /></div>
           </Content>
           <Sider width='35%' style={{ margin: '2%' }}>
             <div><b>School Name</b></div>
