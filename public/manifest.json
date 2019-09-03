@@ -2,35 +2,8 @@
   "manifest_version": 2,
   "short_name": "Boutique Mums",
   "name": "Boutique Mums",
-  "version": "0.8.2",
-  
-  "browser_action": {
-    "default_icon": "icons/icon128.png",
-    "default_title": "Boutique Mums"
-  },
-
-  "icons": {
-    "128": "icons/icon128.png",
-    "16": "icons/icon16.png"
-  },
-
-  "permissions": ["storage"],
-  
+  "icons": [],
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
-
-  "content_scripts": [
-    {
-      "js": [
-        "Scripts/PandaPowerScript.js"
-      ],
-      "matches": [
-        "https://worker.mturk.com/*",
-        "https://www.amazon.com/ap/signin*amzn_mturk_worker*"
-      ],
-      "run_at": "document_end"
-    }
-  ]
-
+  "theme_color": "#68C6BF",
+  "background_color": "#ffffff"
 }

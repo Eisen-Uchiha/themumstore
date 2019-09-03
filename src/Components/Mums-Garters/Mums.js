@@ -8,7 +8,6 @@ const productOrder = [ 'spiritbadge', 'mini', 'small', 'medium', 'large', 'extra
 
 class Mums extends Component {
   render() {
-    console.log(products)
     return (
       <div style={{ background: 'white' }}>
         <h1 style={{ textAlign: 'center' }}>Our Mums</h1>
