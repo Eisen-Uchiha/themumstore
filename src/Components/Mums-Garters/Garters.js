@@ -11,7 +11,7 @@ class Garters extends Component {
       <div style={{ background: 'white' }}>
         <h1 style={{ textAlign: 'center' }}>Our Garters</h1>
         <div className='cards'>
-        {productOrder.map(type =>
+          {productOrder.map(type =>
             <ProductCard
               key={type}
               category={category}

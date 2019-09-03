@@ -2,3 +2,9 @@
   command = "npm run build"
   functions = "./lambda"
   publish = "build"
+
+[build.environment]
+  GENERATE_SOURCEMAP = "true"
+
+[build.production.environment]
+  GENERATE_SOURCEMAP = "false"
