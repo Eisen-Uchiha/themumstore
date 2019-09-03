@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
-import { Layout, Icon, Menu, Badge } from 'antd'
+import { Layout, Icon, Menu, Badge, Row, Col } from 'antd'
 import Home from './Components/Home'
 import Mums from './Components/Mums-Garters/Mums'
 import Garters from './Components/Mums-Garters/Garters'
@@ -129,11 +129,20 @@ class App extends Component {
       <Router>
         <Layout className="layout">
           <Header className='menu-header'>
+          <Row type="flex" justify="start">
+            <Col span={6}>
+              <div className="site-header">Boutique Mums</div>
+            </Col>
+            <Col span={18}>
+              {this.DeskMenu({ menu, cartSize })}
+              {this.MobileMenu({ menu, cartSize })}
+            </Col>
+          </Row>
             {/* <div className="logo">
               <Link to="/"><img alt='' src="/icons/kitty-square.png" onClick={() => this.handleMenu([])} /></Link>
             </div> */}
-            {this.DeskMenu({ menu, cartSize })}
-            {this.MobileMenu({ menu, cartSize })}
+            {/* {this.DeskMenu({ menu, cartSize })} */}
+            {/* {this.MobileMenu({ menu, cartSize })} */}
               {/* <SubMenu title="Extras">
                 <MenuItemGroup>
                   <Menu.Item key="extras1" onClick={() => this.handleMenu(['extras1'])}><Link to="/extras1">Extras 1</Link></Menu.Item>

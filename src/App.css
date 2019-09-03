@@ -1,5 +1,16 @@
 .menu-header {
-  background: #68C6BF;
+  background: white;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.site-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 900;
+  font-style: normal;
+  color: #68C6BF;
+  white-space: nowrap;
+  padding: 0 20%;
+  width: fit-content;
 }
 
 .logo {
@@ -36,7 +47,7 @@ li.slick-active button {
 
 .ant-layout-header {
   height: 63px;
-  padding: 0 5%;
+  padding: 0;
 }
 
 .slick-slide div, .logo img {
@@ -112,16 +123,31 @@ li.slick-active button {
   flex: 0 1 26%;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 660px) {
   .nav {
     display: none;
   }
   .mobile-nav {
     display: block;
+    position: absolute;
+    right: 0;
+    padding: 0 5%;
+  }
+  .site-header {
+    float: initial;
+  }
+  .menu-header {
+    text-align: center;
+  }
+  .ant-col-6 {
+    width: 75%
+  }
+  .ant-col-18 {
+    width: 25%
   }
 }
 
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 660px) {
   .nav {
     display: block;
   }
