@@ -5,10 +5,8 @@ import { Spin, Input, Tooltip, Icon } from 'antd'
 import prices from '../../price-list'
 
 const CLIENT = {
-  // sandbox: process.env.REACT_APP_PAYPAL_CLIENT_ID_SANDBOX, // For Testing
-  // production: process.env.REACT_APP_PAYPAL_CLIENT_ID_PRODUCTION, // For Testing
-  sandbox: process.env.PAYPAL_CLIENT_ID_SANDBOX,
-  production: process.env.PAYPAL_CLIENT_ID_PRODUCTION,
+  sandbox: process.env.REACT_APP_PAYPAL_CLIENT_ID_SANDBOX,
+  production: process.env.REACT_APP_PAYPAL_CLIENT_ID_PRODUCTION,
 }
 
 const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
