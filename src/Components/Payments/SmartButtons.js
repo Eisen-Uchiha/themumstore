@@ -11,9 +11,6 @@ const CLIENT = {
 
 const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
 const CLIENT_ID = CLIENT[ENV]
-console.log(CLIENT)
-console.log('process.env', process.env)
-console.log('ENV', ENV)
 
 let PayPalButton = null;
 class PaypalButton extends Component {
@@ -157,8 +154,8 @@ class PaypalButton extends Component {
   }
 
   saveOrder = ({ details = {} }) => {
-    const { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } = process.env
-    const data = { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } // Temporary for testing on local server
+    // const { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } = process.env
+    // const data = { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } // Temporary for testing on local server
     const { products } = this.props
 
     const orders = Object.keys(products).map(p => {
@@ -191,7 +188,8 @@ class PaypalButton extends Component {
     const config = {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
-      body: JSON.stringify({ orders, data }),
+      body: JSON.stringify({ orders }),
+      // body: JSON.stringify({ orders, data }), // For Testing
     }
 
     // Now set up to run on local and Netlify backend
