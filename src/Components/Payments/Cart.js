@@ -46,7 +46,7 @@ class Cart extends Component {
     const date = new Date()
     const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date, products: {} }
     const products = (cartStorage.date - date) < oneWeek ? cartStorage.products : {}
-    this.state = { data: this.dataPush(products), products, toRedirect: null }
+    this.state = { data: this.dataPush(products), products, toRedirect: null, paid: false }
   }
 
   dataPush = (products) => {
@@ -100,7 +100,7 @@ class Cart extends Component {
       window.localStorage.setItem('cart', JSON.stringify(cart))
       const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
       const products =  cartStorage.products || {}
-      this.setState({ data: this.dataPush(products), products })
+      this.setState({ data: this.dataPush(products), paid: true, products })
       this.props.onCart()
     }
   }
@@ -131,7 +131,7 @@ class Cart extends Component {
   }
 
   render() {
-    const { products, data, toRedirect } = this.state
+    const { products, data, toRedirect, paid } = this.state
     if (toRedirect) return <Redirect to={toRedirect} />
     const totalCost = this.totalCost(data)
     const totalCostForm = Number(totalCost.toFixed(2))
@@ -182,7 +182,7 @@ class Cart extends Component {
             </List.Item>
           )}
         />
-        {totalCost > 0 && <SmartButtons total={totalCostForm} products={products} onPayment={this.handleCart} />}
+        {totalCost > 0 && !paid && <SmartButtons total={totalCostForm} products={products} onPayment={this.handleCart} />}
       </div>
     )
   }
