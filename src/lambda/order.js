@@ -104,6 +104,7 @@ const createRecord = ({ base, order }) => {
   return new Promise(async (resolve, reject) => {
     const date = order['Order Date'].split('-')
     const sheet = `${date[1]}/${date[0]}`
+    console.log('Airtable Sheet', sheet)
 
     base(sheet).create(order, (err, record) => {
       if (err) return reject(err)
@@ -128,7 +129,7 @@ export async function handler(event, context, callback) {
     const data = JSON.parse(event.body)
     console.log('DATA: ', data)
     const run = await Promise.all([ saveOrder(data), orderEmail(data), appreciationEmail(data) ])
-    console.log(run)
+    console.log(JSON.stringify(run))
 
     // const message = await saveOrder(data)
     // const errors = errorCheck(message.records)

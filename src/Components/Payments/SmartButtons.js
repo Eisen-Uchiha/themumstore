@@ -147,7 +147,7 @@ class PaypalButton extends Component {
         // console.log("Payment Approved: ", payment)
         // console.log(details)
         this.saveOrder({ details })
-        // this.props.onPayment({ action: 'clear', id: null })
+        this.props.onPayment({ action: 'clear', id: null })
         this.setState({ showButtons: false, paid: true, order: details.id })
       }
     })
