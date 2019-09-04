@@ -11,6 +11,9 @@ const CLIENT = {
 
 const ENV = process.env.NODE_ENV === 'production' ? 'production' : 'sandbox'
 const CLIENT_ID = CLIENT[ENV]
+console.log(CLIENT)
+console.log('process.env', process.env)
+console.log('ENV', ENV)
 
 let PayPalButton = null;
 class PaypalButton extends Component {

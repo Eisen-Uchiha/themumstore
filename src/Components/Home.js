@@ -10,7 +10,7 @@ class Home extends Component {
       <Layout style={{ background: '#fff', padding: '0 2%', minHeight: 350 }}>
         <Content>
           <div style={{ textAlign: "center" }}>
-            <h1 style={{ fontSize: "-webkit-xxx-large" }}>Boutique Mums</h1>
+            <h1 className='site-font' style={{ fontSize: "-webkit-xxx-large", margin: '10px 0 0 0' }}>Boutique Mums</h1>
           </div>
           <div className='cards' style={{ justifyContent: 'center' }}>
               <div className='card' style={{ minWidth: '300px', maxWidth: 450, maxHeight: 350, flex: '1 0 26%', margin: '5% 0' }}>

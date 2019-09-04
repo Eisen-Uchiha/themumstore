@@ -131,7 +131,7 @@ class App extends Component {
           <Header className='menu-header'>
           <Row type="flex" justify="start">
             <Col span={7}>
-              <div className="site-header">Boutique Mums</div>
+              <div className="site-header site-font">Boutique Mums</div>
             </Col>
             <Col span={17}>
               {this.DeskMenu({ menu, cartSize })}

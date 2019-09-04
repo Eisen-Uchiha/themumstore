@@ -4,7 +4,6 @@
 }
 
 .site-header {
-  font-family: 'Cinzel Decorative', serif;
   font-weight: 900;
   font-style: normal;
   font-size: large;
@@ -12,6 +11,10 @@
   white-space: nowrap;
   padding: 0 20%;
   width: fit-content;
+}
+
+.site-font {
+  font-family: 'Cinzel Decorative', serif
 }
 
 .logo {
