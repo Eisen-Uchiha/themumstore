@@ -147,7 +147,7 @@ class PaypalButton extends Component {
         // console.log("Payment Approved: ", payment)
         // console.log(details)
         this.saveOrder({ details })
-        this.props.onPayment({ action: 'clear', id: null })
+        this.props.onPayment({ action: 'clear', id: null, paid: true })
         this.setState({ showButtons: false, paid: true, order: details.id })
       }
     })
@@ -270,9 +270,9 @@ class PaypalButton extends Component {
         )}
 
         {paid && (
-          <div className="main">
+          <div style={{ textAlign: 'center' }}>
             <div><h2>Congrats! Your order has been submitted!</h2></div>
-            <div><h2>Order ID: {order}</h2></div>
+            <div><h2>Order ID: <span style={{ fontWeight: 'normal' }}>{order}</span></h2></div>
           </div>
         )}
       </div>

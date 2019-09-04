@@ -75,7 +75,7 @@ class Cart extends Component {
     )
   }
 
-  handleCart = ({ action, id }) => {
+  handleCart = ({ action, id, paid }) => {
     if (action === 'edit') {
       const product = { ...this.state.products[id] }
       window.localStorage.setItem('custom', JSON.stringify({ date: new Date().getTime(), details: product, modify: id }))
@@ -100,7 +100,7 @@ class Cart extends Component {
       window.localStorage.setItem('cart', JSON.stringify(cart))
       const cartStorage = JSON.parse(window.localStorage.getItem('cart')) || { date }
       const products =  cartStorage.products || {}
-      this.setState({ data: this.dataPush(products), paid: true, products })
+      this.setState({ data: this.dataPush(products), paid, products })
       this.props.onCart()
     }
   }
@@ -132,6 +132,7 @@ class Cart extends Component {
 
   render() {
     const { products, data, toRedirect, paid } = this.state
+    console.log(this.state)
     if (toRedirect) return <Redirect to={toRedirect} />
     const totalCost = this.totalCost(data)
     const totalCostForm = Number(totalCost.toFixed(2))
@@ -182,7 +183,7 @@ class Cart extends Component {
             </List.Item>
           )}
         />
-        {totalCost > 0 && !paid && <SmartButtons total={totalCostForm} products={products} onPayment={this.handleCart} />}
+        {(totalCost > 0 || paid) && <SmartButtons total={totalCostForm} products={products} onPayment={this.handleCart} />}
       </div>
     )
   }
