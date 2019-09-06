@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip } from 'antd'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
 import icons from '../icons'
 import prices from '../../price-list'
 
@@ -9,12 +11,13 @@ const { Header, Content, Footer } = Layout
 const colors = [ 'red', 'blue', 'white', 'yellow', 'gold', 'silver', 'maroon', 'black']
 const activities = ['Band', 'Choir', 'Cheer', 'Theater', 'FFA', 'ROTC']
 const sports = ['Basketball', 'Football', 'Soccer', 'Volleyball', 'Tennis', 'Golf', 'Track', 'Cross Country', 'Baseball', ]
+const trinketsAvailable = ['Dragon', 'Tiger', 'Tractor']
 const failsafe = ['school', 'colors', 'names', 'activities', 'extras']
 const oneWeek =  7 * 8.64e+7
 
 
 const additions = ({ extra, id }) => (
-  <span style={{ color: 'green' }}>+ ${!isNaN(extra) ? extra.toFixed(2) : '#.##'}</span>
+  <span style={{ color: 'green' }}> + ${!isNaN(extra) ? extra.toFixed(2) : '#.##'}</span>
 )
 
 class Customization extends Component {
@@ -28,7 +31,7 @@ class Customization extends Component {
     const product = path[1].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
 
     const prod = product.toLowerCase().replace(' ', '')
-    const { loops, boa, bling, extraWidth, twoTone } = prices.main[prod]
+    const { loops, boa, bling, extraWidth, trinkets, twoTone } = prices.main[prod]
     // Set the state directly. Use props if necessary.
     this.state = {
       toRedirect: null,
@@ -58,6 +61,7 @@ class Customization extends Component {
         boa: boa ? details.extras.boa : false || false,
         bling: bling ? details.extras.bling : false || false,
         extraWidth: extraWidth ? details.extras.extraWidth : false || false,
+        trinkets: trinkets ? details.extras.trinkets || [] : [],
         // twoTone: twoTone ? details.extras.twoTone : false || false,
       },
     }
@@ -87,10 +91,37 @@ class Customization extends Component {
     )
   }
 
+  trinkets = (trinkets) => {
+    const trinketsArray = this.state.extras.trinkets
+    const array = Object.assign([], trinketsArray, {[trinketsArray.length]: false})
+    return (
+      <div>
+        {array.map((selected, index) =>
+          <div key={`trinket${index}`} style={{ margin: '8px 0' }}>
+            {selected && <Button className="remove-trinket" icon="close" shape="circle" type="danger" size="small" onClick={() => this.handleTrinket({ index, value: false })} />}
+            <Icon type="thunderbolt" style={{ margin: '6px', color: selected ? '#68C6BF' : 'inherit' }} />
+            <Select value={selected || `Add 3D Trinket`} onChange={value => this.handleTrinket({ index, value })}>
+              {trinketsAvailable.map(option => <Select.Option key={option}>{option}</Select.Option>)}
+            </Select>
+            {trinkets && (selected || !trinketsArray.length) ? additions({ extra: trinkets }) : ''}
+          </div>
+        )}
+        <br />
+      </div>
+    )
+  }
+
   handleChange = ({ category, property, value }) => {
     const newState = { ...this.state[category] }
     newState[property] = value
     this.setState({ [category]: newState }, () => window.localStorage.setItem('custom', JSON.stringify({ date: new Date().getTime(), details: this.state })))
+  }
+
+  handleTrinket = ({ index, value }) => {
+    const newState = { ...this.state.extras }
+    const newTrinkets = Object.assign([], newState.trinkets, {[index]: value}).filter(item => item)
+    newState.trinkets = newTrinkets
+    this.setState({ extras: newState }, () => window.localStorage.setItem('custom', JSON.stringify({ date: new Date().getTime(), details: this.state })))
   }
 
   handleCart = () => {
@@ -137,9 +168,9 @@ class Customization extends Component {
     if (toRedirect) return <Redirect to='/cart' />
     const cat = category.toLowerCase()
     const prod = product.toLowerCase().replace(' ', '')
-    const { loops, boa, bling, extraWidth, twoTone } = prices.main[prod]
+    const { loops, boa, bling, extraWidth, twoTone, trinkets } = prices.main[prod]
     const xtras = ['loops', 'boa', 'bling', 'extraWidth', 'twoTone']
-    const totalCost = prices.main[prod][cat].price + xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0)
+    const totalCost = prices.main[prod][cat].price + xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0) + (extras.trinkets.length * prices.main[prod].trinkets)
     const totalCostForm = Number(totalCost.toFixed(2))
 
     return (
@@ -201,10 +232,11 @@ class Customization extends Component {
               <div><b>Activities</b></div>
               {this.activities({ activities, sports })}
               <div style={{ marginTop: 10 }}><b>Additions</b></div>
-              <div><Checkbox disabled={loops === null} checked={extras.loops} onChange={() => this.handleChange({ category: 'extras', property: 'loops', value: !extras.loops })}>{product.match(/Spirit|Mini|Small/) ? 'Add Single Color Loops' : 'Upgrade To Decorative Loops'}{loops ? additions({ extra: loops }) : ''}</Checkbox></div>
-              <div><Checkbox disabled={boa === null} checked={extras.boa} onChange={() => this.handleChange({ category: 'extras', property: 'boa', value: !extras.boa })}>Add Feather Boa {boa ? additions({ extra: boa }) : ''}</Checkbox></div>
-              <div><Checkbox disabled={bling === null} checked={extras.bling} onChange={() => this.handleChange({ category: 'extras', property: 'bling', value: !extras.bling })}>Add Bling Package {bling ? additions({ extra: bling }) : ''}</Checkbox></div>
-              <div><Checkbox disabled={extraWidth === null} checked={extras.extraWidth} onChange={() => this.handleChange({ category: 'extras', property: 'extraWidth', value: !extras.extraWidth })}>Add Extra Width {extraWidth ? additions({ extra: extraWidth }) : ''}</Checkbox></div>
+              <div>{this.trinkets(trinkets)}</div>
+              <div><Checkbox disabled={loops === null} checked={extras.loops} onChange={() => this.handleChange({ category: 'extras', property: 'loops', value: !extras.loops })}><FontAwesomeIcon icon={faRibbon} style={{ color: extras.loops ? '#68C6BF' : 'inherit' }} /> {product.match(/Spirit|Mini|Small/) ? 'Add Single Color Loops' : 'Upgrade To Decorative Loops'}{loops ? additions({ extra: loops }) : ''}</Checkbox></div>
+              <div><Checkbox disabled={boa === null} checked={extras.boa} onChange={() => this.handleChange({ category: 'extras', property: 'boa', value: !extras.boa })}><FontAwesomeIcon icon={faFeatherAlt} style={{ color: extras.boa ? '#68C6BF' : 'inherit' }} /> Add Feather Boa {boa ? additions({ extra: boa }) : ''}</Checkbox></div>
+              <div><Checkbox disabled={bling === null} checked={extras.bling} onChange={() => this.handleChange({ category: 'extras', property: 'bling', value: !extras.bling })}><FontAwesomeIcon icon={faGem} style={{ color: extras.bling ? '#68C6BF' : 'inherit' }} /> Add Bling Package {bling ? additions({ extra: bling }) : ''}</Checkbox></div>
+              <div><Checkbox disabled={extraWidth === null} checked={extras.extraWidth} onChange={() => this.handleChange({ category: 'extras', property: 'extraWidth', value: !extras.extraWidth })}><Icon type='column-width' style={{ color: extras.extraWidth ? '#68C6BF' : 'inherit' }} /> Add Extra Width {extraWidth ? additions({ extra: extraWidth }) : ''}</Checkbox></div>
               {/* <div><Checkbox disabled={twoTone === null} checked={extras.twoTone} onChange={() => this.handleChange({ category: 'extras', property: 'twoTone', value: !extras.twoTone })}>Add 2-Tone Die Cut {twoTone ? additions({ extra: twoTone }) : ''}</Checkbox></div> */}
               <br />
               <div><i style={{ fontSize: '1.15em' }}>Special instructions can be added on checkout page</i></div>

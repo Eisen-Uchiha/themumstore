@@ -138,6 +138,10 @@ li.slick-active button {
   max-height: 500px;
 }
 
+.remove-trinket {
+  margin-right: 10px;
+}
+
 @media only screen and (max-width: 680px) {
   .nav {
     display: none;

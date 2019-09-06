@@ -60,7 +60,7 @@ class PaypalButton extends Component {
     const items = Object.keys(products).map(p => {
       const product = products[p]
       const item = {}
-      item.name = `${product.product} ${product.category.replace('s', '')}`
+      item.name = orderName(product)
       item.unit_amount = { currency_code: 'USD', value: this.totalCost(product) }
       item.quantity = 1
       return item
@@ -76,7 +76,8 @@ class PaypalButton extends Component {
     const baseItem = currentPrices[category.toLowerCase().replace(' ', '')].price
     const extrarray = Object.keys(item.extras)
     const totalExtras = extrarray.reduce((acc, curr) => item.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
-    total = total + baseItem + totalExtras
+    const totalTrinkets = item.extras.trinkets.length * currentPrices.trinkets
+    total = total + baseItem + totalExtras + totalTrinkets
     total = Number(total.toFixed(2))
     return total
   }
@@ -161,6 +162,7 @@ class PaypalButton extends Component {
     const orders = Object.keys(products).map(p => {
       const prod = products[p]
       const { product, category, school, activities, colors, extras, names } = prod
+      const { trinkets } = extras
 
       const order = {
         'Customer Name': `${details.payer.name.given_name} ${details.payer.name.surname}`,
@@ -179,11 +181,11 @@ class PaypalButton extends Component {
         'Name 2': names.second || '',
         'Activities': Object.entries(activities).filter(([key, value]) => value).map(([key, value]) => value),
         'Extras': formatExtras(extras),
+        'Trinkets': formatTrinkets(trinkets),
         'Status': 'Ordered',
       }
       return order
     })
-
 
     const config = {
       method: 'POST',
@@ -302,6 +304,16 @@ function formatExtras(extras) {
   return formattedExtras
 }
 
+function formatTrinkets(trinkets) {
+  const counter = {}
+  trinkets.forEach(tri => {
+    if (!counter[tri]) counter[tri] = 0
+    counter[tri] = counter[tri] + 1
+  })
+  const formattedTrinkets = Object.keys(counter).map(tri => `${counter[tri]} ${tri}${counter[tri] > 1 ? 's' : ''}`).join(', ')
+  return formattedTrinkets
+}
+
 function formatPhone(value) {
   const first = value.match(/\d{3}/g)[0]
   const second = value.match(/\d{3}/g)[1]
@@ -313,4 +325,21 @@ function formatPhone(value) {
 function getDate() {
   const date = new Date()
   return date.toISOString().match(/\d{4}-\d{2}-\d{2}/)[0]
+}
+
+function orderName(product) {
+  const keys = Object.keys(product.extras)
+  let addons = false
+  for (let i = 0; i < keys.length; i++) {
+    const extra = keys[i]
+
+    if (typeof extra === 'boolean') {
+      if (extra) addons = true
+    }
+
+    else if (extra.length > 0) addons = true
+  }
+
+  if (addons) return `${product.product} ${product.category.replace('s', '')} w/ Extras`
+  return `${product.product} ${product.category.replace('s', '')}`
 }

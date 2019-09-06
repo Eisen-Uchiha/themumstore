@@ -17,6 +17,7 @@ const prices = {
       boa: null,
       bling: null,
       extraWidth: null,
+      trinkets: 5.00,
       twoTone: null,
     },
 
@@ -35,6 +36,7 @@ const prices = {
       boa: 8.00,
       bling: null,
       extraWidth: null,
+      trinkets: 5.00,
       twoTone: 7.00,
     },
 
@@ -57,6 +59,7 @@ const prices = {
       boa: 8.00,
       bling: 8.00,
       extraWidth: 5.00,
+      trinkets: 5.00,
       twoTone: 7.00,
     },
 
@@ -77,6 +80,7 @@ const prices = {
       boa: 8.00,
       bling: 10.00,
       extraWidth: 7.00,
+      trinkets: 5.00,
       twoTone: 7.00,
     },
 
@@ -99,6 +103,7 @@ const prices = {
       boa: 8.00,
       bling: 12.00,
       extraWidth: 9.00,
+      trinkets: 5.00,
       twoTone: 7.00,
     },
 
@@ -123,6 +128,7 @@ const prices = {
       boa: 8.00,
       bling: 15.00,
       extraWidth: null,
+      trinkets: 5.00,
       twoTone: 7.00,
     },
   },

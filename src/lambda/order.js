@@ -20,6 +20,7 @@ const appreciationEmail = async ({ orders }) => {
       html += `<div style="margin-left: 2%;"><b>Name 1: </b>${order['Name 1']}  -  <b>Name 2: </b>${order['Name 2']}</div>`
       html += `<div style="margin-left: 2%;"><b>Colors: </b>${order['Colors'].join(', ')}  -  <b>Activities: </b>${order['Activities'].join(', ')}</div>`
       html += `<div style="margin-left: 2%;"><b>Extras: </b>${order['Extras']}</div>`
+      html += `<div style="margin-left: 2%;"><b>Trinkets: </b>${order['Trinkets']}</div>`
     })
 
     html += `<div>If the details of your order are incorrect, mail us at <a href="orders@boutiquemums.com">orders@boutiquemums.com</a></div>`
@@ -36,7 +37,7 @@ const appreciationEmail = async ({ orders }) => {
     mailgun.messages().send(message, (error, body) => {
       if (error) console.log(error)
       if (body) console.log(body)
-      if (error) return reject(error)
+      if (error) return reject({ id: 'customer-email', error })
       resolve()
     })
   })
@@ -65,6 +66,7 @@ const orderEmail = async ({ orders }) => {
       html += `<div style="margin-left: 2%;"><b>Name 1: </b>${order['Name 1']}  -  <b>Name 2: </b>${order['Name 2']}</div>`
       html += `<div style="margin-left: 2%;"><b>Colors: </b>${order['Colors'].join(', ')}  -  <b>Activities: </b>${order['Activities'].join(', ')}</div>`
       html += `<div style="margin-left: 2%;"><b>Extras: </b>${order['Extras']}</div>`
+      html += `<div style="margin-left: 2%;"><b>Trinkets: </b>${order['Trinkets']}</div>`
     })
     html += `</div>`
 
@@ -76,10 +78,10 @@ const orderEmail = async ({ orders }) => {
       html,
     }
 
-    mailgun.messages().send(message, err => {
-      if (err) {
-        console.log(err)
-        return reject(err)
+    mailgun.messages().send(message, error => {
+      if (error) {
+        console.log(error)
+        return reject({ id: 'order-email', error })
       }
       resolve({ message: 'Email Sent' })
     });
@@ -106,8 +108,8 @@ const createRecord = ({ base, order }) => {
     const sheet = `${date[1]}/${date[0]}`
     console.log('Airtable Sheet', sheet)
 
-    base(sheet).create(order, (err, record) => {
-      if (err) return reject(err)
+    base(sheet).create(order, (error, record) => {
+      if (error) return reject({ id: 'air-record', error })
       return resolve(record)
     })
   })
@@ -150,11 +152,11 @@ export async function handler(event, context, callback) {
       body: JSON.stringify({ message: 'Order Confirmed' }),
     })
   }
-  catch(e) {
-    console.log(e)
+  catch(error) {
+    console.log(error)
     callback(null, {
       statusCode: 500,
-      body: JSON.stringify({ message: e.message }),
+      body: JSON.stringify(error),
     })
   }
 }

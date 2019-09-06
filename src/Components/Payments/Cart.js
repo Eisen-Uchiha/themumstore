@@ -27,7 +27,7 @@ const dots = ({ colors }) => (
 )
 
 const activityIcons = ({ activities, color }) => (
-  Object.keys(activities).map(a => activities[a] && <span key={a} style={{ padding: 5, fontSize: 20, color: color }}>{icons[activities[a]]}</span>)
+  Object.keys(activities).map(a => activities[a] && <span key={a} style={{ padding: 5, fontSize: 20, color }}>{icons[activities[a]]}</span>)
 )
 
 const title = ({ item }) => {
@@ -63,13 +63,14 @@ class Cart extends Component {
   }
 
   addons = ({ extras, id, color, size }) => {
-    const { loops, boa, bling, extraWidth, twoTone } = prices.main[size]
+    const { loops, boa, bling, extraWidth, trinkets, twoTone } = prices.main[size]
     return (
       <span style={{ padding: '5px', fontSize: '20px' }}>
         {loops !== null && <span style={{ padding: '5px', color: extras.loops && color }} onClick={() => this.handleAddons({ key: 'loops', id })}><FontAwesomeIcon icon={faRibbon} /></span>}
         {boa !== null && <span style={{ padding: '5px', color: extras.boa && color }} onClick={() => this.handleAddons({ key: 'boa', id })}><FontAwesomeIcon icon={faFeatherAlt} /></span>}
         {bling !== null && <span style={{ padding: '5px', color: extras.bling && color }} onClick={() => this.handleAddons({ key: 'bling', id })}><FontAwesomeIcon icon={faGem} /></span>}
         {extraWidth !== null && <span style={{ padding: '5px', color: extras.extraWidth && color }} onClick={() => this.handleAddons({ key: 'extraWidth', id })}><Icon type='column-width' /></span>}
+        {trinkets !== null && <span style={{ padding: '5px', color: extras.trinkets.length && color }} onClick={null}><Icon type='thunderbolt' /></span>}
         {/* {twoTone !== null && <span style={{ padding: '5px' }} onClick={() => this.handleAddons({ key: 'twoTone', id })}><Icon type='switcher' theme={extras.twoTone && 'twoTone'} twoToneColor={extras.twoTone && color} /></span>} */}
       </span>
     )
@@ -124,7 +125,8 @@ class Cart extends Component {
       const baseItem = currentPrices[category.toLowerCase().replace(' ', '')].price
       const extrarray = Object.keys(obj.extras)
       const totalExtras = extrarray.reduce((acc, curr) => obj.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
-      total = total + baseItem + totalExtras
+      const totalTrinkets = obj.extras.trinkets.length * currentPrices.trinkets
+      total = total + baseItem + totalExtras + totalTrinkets
     }
 
     return total
@@ -132,7 +134,6 @@ class Cart extends Component {
 
   render() {
     const { products, data, toRedirect, paid } = this.state
-    console.log(this.state)
     if (toRedirect) return <Redirect to={toRedirect} />
     const totalCost = this.totalCost(data)
     const totalCostForm = Number(totalCost.toFixed(2))
