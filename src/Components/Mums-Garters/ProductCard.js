@@ -21,7 +21,12 @@ class ProductCard extends Component {
           <Card style={{ maxWidth: '350px', maxHeight: '311px', minWidth: '310px', minHeight: '500px', margin: '5px' }}>
               <Card.Grid style={{ minWidth: '50%', textAlign: 'center', height: '-webkit-fill-available' }}>
                 <h3>{name}</h3>
-                <img alt='' style={{ width: 'inherit', minWidth: '-webkit-fill-available' }} src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" />
+                <img
+                  alt=''
+                  style={{ width: 'inherit', minWidth: '-webkit-fill-available' }}
+                  src={`/media/current-models/${category.replace('s','')}-${name.replace(' ', '-').toLowerCase()}.jpeg`}
+                  onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
+                />
                 <div style={{ padding: 10 }}><b>${price}</b></div>
               </Card.Grid>
               <Card.Grid style={{ width: 'auto', textAlign: 'center', height: '-webkit-fill-available', maxWidth: '50%' }}>{description}</Card.Grid>

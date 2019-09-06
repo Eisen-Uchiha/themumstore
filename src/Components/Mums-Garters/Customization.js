@@ -146,59 +146,69 @@ class Customization extends Component {
       <Layout style={{ minHeight: '100px', background: 'white', padding: '0 4%' }}>
         <Header style={{ textAlign: 'center' }}><h1>{product} {category.replace('s','')} Customization</h1></Header>
         <Layout style={{ background: 'white' }}>
-          <Content style={{ textAlign: 'center', margin: '2%' }}>
-            <div><img src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" alt='' style={{ width: 'auto', padding: '5%' }} /></div>
-          </Content>
-          <Sider width='35%' style={{ margin: '2%' }}>
-            <div><b>School Name</b></div>
-            <Input
-              value={school.name}
-              onChange={event => this.handleChange({ category: 'school', property: 'name', value: event.target.value })}
-              placeholder='Rydell, Walkerville, Hogwarts, etc.'
-              suffix={
-                <Tooltip title={'Required Field'}>
-                  <Icon type="info-circle" style={{ color: 'gray' }} />
-                </Tooltip>
-              }
-            />
-            <div><b>School Mascot</b></div>
-            <Input
-              value={school.mascot}
-              onChange={event => this.handleChange({ category: 'school', property: 'mascot', value: event.target.value })}
-              placeholder='Lions, Tigers, Bears...'
-              suffix={<Tooltip title={'Required Field'}><Icon type="info-circle" style={{ color: 'gray' }} /></Tooltip>}
-            />
-            <div><b>School Colors</b></div>
-            <Input.Group compact>
-              {this.colors({ colors, type: 'Primary' })}
-              {this.colors({ colors, type: 'Secondary' })}
-              {this.colors({ colors, type: 'Accent' })}
-            </Input.Group>
-            <div><b>Names</b></div>
-            <Input.Group compact>
+          <div className='cards' style={{ justifyContent: 'center' }}>
+            <div className='card' style={{ textAlign: 'center', margin: '2%' }}>
+              <div>
+                <img
+                  className='customization-image'
+                  src={`/media/current-models/${category.replace('s','')}-${product.replace(' ', '-').toLowerCase()}.jpeg`}
+                  onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
+                  alt=''
+                />
+              </div>
+            </div>
+            <div className='card' style={{ margin: '2%', minWidth: 'fit-content' }}>
+              <div><b>School Name</b></div>
               <Input
-                value={names.first}
-                onChange={event => this.handleChange({ category: 'names', property: 'first', value: event.target.value })}
-                style={{ width: '50%' }}
-                placeholder="Clark Kent"
+                value={school.name}
+                onChange={event => this.handleChange({ category: 'school', property: 'name', value: event.target.value })}
+                placeholder='Rydell, Walkerville, Hogwarts, etc.'
+                suffix={
+                  <Tooltip title={'Required Field'}>
+                    <Icon type="info-circle" style={{ color: 'gray' }} />
+                  </Tooltip>
+                }
+              />
+              <div><b>School Mascot</b></div>
+              <Input
+                value={school.mascot}
+                onChange={event => this.handleChange({ category: 'school', property: 'mascot', value: event.target.value })}
+                placeholder='Lions, Tigers, Bears...'
                 suffix={<Tooltip title={'Required Field'}><Icon type="info-circle" style={{ color: 'gray' }} /></Tooltip>}
               />
-              <Input
-                value={names.second}
-                onChange={event => this.handleChange({ category: 'names', property: 'second', value: event.target.value })}
-                style={{ width: '50%' }}
-                placeholder="Lois Lane"
-              />
-            </Input.Group>
-            <div><b>Activities</b></div>
-            {this.activities({ activities, sports })}
-            <div style={{ marginTop: 10 }}><b>Additions</b></div>
-            <div><Checkbox disabled={loops === null} checked={extras.loops} onChange={() => this.handleChange({ category: 'extras', property: 'loops', value: !extras.loops })}>{product.match(/Spirit|Mini|Small/) ? 'Add Single Color Loops' : 'Upgrade To Decorative Loops'}{loops ? additions({ extra: loops }) : ''}</Checkbox></div>
-            <div><Checkbox disabled={boa === null} checked={extras.boa} onChange={() => this.handleChange({ category: 'extras', property: 'boa', value: !extras.boa })}>Add Feather Boa {boa ? additions({ extra: boa }) : ''}</Checkbox></div>
-            <div><Checkbox disabled={bling === null} checked={extras.bling} onChange={() => this.handleChange({ category: 'extras', property: 'bling', value: !extras.bling })}>Add Bling Package {bling ? additions({ extra: bling }) : ''}</Checkbox></div>
-            <div><Checkbox disabled={extraWidth === null} checked={extras.extraWidth} onChange={() => this.handleChange({ category: 'extras', property: 'extraWidth', value: !extras.extraWidth })}>Add Extra Width {extraWidth ? additions({ extra: extraWidth }) : ''}</Checkbox></div>
-            {/* <div><Checkbox disabled={twoTone === null} checked={extras.twoTone} onChange={() => this.handleChange({ category: 'extras', property: 'twoTone', value: !extras.twoTone })}>Add 2-Tone Die Cut {twoTone ? additions({ extra: twoTone }) : ''}</Checkbox></div> */}
-          </Sider>
+              <div><b>School Colors</b></div>
+              <Input.Group compact>
+                {this.colors({ colors, type: 'Primary' })}
+                {this.colors({ colors, type: 'Secondary' })}
+                {this.colors({ colors, type: 'Accent' })}
+              </Input.Group>
+              <div><b>Names</b></div>
+              <Input.Group compact>
+                <Input
+                  value={names.first}
+                  onChange={event => this.handleChange({ category: 'names', property: 'first', value: event.target.value })}
+                  style={{ width: '50%' }}
+                  placeholder="Clark Kent"
+                  suffix={<Tooltip title={'Required Field'}><Icon type="info-circle" style={{ color: 'gray' }} /></Tooltip>}
+                />
+                <Input
+                  value={names.second}
+                  onChange={event => this.handleChange({ category: 'names', property: 'second', value: event.target.value })}
+                  style={{ width: '50%' }}
+                  placeholder="Lois Lane"
+                />
+              </Input.Group>
+              <div><b>Activities</b></div>
+              {this.activities({ activities, sports })}
+              <div style={{ marginTop: 10 }}><b>Additions</b></div>
+              <div><Checkbox disabled={loops === null} checked={extras.loops} onChange={() => this.handleChange({ category: 'extras', property: 'loops', value: !extras.loops })}>{product.match(/Spirit|Mini|Small/) ? 'Add Single Color Loops' : 'Upgrade To Decorative Loops'}{loops ? additions({ extra: loops }) : ''}</Checkbox></div>
+              <div><Checkbox disabled={boa === null} checked={extras.boa} onChange={() => this.handleChange({ category: 'extras', property: 'boa', value: !extras.boa })}>Add Feather Boa {boa ? additions({ extra: boa }) : ''}</Checkbox></div>
+              <div><Checkbox disabled={bling === null} checked={extras.bling} onChange={() => this.handleChange({ category: 'extras', property: 'bling', value: !extras.bling })}>Add Bling Package {bling ? additions({ extra: bling }) : ''}</Checkbox></div>
+              <div><Checkbox disabled={extraWidth === null} checked={extras.extraWidth} onChange={() => this.handleChange({ category: 'extras', property: 'extraWidth', value: !extras.extraWidth })}>Add Extra Width {extraWidth ? additions({ extra: extraWidth }) : ''}</Checkbox></div>
+              {/* <div><Checkbox disabled={twoTone === null} checked={extras.twoTone} onChange={() => this.handleChange({ category: 'extras', property: 'twoTone', value: !extras.twoTone })}>Add 2-Tone Die Cut {twoTone ? additions({ extra: twoTone }) : ''}</Checkbox></div> */}
+            </div>
+
+          </div>
         </Layout>
           <Content style={{ textAlign: 'center', padding: '1%' }}>
             <h3><b>Total Price:</b> ${totalCostForm}</h3>

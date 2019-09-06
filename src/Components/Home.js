@@ -14,7 +14,7 @@ class Home extends Component {
           </div>
           <div className='cards' style={{ justifyContent: 'center' }}>
               <div className='card' style={{ minWidth: '300px', maxWidth: 450, maxHeight: 350, flex: '1 0 26%', margin: '5% 0' }}>
-                <Carousel style={{ height: 'auto', lineHeight: 0 }} autoplay>
+                <Carousel style={{ height: 'auto', lineHeight: 0 }} autoplay={true}>
                   <div><img src="/media/carousel/carousel-01.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
                   <div><img src="/media/carousel/carousel-02.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
                   <div><img src="/media/carousel/carousel-03.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
