@@ -4,7 +4,7 @@ import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip } from 'antd'
 import icons from '../icons'
 import prices from '../../price-list'
 
-const { Header, Content, Sider } = Layout
+const { Header, Content, Footer } = Layout
 
 const colors = [ 'red', 'blue', 'white', 'yellow', 'gold', 'silver', 'maroon', 'black']
 const activities = ['Band', 'Choir', 'Cheer', 'Theater', 'FFA', 'ROTC']
@@ -143,9 +143,9 @@ class Customization extends Component {
     const totalCostForm = Number(totalCost.toFixed(2))
 
     return (
-      <Layout style={{ minHeight: '100px', background: 'white', padding: '0 4%' }}>
+      <Layout style={{ background: 'white', padding: '0 4%' }}>
         <Header style={{ textAlign: 'center' }}><h1>{product} {category.replace('s','')} Customization</h1></Header>
-        <Layout style={{ background: 'white' }}>
+        <Content style={{ background: 'white' }}>
           <div className='cards' style={{ justifyContent: 'center' }}>
             <div className='card' style={{ textAlign: 'center', margin: '2%' }}>
               <div>
@@ -211,52 +211,14 @@ class Customization extends Component {
             </div>
 
           </div>
-        </Layout>
-          <Content style={{ textAlign: 'center', padding: '1%' }}>
+        </Content>
+          <Footer style={{ background: 'white', textAlign: 'center', padding: '1%', margin: '2% 0 5% 0' }}>
             <h3><b>Total Price:</b> ${totalCostForm}</h3>
             <Button type='primary' onClick={this.handleCart}>{modify ? 'Save Changes' : 'Add To Cart'}</Button>
-          </Content>
+          </Footer>
       </Layout>
     )
   }
 }
  
 export default Customization
-
-
-
-// {
-//   "date": 1566687070488,
-//   "products": {
-//     "MediumMum1": {
-//       "category": "Mums",
-//       "product": "Medium",
-//       "toRedirect": null,
-//       "school": {
-//         "name": "Hogwarts",
-//         "mascot": "Wiz Kids"
-//       },
-//       "colors": {
-//         "primary": "red",
-//         "secondary": "gold",
-//         "accent": "purple"
-//       },
-//       "names": {
-//         "first": "Hairy Potter",
-//         "second": "Professor Xavier"
-//       },
-//       "activities": {
-//         "first": "Cheer",
-//         "second": "Soccer",
-//         "third": "Choir"
-//       },
-//       "extras": {
-//         "loops": true,
-//         "boa": true,
-//         "bling": true,
-//         "extraWidth": true,
-//         "twoTone": true
-//       }
-//     }
-//   }
-// }
