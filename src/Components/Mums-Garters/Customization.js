@@ -206,6 +206,8 @@ class Customization extends Component {
               <div><Checkbox disabled={bling === null} checked={extras.bling} onChange={() => this.handleChange({ category: 'extras', property: 'bling', value: !extras.bling })}>Add Bling Package {bling ? additions({ extra: bling }) : ''}</Checkbox></div>
               <div><Checkbox disabled={extraWidth === null} checked={extras.extraWidth} onChange={() => this.handleChange({ category: 'extras', property: 'extraWidth', value: !extras.extraWidth })}>Add Extra Width {extraWidth ? additions({ extra: extraWidth }) : ''}</Checkbox></div>
               {/* <div><Checkbox disabled={twoTone === null} checked={extras.twoTone} onChange={() => this.handleChange({ category: 'extras', property: 'twoTone', value: !extras.twoTone })}>Add 2-Tone Die Cut {twoTone ? additions({ extra: twoTone }) : ''}</Checkbox></div> */}
+              <br />
+              <div><i style={{ fontSize: '1.15em' }}>Special instructions can be added on checkout page</i></div>
             </div>
 
           </div>
