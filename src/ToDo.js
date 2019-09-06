@@ -1,5 +1,7 @@
 //(1) Add pictures to website
 
+//(1) Add a way for people to see enlarged pictures on carousel and gallery
+
 //(2) Implement a way to cut off orders by a certain date
 
 //(3) Show required fields in customization

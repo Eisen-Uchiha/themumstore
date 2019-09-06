@@ -14,12 +14,13 @@ class Home extends Component {
           </div>
           <div className='cards' style={{ justifyContent: 'center' }}>
               <div className='card' style={{ minWidth: '300px', maxWidth: 450, maxHeight: 350, flex: '1 0 26%', margin: '5% 0' }}>
-                <Carousel style={{ height: 'auto', lineHeight: 0 }} autoplay={false}>
-                  {/* <div><img src="/icons/kitty-square.png" alt="" style={{ width: 'auto' }} /></div> */}
-                  <div><img src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" alt="" style={{ width: 'auto' }} /></div>
-                  <div><img src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" alt="" style={{ width: 'auto' }} /></div>
-                  <div><img src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" alt="" style={{ width: 'auto' }} /></div>
-                  <div><img src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" alt="" style={{ width: 'auto' }} /></div>
+                <Carousel style={{ height: 'auto', lineHeight: 0 }} autoplay>
+                  <div><img src="/media/carousel/carousel-01.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
+                  <div><img src="/media/carousel/carousel-02.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
+                  <div><img src="/media/carousel/carousel-03.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
+                  <div><img src="/media/carousel/carousel-04.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
+                  <div><img src="/media/carousel/carousel-05.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
+                  <div><img src="/media/carousel/carousel-06.jpeg" alt="" style={{ width: 'auto', maxHeight: '320px' }} /></div>
                 </Carousel>
               </div>
             <div className='card' style={{ minWidth: 300, maxWidth: 500, maxHeight: 415, flex: '1 0 26%', margin: '5% 0' }}>

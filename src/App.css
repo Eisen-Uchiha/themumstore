@@ -27,14 +27,19 @@
   vertical-align: unset;
 }
 
+.ant-carousel .slick-dots li button, .ant-carousel .slick-dots li.slick-active button {
+  background: #68C6BF
+}
+
 li.slick-active button {
-  background: #7D769C
+  opacity: 1;
+  /* background: #7D769C */
 }
 
 .ant-carousel .slick-slide {
   text-align: center;
   /* max-height: 300px; */
-  background: #F7DC99;
+  /* background: #F7DC99; */
   overflow: hidden;
 }
 
