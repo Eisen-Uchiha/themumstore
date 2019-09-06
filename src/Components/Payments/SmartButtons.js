@@ -76,7 +76,7 @@ class PaypalButton extends Component {
     const baseItem = currentPrices[category.toLowerCase().replace(' ', '')].price
     const extrarray = Object.keys(item.extras)
     const totalExtras = extrarray.reduce((acc, curr) => item.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
-    const totalTrinkets = item.extras.trinkets.length * currentPrices.trinkets
+    const totalTrinkets = item.extras.trinkets.reduce((acc, tri) => acc + currentPrices.trinkets[tri].price, 0)
     total = total + baseItem + totalExtras + totalTrinkets
     total = Number(total.toFixed(2))
     return total
@@ -181,7 +181,7 @@ class PaypalButton extends Component {
         'Name 2': names.second || '',
         'Activities': Object.entries(activities).filter(([key, value]) => value).map(([key, value]) => value),
         'Extras': formatExtras(extras),
-        'Trinkets': formatTrinkets(trinkets),
+        'Trinkets': formatTrinkets({ trinkets, product }),
         'Status': 'Ordered',
       }
       return order
@@ -304,13 +304,14 @@ function formatExtras(extras) {
   return formattedExtras
 }
 
-function formatTrinkets(trinkets) {
+function formatTrinkets({ trinkets, product }) {
   const counter = {}
+  const prod = product.toLowerCase().replace(' ', '')
   trinkets.forEach(tri => {
     if (!counter[tri]) counter[tri] = 0
     counter[tri] = counter[tri] + 1
   })
-  const formattedTrinkets = Object.keys(counter).map(tri => `${counter[tri]} ${tri}${counter[tri] > 1 ? 's' : ''}`).join(', ')
+  const formattedTrinkets = Object.keys(counter).map(tri => `${counter[tri]} ${prices.main[prod].trinkets[tri].name}${counter[tri] > 1 ? 's' : ''}`).join(', ')
   return formattedTrinkets
 }
 

@@ -17,7 +17,32 @@ const prices = {
       boa: null,
       bling: null,
       extraWidth: null,
-      trinkets: 5.00,
+      trinkets: {
+        cuteTigerPlush: {
+          name: 'Cute Tiger Plush',
+          price: 8.00,
+        },
+        tigerHeadPlush: {
+          name: 'Tiger Head Plush',
+          price: 5.50,
+        },
+        tigerPawPick: {
+          name: 'Tiger Paw Pick',
+          price: 2.75,
+        },
+        footballPick: {
+          name: 'Football Pick',
+          price: 3.00,
+        },
+        dimensionalFootball: {
+          name: '3D Football',
+          price: 6.00,
+        },
+        dimensionalMegaphone: {
+          name: '3D Megaphone',
+          price: 6.00,
+        }
+      },
       twoTone: null,
     },
 
@@ -36,7 +61,32 @@ const prices = {
       boa: 8.00,
       bling: null,
       extraWidth: null,
-      trinkets: 5.00,
+      trinkets: {
+        cuteTigerPlush: {
+          name: 'Cute Tiger Plush',
+          price: 8.00,
+        },
+        tigerHeadPlush: {
+          name: 'Tiger Head Plush',
+          price: 5.50,
+        },
+        tigerPawPick: {
+          name: 'Tiger Paw Pick',
+          price: 2.75,
+        },
+        footballPick: {
+          name: 'Football Pick',
+          price: 3.00,
+        },
+        dimensionalFootball: {
+          name: '3D Football',
+          price: 6.00,
+        },
+        dimensionalMegaphone: {
+          name: '3D Megaphone',
+          price: 6.00,
+        }
+      },
       twoTone: 7.00,
     },
 
@@ -59,7 +109,32 @@ const prices = {
       boa: 8.00,
       bling: 8.00,
       extraWidth: 5.00,
-      trinkets: 5.00,
+      trinkets: {
+        cuteTigerPlush: {
+          name: 'Cute Tiger Plush',
+          price: 8.00,
+        },
+        tigerHeadPlush: {
+          name: 'Tiger Head Plush',
+          price: 5.50,
+        },
+        tigerPawPick: {
+          name: 'Tiger Paw Pick',
+          price: 2.75,
+        },
+        footballPick: {
+          name: 'Football Pick',
+          price: 3.00,
+        },
+        dimensionalFootball: {
+          name: '3D Football',
+          price: 6.00,
+        },
+        dimensionalMegaphone: {
+          name: '3D Megaphone',
+          price: 6.00,
+        }
+      },
       twoTone: 7.00,
     },
 
@@ -80,7 +155,32 @@ const prices = {
       boa: 8.00,
       bling: 10.00,
       extraWidth: 7.00,
-      trinkets: 5.00,
+      trinkets: {
+        cuteTigerPlush: {
+          name: 'Cute Tiger Plush',
+          price: 8.00,
+        },
+        tigerHeadPlush: {
+          name: 'Tiger Head Plush',
+          price: 5.50,
+        },
+        tigerPawPick: {
+          name: 'Tiger Paw Pick',
+          price: 2.75,
+        },
+        footballPick: {
+          name: 'Football Pick',
+          price: 3.00,
+        },
+        dimensionalFootball: {
+          name: '3D Football',
+          price: 6.00,
+        },
+        dimensionalMegaphone: {
+          name: '3D Megaphone',
+          price: 6.00,
+        }
+      },
       twoTone: 7.00,
     },
 
@@ -103,7 +203,32 @@ const prices = {
       boa: 8.00,
       bling: 12.00,
       extraWidth: 9.00,
-      trinkets: 5.00,
+      trinkets: {
+        cuteTigerPlush: {
+          name: 'Cute Tiger Plush',
+          price: 8.00,
+        },
+        tigerHeadPlush: {
+          name: 'Tiger Head Plush',
+          price: 5.50,
+        },
+        tigerPawPick: {
+          name: 'Tiger Paw Pick',
+          price: 2.75,
+        },
+        footballPick: {
+          name: 'Football Pick',
+          price: 3.00,
+        },
+        dimensionalFootball: {
+          name: '3D Football',
+          price: 6.00,
+        },
+        dimensionalMegaphone: {
+          name: '3D Megaphone',
+          price: 6.00,
+        }
+      },
       twoTone: 7.00,
     },
 
@@ -128,7 +253,32 @@ const prices = {
       boa: 8.00,
       bling: 15.00,
       extraWidth: null,
-      trinkets: 5.00,
+      trinkets: {
+        cuteTigerPlush: {
+          name: 'Cute Tiger Plush',
+          price: 8.00,
+        },
+        tigerHeadPlush: {
+          name: 'Tiger Head Plush',
+          price: 5.50,
+        },
+        tigerPawPick: {
+          name: 'Cute Tiger Plush',
+          price: 2.75,
+        },
+        footballPick: {
+          name: 'Cute Tiger Plush',
+          price: 3.00,
+        },
+        dimensionalFootball: {
+          name: 'Cute Tiger Plush',
+          price: 6.00,
+        },
+        dimensionalMegaphone: {
+          name: 'Cute Tiger Plush',
+          price: 6.00,
+        }
+      },
       twoTone: 7.00,
     },
   },

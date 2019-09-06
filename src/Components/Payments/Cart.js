@@ -125,8 +125,9 @@ class Cart extends Component {
       const baseItem = currentPrices[category.toLowerCase().replace(' ', '')].price
       const extrarray = Object.keys(obj.extras)
       const totalExtras = extrarray.reduce((acc, curr) => obj.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
-      const totalTrinkets = obj.extras.trinkets.length * currentPrices.trinkets
+      const totalTrinkets = obj.extras.trinkets.reduce((acc, tri) => acc + currentPrices.trinkets[tri].price, 0)
       total = total + baseItem + totalExtras + totalTrinkets
+      total = Number(total.toFixed(2))
     }
 
     return total
@@ -135,8 +136,7 @@ class Cart extends Component {
   render() {
     const { products, data, toRedirect, paid } = this.state
     if (toRedirect) return <Redirect to={toRedirect} />
-    const totalCost = this.totalCost(data)
-    const totalCostForm = Number(totalCost.toFixed(2))
+    const total = this.totalCost(data)
 
     return (
       <div style={{ margin: '2%', background: 'white', padding: 20 }}>
@@ -152,7 +152,7 @@ class Cart extends Component {
           locale={{ emptyText: 'Your cart is empty' }}
           footer={
             <div>
-              {totalCost > 0 && <h3><b>Total Amount:</b> ${totalCostForm.toFixed(2)}</h3>}
+              {total > 0 && <h3><b>Total Amount:</b> ${total.toFixed(2)}</h3>}
             </div>
           }
           renderItem={item => (
@@ -184,7 +184,7 @@ class Cart extends Component {
             </List.Item>
           )}
         />
-        {(totalCost > 0 || paid) && <SmartButtons total={totalCostForm} products={products} onPayment={this.handleCart} />}
+        {(total > 0 || paid) && <SmartButtons total={total} products={products} onPayment={this.handleCart} />}
       </div>
     )
   }

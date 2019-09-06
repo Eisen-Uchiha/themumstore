@@ -11,7 +11,7 @@ const { Header, Content, Footer } = Layout
 const colors = [ 'red', 'blue', 'white', 'yellow', 'gold', 'silver', 'maroon', 'black']
 const activities = ['Band', 'Choir', 'Cheer', 'Theater', 'FFA', 'ROTC']
 const sports = ['Basketball', 'Football', 'Soccer', 'Volleyball', 'Tennis', 'Golf', 'Track', 'Cross Country', 'Baseball', ]
-const trinketsAvailable = ['Dragon', 'Tiger', 'Tractor']
+const trinketsAvailable = ['cuteTigerPlush', 'tigerHeadPlush', 'tigerPawPick', 'footballPick', 'dimensionalFootball', 'dimensionalMegaphone']
 const failsafe = ['school', 'colors', 'names', 'activities', 'extras']
 const oneWeek =  7 * 8.64e+7
 
@@ -61,7 +61,7 @@ class Customization extends Component {
         boa: boa ? details.extras.boa : false || false,
         bling: bling ? details.extras.bling : false || false,
         extraWidth: extraWidth ? details.extras.extraWidth : false || false,
-        trinkets: trinkets ? details.extras.trinkets || [] : [],
+        trinkets: details.extras.trinkets || [],
         // twoTone: twoTone ? details.extras.twoTone : false || false,
       },
     }
@@ -100,10 +100,10 @@ class Customization extends Component {
           <div key={`trinket${index}`} style={{ margin: '8px 0' }}>
             {selected && <Button className="remove-trinket" icon="close" shape="circle" type="danger" size="small" onClick={() => this.handleTrinket({ index, value: false })} />}
             <Icon type="thunderbolt" style={{ margin: '6px', color: selected ? '#68C6BF' : 'inherit' }} />
-            <Select value={selected || `Add 3D Trinket`} onChange={value => this.handleTrinket({ index, value })}>
-              {trinketsAvailable.map(option => <Select.Option key={option}>{option}</Select.Option>)}
+            <Select value={selected || `Mascots and Premium Trinkets`} onChange={value => this.handleTrinket({ index, value })}>
+              {trinketsAvailable.map(option => <Select.Option key={option}>{trinkets[option].name} {!selected && additions({ extra: trinkets[option].price })}</Select.Option>)}
             </Select>
-            {trinkets && (selected || !trinketsArray.length) ? additions({ extra: trinkets }) : ''}
+            {selected ? additions({ extra: trinkets[selected].price }) : ''}
           </div>
         )}
         <br />
@@ -163,15 +163,27 @@ class Customization extends Component {
     else return empty
   }
 
+  totalCost = () => {
+    const { extras, category, product } = this.state
+    const cat = category.toLowerCase()
+    const prod = product.toLowerCase().replace(' ', '')
+    const { trinkets } = prices.main[prod]
+    const xtras = ['loops', 'boa', 'bling', 'extraWidth', 'twoTone']
+    const baseItem = prices.main[prod][cat].price
+    const totalExtras = xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0)
+    const totalTrinkets = extras.trinkets.reduce((acc, tri) => acc + trinkets[tri].price, 0)
+    const totalCost = baseItem + totalExtras + totalTrinkets
+    const total = Number(totalCost.toFixed(2))
+
+    return total
+  }
+
   render() {
     const { school, names, extras, category, product, toRedirect, modify } = this.state
     if (toRedirect) return <Redirect to='/cart' />
-    const cat = category.toLowerCase()
     const prod = product.toLowerCase().replace(' ', '')
     const { loops, boa, bling, extraWidth, twoTone, trinkets } = prices.main[prod]
-    const xtras = ['loops', 'boa', 'bling', 'extraWidth', 'twoTone']
-    const totalCost = prices.main[prod][cat].price + xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0) + (extras.trinkets.length * prices.main[prod].trinkets)
-    const totalCostForm = Number(totalCost.toFixed(2))
+    const total = this.totalCost()
 
     return (
       <Layout style={{ background: 'white', padding: '0 4%' }}>
@@ -245,7 +257,7 @@ class Customization extends Component {
           </div>
         </Content>
           <Footer style={{ background: 'white', textAlign: 'center', padding: '1%', margin: '2% 0 5% 0' }}>
-            <h3><b>Total Price:</b> ${totalCostForm}</h3>
+            <h3><b>Total Price:</b> ${total}</h3>
             <Button type='primary' onClick={this.handleCart}>{modify ? 'Save Changes' : 'Add To Cart'}</Button>
           </Footer>
       </Layout>
