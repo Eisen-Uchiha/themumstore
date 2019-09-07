@@ -1,4 +1,5 @@
 //(1) Reconfig "custom die cuts"
+  // Use object to configure in customization. It needs a type property and value property, so the "custom word" can have a configurable value
   // First Name, School Name, Custom Word, School Mascot Name, School Mascot Logo, Cheer Package, Senior Package
   // Separate section from other extras
   // Selecting option makes another line for another die cut configuration

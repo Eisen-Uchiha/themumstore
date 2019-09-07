@@ -43,7 +43,10 @@ const prices = {
           price: 6.00,
         }
       },
-      twoTone: null,
+      dieCuts: {
+        name: 'Custom Die Cuts',
+        price: null,
+      }
     },
 
     mini: {
@@ -87,7 +90,10 @@ const prices = {
           price: 6.00,
         }
       },
-      twoTone: 7.00,
+      dieCuts: {
+        name: 'Custom Die Cuts',
+        price: 7.00,
+      }
     },
 
     small: {
@@ -135,7 +141,10 @@ const prices = {
           price: 6.00,
         }
       },
-      twoTone: 7.00,
+      dieCuts: {
+        name: 'Custom Die Cuts',
+        price: 7.00,
+      }
     },
 
     medium: {
@@ -181,7 +190,10 @@ const prices = {
           price: 6.00,
         }
       },
-      twoTone: 7.00,
+      dieCuts: {
+        name: 'Custom Die Cuts',
+        price: 7.00,
+      }
     },
 
     large: {
@@ -229,7 +241,10 @@ const prices = {
           price: 6.00,
         }
       },
-      twoTone: 7.00,
+      dieCuts: {
+        name: 'Custom Die Cuts',
+        price: 7.00,
+      }
     },
 
     extralarge: {
@@ -279,7 +294,10 @@ const prices = {
           price: 6.00,
         }
       },
-      twoTone: 7.00,
+      dieCuts: {
+        name: 'Custom Die Cuts',
+        price: 7.00,
+      }
     },
   },
 

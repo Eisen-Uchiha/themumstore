@@ -142,6 +142,10 @@ li.slick-active button {
   margin-right: 10px;
 }
 
+.ant-input-group.ant-input-group-compact::before, .ant-input-group.ant-input-group-compact::after {
+  display: initial;
+}
+
 @media only screen and (max-width: 680px) {
   .nav {
     display: none;

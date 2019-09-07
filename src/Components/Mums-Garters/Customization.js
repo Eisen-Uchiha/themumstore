@@ -12,6 +12,7 @@ const colors = [ 'red', 'blue', 'white', 'yellow', 'gold', 'silver', 'maroon', '
 const activities = ['Band', 'Choir', 'Cheer', 'Theater', 'FFA', 'ROTC']
 const sports = ['Basketball', 'Football', 'Soccer', 'Volleyball', 'Tennis', 'Golf', 'Track', 'Cross Country', 'Baseball', ]
 const trinketsAvailable = ['cuteTigerPlush', 'tigerHeadPlush', 'tigerPawPick', 'footballPick', 'dimensionalFootball', 'dimensionalMegaphone']
+const dieCutsAvailable = ['First Name', 'School Name', 'Custom Word', 'Mascot Name', 'Mascot Logo', 'Cheer Package', 'Senior Package']
 const failsafe = ['school', 'colors', 'names', 'activities', 'extras']
 const oneWeek =  7 * 8.64e+7
 
@@ -31,7 +32,7 @@ class Customization extends Component {
     const product = path[1].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
 
     const prod = product.toLowerCase().replace(' ', '')
-    const { loops, boa, bling, extraWidth, trinkets, twoTone } = prices.main[prod]
+    const { loops, boa, bling, extraWidth, dieCuts } = prices.main[prod]
     // Set the state directly. Use props if necessary.
     this.state = {
       toRedirect: null,
@@ -62,7 +63,7 @@ class Customization extends Component {
         bling: bling ? details.extras.bling : false || false,
         extraWidth: extraWidth ? details.extras.extraWidth : false || false,
         trinkets: details.extras.trinkets || [],
-        // twoTone: twoTone ? details.extras.twoTone : false || false,
+        dieCuts: dieCuts.price ? details.extras.dieCuts || [] : [],
       },
     }
   }
@@ -111,6 +112,37 @@ class Customization extends Component {
     )
   }
 
+  dieCuts = (dieCuts) => {
+    const dieCutsArray = this.state.extras.dieCuts
+    const array = Object.assign([], dieCutsArray, {[dieCutsArray.length]: false})
+    const avail = dieCutsAvailable
+    return (
+      <div>
+        {array.map((selected, index) =>
+          <div key={`dieCut${index}`} style={{ margin: '8px 0' }}>
+            {selected && <Button className="remove-trinket" icon="close" shape="circle" type="danger" size="small" onClick={() => this.handleDieCuts({ index, value: false })} />}
+            <Icon type="switcher" style={{ margin: '6px', color: selected ? '#68C6BF' : 'inherit' }} />
+            <Input.Group compact style={{ display: 'initial' }}>
+              <Select value={selected === false ? `Custom Die Cuts` : !avail.includes(selected) ? 'Custom Word' : selected} onChange={value => this.handleDieCuts({ index, value })}>
+                {avail.map(option => <Select.Option key={option}>{option} {!selected && additions({ extra: dieCuts.price })}</Select.Option>)}
+              </Select>
+              {selected !== false && (selected === 'Custom Word' || !selected.length || !avail.includes(selected)) ?
+                <Input
+                  style={{ width: 'auto' }}
+                  value={selected === 'Custom Word' ? '' : selected}
+                  placeholder='Cheer, Senior, John 3:16...'
+                  onChange={e => this.handleDieCuts({ index, value: e.target.value })}
+                /> : ''
+              }
+            </Input.Group>
+            {selected ? additions({ extra: dieCuts.price }) : ''}
+          </div>
+        )}
+        <br />
+      </div>
+    )
+  }
+
   handleChange = ({ category, property, value }) => {
     const newState = { ...this.state[category] }
     newState[property] = value
@@ -121,6 +153,13 @@ class Customization extends Component {
     const newState = { ...this.state.extras }
     const newTrinkets = Object.assign([], newState.trinkets, {[index]: value}).filter(item => item)
     newState.trinkets = newTrinkets
+    this.setState({ extras: newState }, () => window.localStorage.setItem('custom', JSON.stringify({ date: new Date().getTime(), details: this.state })))
+  }
+
+  handleDieCuts = ({ index, value }) => {
+    const newState = { ...this.state.extras }
+    const newDieCuts = Object.assign([], newState.dieCuts, {[index]: value}).filter(item => item !== false)
+    newState.dieCuts = newDieCuts
     this.setState({ extras: newState }, () => window.localStorage.setItem('custom', JSON.stringify({ date: new Date().getTime(), details: this.state })))
   }
 
@@ -168,7 +207,7 @@ class Customization extends Component {
     const cat = category.toLowerCase()
     const prod = product.toLowerCase().replace(' ', '')
     const { trinkets } = prices.main[prod]
-    const xtras = ['loops', 'boa', 'bling', 'extraWidth', 'twoTone']
+    const xtras = ['loops', 'boa', 'bling', 'extraWidth']
     const baseItem = prices.main[prod][cat].price
     const totalExtras = xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0)
     const totalTrinkets = extras.trinkets.reduce((acc, tri) => acc + trinkets[tri].price, 0)
@@ -182,7 +221,7 @@ class Customization extends Component {
     const { school, names, extras, category, product, toRedirect, modify } = this.state
     if (toRedirect) return <Redirect to='/cart' />
     const prod = product.toLowerCase().replace(' ', '')
-    const { loops, boa, bling, extraWidth, twoTone, trinkets } = prices.main[prod]
+    const { loops, boa, bling, extraWidth, dieCuts, trinkets } = prices.main[prod]
     const total = this.totalCost()
 
     return (
@@ -245,6 +284,7 @@ class Customization extends Component {
               {this.activities({ activities, sports })}
               <div style={{ marginTop: 10 }}><b>Additions</b></div>
               <div>{this.trinkets(trinkets)}</div>
+              {/* <div>{this.dieCuts(dieCuts)}</div> */}
               <div><Checkbox disabled={loops === null} checked={extras.loops} onChange={() => this.handleChange({ category: 'extras', property: 'loops', value: !extras.loops })}><FontAwesomeIcon icon={faRibbon} style={{ color: extras.loops ? '#68C6BF' : 'inherit' }} /> {product.match(/Spirit|Mini|Small/) ? 'Add Single Color Loops' : 'Upgrade To Decorative Loops'}{loops ? additions({ extra: loops }) : ''}</Checkbox></div>
               <div><Checkbox disabled={boa === null} checked={extras.boa} onChange={() => this.handleChange({ category: 'extras', property: 'boa', value: !extras.boa })}><FontAwesomeIcon icon={faFeatherAlt} style={{ color: extras.boa ? '#68C6BF' : 'inherit' }} /> Add Feather Boa {boa ? additions({ extra: boa }) : ''}</Checkbox></div>
               <div><Checkbox disabled={bling === null} checked={extras.bling} onChange={() => this.handleChange({ category: 'extras', property: 'bling', value: !extras.bling })}><FontAwesomeIcon icon={faGem} style={{ color: extras.bling ? '#68C6BF' : 'inherit' }} /> Add Bling Package {bling ? additions({ extra: bling }) : ''}</Checkbox></div>
