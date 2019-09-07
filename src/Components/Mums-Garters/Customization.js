@@ -123,10 +123,20 @@ class Customization extends Component {
       <div>
         {array.map((selected, index) =>
           <div key={`dieCut${index}`} className='die-cuts' style={{ margin: '8px 0' }}>
-            {selected && <Button className="remove-trinket" icon="close" shape="circle" type="danger" size="small" onClick={() => this.handleDieCuts({ index, value: false })} />}
-            <Icon type="switcher" style={{ margin: '10px 10px 0 0', color: selected ? '#68C6BF' : 'inherit' }} />
+            {selected !== false &&
+              <Button
+                className="remove-trinket"
+                icon="close"
+                shape="circle"
+                type="danger"
+                size="small"
+                onClick={() => this.handleDieCuts({ index, value: false })}
+              />
+            }
+            <Icon type="switcher" style={{ margin: '10px 10px 0 0', color: selected !== false ? '#68C6BF' : 'inherit' }} />
             <Input.Group compact style={{ display: 'initial' }}>
               <Select
+                className={selected === 'Custom Word' || !avail.includes(selected) ? 'custom-word' : ''}
                 value={selected === false ? `Custom Die Cuts` : !avail.includes(selected) ? 'Custom Word' : selected}
                 onChange={value => this.handleDieCuts({ index, value })}
                 style={{ width: selected === false && 225 }}
@@ -138,14 +148,15 @@ class Customization extends Component {
               </Select>
               {selected !== false && (selected === 'Custom Word' || !selected.length || !avail.includes(selected)) ?
                 <Input
-                  style={{ width: '33%' }}
+                  required
+                  className={selected === 'Custom Word' || !avail.includes(selected) ? 'custom-word' : ''}
                   value={selected === 'Custom Word' ? '' : selected}
-                  placeholder='Cheer, Senior, John 3:16...'
+                  placeholder='Senior, John 3:16, Stud, etc.'
                   onChange={e => this.handleDieCuts({ index, value: e.target.value })}
                 /> : ''
               }
             </Input.Group>
-            {selected ? additions({ extra: selected.includes('Package') ? dieCuts[camelize(selected)].price : dieCuts.general.price }) : ''}
+            {selected !== false ? additions({ extra: selected.includes('Package') ? dieCuts[camelize(selected)].price : dieCuts.general.price }) : ''}
           </div>
         )}
         <Divider />

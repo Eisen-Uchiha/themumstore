@@ -208,6 +208,14 @@ li.slick-active button {
   display: initial;
 }
 
+.custom-word.ant-select {
+  width: 34%;
+}
+
+.ant-input.custom-word {
+  width: 45%;
+}
+
 @media only screen and (max-width: 700px) {
   .nav {
     display: none;
@@ -251,7 +259,7 @@ li.slick-active button {
     min-width: 35px;
     min-height: 35px;
   }
-  .die-cuts .ant-select.ant-select-enabled {
+  .die-cuts .ant-select.ant-select-enabled:not(.custom-word.ant-select) {
     min-width: 131px;
   }
 }
