@@ -18,8 +18,8 @@ class ProductCard extends Component {
     return (
       <div className='card'>
         <Link to={`/${category}/${name.replace(' ', '-').toLowerCase()}`}>
-          <Card style={{ maxWidth: '350px', maxHeight: '311px', minWidth: '310px', minHeight: '500px', margin: '5px' }}>
-              <Card.Grid style={{ minWidth: '50%', textAlign: 'center', height: '-webkit-fill-available' }}>
+          <Card className='product-card'>
+              <Card.Grid className='product-card-image'>
                 <h3>{name}</h3>
                 <img
                   alt=''
@@ -29,7 +29,7 @@ class ProductCard extends Component {
                 />
                 <div style={{ padding: 10 }}><b>${price}</b></div>
               </Card.Grid>
-              <Card.Grid style={{ width: 'auto', textAlign: 'center', height: '-webkit-fill-available', maxWidth: '50%' }}>{description}</Card.Grid>
+              <Card.Grid className='product-card-desc' style={{ width: 'auto', textAlign: 'center', height: '-webkit-fill-available', maxWidth: '50%' }}>{description}</Card.Grid>
           </Card>
         </Link>
       </div>

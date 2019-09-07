@@ -19,7 +19,7 @@ const oneWeek =  7 * 8.64e+7
 
 
 const additions = ({ extra, id }) => (
-  <span style={{ color: 'green' }}> + ${!isNaN(extra) ? extra.toFixed(2) : '#.##'}</span>
+  <span className='addition-cost'> + ${!isNaN(extra) ? extra.toFixed(2) : '#.##'}</span>
 )
 
 class Customization extends Component {
@@ -70,20 +70,22 @@ class Customization extends Component {
   }
 
   colors = ({ colors, type }) => {
+    const array = !type.includes('ary') ? ['None'].concat(colors) : colors
     return (
-      <Select value={this.state.colors[type.toLowerCase()] || type} style={{ width: '33.3333%' }} onChange={value => this.handleChange({ category: 'colors', property: type.toLowerCase(), value: value })}>
-        {colors.map(option =>
-          <Select.Option key={option}><Icon type="smile" theme="filled" style={{ color: option === 'white' ? 'whitesmoke' : option }} /> {option.charAt(0).toUpperCase() + option.substring(1)}</Select.Option>
+      <Select value={this.state.colors[type.toLowerCase()] || type} style={{ width: '33.3333%' }} onChange={value => this.handleChange({ category: 'colors', property: type.toLowerCase(), value })}>
+        {array.map(option =>
+          <Select.Option key={option}>{option !== 'None' && <Icon type="smile" theme="filled" style={{ color: option === 'white' ? 'whitesmoke' : option }} />} {option.charAt(0).toUpperCase() + option.substring(1)}</Select.Option>
         )}
       </Select>
     )
   }
 
   activities = ({ activities, sports }) => {
+    const array = ['None'].concat(activities).concat(sports)
     return (
       Object.keys(this.state.activities).map(activity =>
-        <Select key={activity} value={this.state.activities[activity] || `Select Activity`} onChange={value => this.handleChange({ category: 'activities', property: activity, value: value })} style={{ width: '100%' }}>
-          {activities.concat(sports).map(option => {
+        <Select key={activity} value={this.state.activities[activity] || `Select Activity`} onChange={value => this.handleChange({ category: 'activities', property: activity, value })} style={{ width: '100%' }}>
+          {array.map(option => {
             const activity = option.charAt(0).toUpperCase() + option.substring(1)
             const icon = icons[activity]
            return <Select.Option key={option}>{icon}<span style={{ margin: '0 5px' }}>{activity}</span></Select.Option>
@@ -120,14 +122,14 @@ class Customization extends Component {
     return (
       <div>
         {array.map((selected, index) =>
-          <div key={`dieCut${index}`} style={{ margin: '8px 0' }}>
+          <div key={`dieCut${index}`} className='die-cuts' style={{ margin: '8px 0' }}>
             {selected && <Button className="remove-trinket" icon="close" shape="circle" type="danger" size="small" onClick={() => this.handleDieCuts({ index, value: false })} />}
             <Icon type="switcher" style={{ margin: '10px 10px 0 0', color: selected ? '#68C6BF' : 'inherit' }} />
             <Input.Group compact style={{ display: 'initial' }}>
               <Select
                 value={selected === false ? `Custom Die Cuts` : !avail.includes(selected) ? 'Custom Word' : selected}
                 onChange={value => this.handleDieCuts({ index, value })}
-                style={{ width: 225 }}
+                style={{ width: selected === false && 225 }}
               >
                 {avail.map(option => {
                   const cat = option.includes('Package') ? camelize(option) : 'general'
@@ -136,7 +138,7 @@ class Customization extends Component {
               </Select>
               {selected !== false && (selected === 'Custom Word' || !selected.length || !avail.includes(selected)) ?
                 <Input
-                  style={{ width: 'auto' }}
+                  style={{ width: '33%' }}
                   value={selected === 'Custom Word' ? '' : selected}
                   placeholder='Cheer, Senior, John 3:16...'
                   onChange={e => this.handleDieCuts({ index, value: e.target.value })}
@@ -153,7 +155,7 @@ class Customization extends Component {
 
   handleChange = ({ category, property, value }) => {
     const newState = { ...this.state[category] }
-    newState[property] = value
+    newState[property] = value === 'None' ? null : value
     this.setState({ [category]: newState }, () => window.localStorage.setItem('custom', JSON.stringify({ date: new Date().getTime(), details: this.state })))
   }
 

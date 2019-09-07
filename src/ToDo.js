@@ -1,15 +1,14 @@
-//(1) Reconfig "custom die cuts"
-  // Use object to configure in customization. It needs a type property and value property, so the "custom word" can have a configurable value
-  // First Name, School Name, Custom Word, School Mascot Name, School Mascot Logo, Cheer Package, Senior Package
-  // Separate section from other extras
-  // Selecting option makes another line for another die cut configuration
+//(1) Add descriptions of extras
   // Option line should be button group to select between dropdown that includes the specific mascot images in inventory (Picture Optional)
+
+
+//(2) Make Color Circles and Cart Names 3D like silver css rule
+
+//(2) Add Tooltips
 
 //(2) Add pictures to website
 
 //(3) Show required fields in customization
-
-//(4) Allow deselect in accent color dropdown
 
 //(5) Style the info in Product Card under the image to save text space in explaining the dimensions and extras
 

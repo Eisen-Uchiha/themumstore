@@ -129,13 +129,75 @@ li.slick-active button {
 }
 
 .card {
-  flex: 0 1 26%;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: 26%;
+}
+
+.product-card {
+  max-width: 350px;
+  max-height: 311px;
+  min-width: 310px;
+  min-height: 500px;
+  margin: 5px 15px;
+}
+
+.product-card-image {
+  text-align: center;
+  min-width: 50%;
+  min-height: 499px;
+}
+
+.product-card-desc {
+  width: fit-content;
+  text-align: center;
+  max-width: 50%;
+  min-height: 499px;
+}
+
+.cart {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.cart-item-colors {
+  height: 20px;
+  width: 20px;
+  padding: 5;
+  margin: 0 2px;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: baseline;
+  border: 1px solid lightgray;
+}
+
+.cart-item-title {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-size: x-large;
+  color: black;
+  font-weight: 500;
+}
+
+.cart-item-mod {
+  width: 35px !important;
+  height: 35px !important;
+  margin: 0 5px;
+}
+
+.ant-list-vertical .ant-list-item-action {
+  margin-bottom: 0;
 }
 
 .customization-image {
   width: auto;
   padding: 0 5%;
   max-height: 500px;
+}
+
+.addition-cost {
+  color: green;
+  white-space: nowrap;
 }
 
 .remove-trinket {
@@ -146,7 +208,7 @@ li.slick-active button {
   display: initial;
 }
 
-@media only screen and (max-width: 680px) {
+@media only screen and (max-width: 700px) {
   .nav {
     display: none;
   }
@@ -171,14 +233,47 @@ li.slick-active button {
   .customization-image {
     max-width: 300px;
   }
+  .cart-list .ant-list-item-action > li {
+    min-width: 100%;
+  }
+
+  .ant-list-item-action-split {
+    display: none;
+  }
+  .cart-item-colors {
+    margin: 0 10px;
+  }
+  .ant-list-vertical .ant-list-item-action > li {
+    padding: 5px 16px;
+  }
+  .ant-list-item-action button {
+    margin: 10px 10px 0 10px;
+    min-width: 35px;
+    min-height: 35px;
+  }
+  .die-cuts .ant-select.ant-select-enabled {
+    min-width: 131px;
+  }
 }
 
-@media only screen and (min-width: 680px) {
+@media only screen and (min-width: 700px) {
   .nav {
     display: block;
   }
   .mobile-nav {
     display: none;
   }
+}
+
+.silver-color {
+  background: linear-gradient(#eee, #333);
+  -webkit-text-fill-color: transparent;
+}
+
+.silver-text {
+  background: linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 

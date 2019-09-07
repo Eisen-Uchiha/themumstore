@@ -10,35 +10,35 @@ import icons from '../icons'
 
 const oneWeek =  7 * 8.64e+7
 
-const dotStyle = ({ color }) => {
-  return {
-    height: '20px',
-    width: '20px',
-    padding: 5,
-    margin: '0 2px',
-    backgroundColor: color,
-    borderRadius: '50%',
-    display: 'inline-block',
-    verticalAlign: 'baseline',
-  }
-}
+const schoolDetails = ({ name, mascot }) => (
+  <span>
+    <span style={{ fontSize: '1.2em' }}>{name}</span>
+    <Divider type="vertical" />
+    <span style={{ fontSize: '1.2em' }}>{mascot}</span>
+  </span>
+)
 
 const dots = ({ colors }) => (
-  Object.keys(colors).map(c => colors[c] && <span key={c} style={dotStyle({ color: colors[c] })}></span>)
+  Object.keys(colors).map(c => colors[c] && <span key={c} className={`cart-item-colors ${colors[c].match(/silver/) ? 'silver-color' : ''}`} style={{ backgroundColor: colors[c] }}></span>)
 )
 
 const activityIcons = ({ activities, color }) => (
-  Object.keys(activities).map(a => activities[a] && <span key={a} style={{ padding: 5, fontSize: 20, color }}>{icons[activities[a]]}</span>)
+  Object.keys(activities).map(a => activities[a] && <span key={a} style={{ padding: 5, fontSize: 20, color: color.match(/white/) ? 'inherit' : color }}>{icons[activities[a]]}</span>)
 )
 
-const title = ({ item }) => {
-  const title = `${item.product} ${item.category.replace('s', '')}`
-  return(
-    <div>
-      <h2>{title}</h2>
-      {item.names.second ? <h3>{item.names.first} <Divider type='vertical' /> {item.names.second}</h3> : <h3>{item.names.first}</h3>}
-    </div>
-  )
+const addonStyle = ({ color, present }) => {
+  const style = {
+    padding: '3px',
+    margin: '3px',
+    color: 'gainsboro'
+  }
+
+  if (present) {
+    const fill = color === 'white' ? 'inherit' : color
+    style.color = fill
+  }
+
+  return style
 }
 
 class Cart extends Component {
@@ -50,16 +50,41 @@ class Cart extends Component {
     this.state = { data: this.dataPush(products), products, toRedirect: null, paid: false }
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0)
+  }
+
   dataPush = (products) => {
     return Object.keys(products).map(p => ({ id: p, ...products[p] }))
   }
 
-  cartButtons = ({ id }) => {
-    return (
-      <span style={{ verticalAlign: 'super' }}>
-        <Button style={{ margin: '0 2px' }} size="small" icon="edit" onClick={() => this.handleCart({ action: 'edit', id })} />
-        <Button style={{ margin: '0 2px' }} size="small" icon="close" onClick={() => this.handleCart({ action: 'delete', id })} />
-      </span>
+  itemDetails = (item) => {
+    const { activities, school, colors, extras, id, product } = item
+    const array = []
+    if (activities.first || activities.second || activities.third) array.push(activityIcons({ activities, color: colors.primary }))
+    array.push(schoolDetails(school))
+    array.push(dots({ colors }))
+    array.push(this.addons({ id, extras, color: colors.primary, size: product.match(/\w+/g).join('').toLowerCase() }))
+
+    return array
+  }
+
+  title = ({ product, category, names, id, colors }) => {
+    const title = `${product} ${category.replace('s', '')}`
+    return(
+      <div>
+        <div style={{ marginBottom: '10px' }}>
+          <span className='cart-item-title'>{title}</span>
+          <span style={{ verticalAlign: 'super' }}>
+            <Button className='cart-item-mod' size="small" icon="edit" onClick={() => this.handleCart({ action: 'edit', id })} />
+            <Button className='cart-item-mod' size="small" icon="close" type='danger' onClick={() => this.handleCart({ action: 'delete', id })} />
+          </span>
+        </div>
+        {names.second ?
+          <h3 className={`${colors.primary.match(/silver|white/) && 'silver-text'}`} style={{ color: colors.primary }}>{names.first.toUpperCase()} <Divider type='vertical' /> {names.second.toUpperCase()}</h3> :
+          <h3 className={`${colors.primary.match(/silver|white/) && 'silver-text'}`} style={{ color: colors.primary }}>{names.first.toUpperCase()}</h3>
+        }
+      </div>
     )
   }
 
@@ -67,12 +92,12 @@ class Cart extends Component {
     const { loops, boa, bling, extraWidth, trinkets, dieCuts } = prices.main[size]
     return (
       <span style={{ padding: '5px', fontSize: '20px' }}>
-        {loops !== null && <span style={{ padding: '5px', color: extras.loops && color }} onClick={() => this.handleAddons({ key: 'loops', id })}><FontAwesomeIcon icon={faRibbon} /></span>}
-        {boa !== null && <span style={{ padding: '5px', color: extras.boa && color }} onClick={() => this.handleAddons({ key: 'boa', id })}><FontAwesomeIcon icon={faFeatherAlt} /></span>}
-        {bling !== null && <span style={{ padding: '5px', color: extras.bling && color }} onClick={() => this.handleAddons({ key: 'bling', id })}><FontAwesomeIcon icon={faGem} /></span>}
-        {extraWidth !== null && <span style={{ padding: '5px', color: extras.extraWidth && color }} onClick={() => this.handleAddons({ key: 'extraWidth', id })}><Icon type='column-width' /></span>}
-        {trinkets !== null && <span style={{ padding: '5px', color: extras.trinkets.length && color }} onClick={null}><Icon type='thunderbolt' /></span>}
-        {dieCuts !== null && <span style={{ padding: '5px' }} ><Icon type='switcher' theme={extras.dieCuts && 'twoTone'} twoToneColor={extras.dieCuts && color} /></span>}
+        {loops !== null && <span style={addonStyle({ present: extras.loops, color })} onClick={() => this.handleAddons({ key: 'loops', id })}><FontAwesomeIcon icon={faRibbon} /></span>}
+        {boa !== null && <span style={addonStyle({ present: extras.boa, color })} onClick={() => this.handleAddons({ key: 'boa', id })}><FontAwesomeIcon icon={faFeatherAlt} /></span>}
+        {bling !== null && <span style={addonStyle({ present: extras.bling, color })} onClick={() => this.handleAddons({ key: 'bling', id })}><FontAwesomeIcon icon={faGem} /></span>}
+        {extraWidth !== null && <span style={addonStyle({ present: extras.extraWidth, color })} onClick={() => this.handleAddons({ key: 'extraWidth', id })}><Icon type='column-width' /></span>}
+        {trinkets !== null && <span style={addonStyle({ present: extras.trinkets.length, color })} onClick={null}><Icon type='thunderbolt' theme='filled' /></span>}
+        {dieCuts !== null && <span style={addonStyle({ present: extras.dieCuts, color })} ><Icon type='switcher' theme={extras.dieCuts && 'filled'} twoToneColor={extras.dieCuts && color} /></span>}
       </span>
     )
   }
@@ -142,8 +167,9 @@ class Cart extends Component {
 
     return (
       <div style={{ margin: '2%', background: 'white', padding: 20 }}>
-        <h1 style={{ textAlign: 'center', marginTop: '40px' }}>Shopping Cart</h1>
+        <h1 className='cart'>Shopping Cart</h1>
         <List
+          className='cart-list'
           itemLayout='vertical'
           // size="large"
           pagination={{
@@ -161,19 +187,13 @@ class Cart extends Component {
             <List.Item
               key={item.title}
               style={{ border: '1px solid #F7DC99', padding: '20px' }}
-              actions={[
-                item.activities.first ? activityIcons({ activities: item.activities, color: item.colors.primary }) : icons.Star,
-                <span style={{ fontSize: '1.2em' }}>{item.school.name}</span>,
-                <span style={{ fontSize: '1.2em' }}>{item.school.mascot}</span>,
-                dots({ colors: item.colors }),
-                this.addons({ id: item.id, extras: item.extras, color: item.colors.primary, size: item.product.match(/\w+/g).join('').toLowerCase() }),
-                this.cartButtons({ id: item.id }),
-              ]}
+              actions={this.itemDetails(item)}
               extra={
                 <img
                   width={150}
                   alt="logo"
-                  src="https://media.altpress.com/uploads/2018/07/Hello_Kitty.jpg"
+                  src={`/media/current-models/${item.category.replace('s','')}-${item.product.replace(' ', '-').toLowerCase()}.jpeg`}
+                  onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
                 />
               }
             >
@@ -181,7 +201,7 @@ class Cart extends Component {
                 // avatar={<Avatar src={item.avatar} />}
                 title={''}
                 // description={item.description}
-                description={title({ item })}
+                description={this.title(item)}
               />
             </List.Item>
           )}
