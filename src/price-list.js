@@ -44,8 +44,18 @@ const prices = {
         }
       },
       dieCuts: {
-        name: 'Custom Die Cuts',
-        price: null,
+        general: {
+          name: 'Custom Die Cuts',
+          price: null,
+        },
+        cheerPackage: {
+          name: 'Cheer Package',
+          price: null,
+        },
+        seniorPackage: {
+          name: 'Senior Package',
+          price: null,
+        }
       }
     },
 
@@ -91,8 +101,18 @@ const prices = {
         }
       },
       dieCuts: {
-        name: 'Custom Die Cuts',
-        price: 7.00,
+        general: {
+          name: 'Custom Die Cuts',
+          price: 7.00,
+        },
+        cheerPackage: {
+          name: 'Cheer Package',
+          price: 18.00,
+        },
+        seniorPackage: {
+          name: 'Senior Package',
+          price: 18.00,
+        }
       }
     },
 
@@ -142,8 +162,18 @@ const prices = {
         }
       },
       dieCuts: {
-        name: 'Custom Die Cuts',
-        price: 7.00,
+        general: {
+          name: 'Custom Die Cuts',
+          price: 7.00,
+        },
+        cheerPackage: {
+          name: 'Cheer Package',
+          price: 18.00,
+        },
+        seniorPackage: {
+          name: 'Senior Package',
+          price: 18.00,
+        }
       }
     },
 
@@ -191,8 +221,18 @@ const prices = {
         }
       },
       dieCuts: {
-        name: 'Custom Die Cuts',
-        price: 7.00,
+        general: {
+          name: 'Custom Die Cuts',
+          price: 7.00,
+        },
+        cheerPackage: {
+          name: 'Cheer Package',
+          price: 18.00,
+        },
+        seniorPackage: {
+          name: 'Senior Package',
+          price: 18.00,
+        }
       }
     },
 
@@ -242,8 +282,18 @@ const prices = {
         }
       },
       dieCuts: {
-        name: 'Custom Die Cuts',
-        price: 7.00,
+        general: {
+          name: 'Custom Die Cuts',
+          price: 7.00,
+        },
+        cheerPackage: {
+          name: 'Cheer Package',
+          price: 18.00,
+        },
+        seniorPackage: {
+          name: 'Senior Package',
+          price: 18.00,
+        }
       }
     },
 
@@ -295,8 +345,18 @@ const prices = {
         }
       },
       dieCuts: {
-        name: 'Custom Die Cuts',
-        price: 7.00,
+        general: {
+          name: 'Custom Die Cuts',
+          price: 7.00,
+        },
+        cheerPackage: {
+          name: 'Cheer Package',
+          price: 18.00,
+        },
+        seniorPackage: {
+          name: 'Senior Package',
+          price: 18.00,
+        }
       }
     },
   },

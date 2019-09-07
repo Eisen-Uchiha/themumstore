@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip } from 'antd'
+import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip, Divider } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
+import { camelize } from '../Shared'
 import icons from '../icons'
 import prices from '../../price-list'
 
@@ -63,7 +64,7 @@ class Customization extends Component {
         bling: bling ? details.extras.bling : false || false,
         extraWidth: extraWidth ? details.extras.extraWidth : false || false,
         trinkets: details.extras.trinkets || [],
-        dieCuts: dieCuts.price ? details.extras.dieCuts || [] : [],
+        dieCuts: dieCuts.general.price ? details.extras.dieCuts || [] : [],
       },
     }
   }
@@ -100,14 +101,14 @@ class Customization extends Component {
         {array.map((selected, index) =>
           <div key={`trinket${index}`} style={{ margin: '8px 0' }}>
             {selected && <Button className="remove-trinket" icon="close" shape="circle" type="danger" size="small" onClick={() => this.handleTrinket({ index, value: false })} />}
-            <Icon type="thunderbolt" style={{ margin: '6px', color: selected ? '#68C6BF' : 'inherit' }} />
+            <Icon type="thunderbolt" style={{ margin: '10px 10px 0 0', color: selected ? '#68C6BF' : 'inherit' }} />
             <Select value={selected || `Mascots and Premium Trinkets`} onChange={value => this.handleTrinket({ index, value })}>
               {trinketsAvailable.map(option => <Select.Option key={option}>{trinkets[option].name} {!selected && additions({ extra: trinkets[option].price })}</Select.Option>)}
             </Select>
             {selected ? additions({ extra: trinkets[selected].price }) : ''}
           </div>
         )}
-        <br />
+        <Divider />
       </div>
     )
   }
@@ -121,10 +122,17 @@ class Customization extends Component {
         {array.map((selected, index) =>
           <div key={`dieCut${index}`} style={{ margin: '8px 0' }}>
             {selected && <Button className="remove-trinket" icon="close" shape="circle" type="danger" size="small" onClick={() => this.handleDieCuts({ index, value: false })} />}
-            <Icon type="switcher" style={{ margin: '6px', color: selected ? '#68C6BF' : 'inherit' }} />
+            <Icon type="switcher" style={{ margin: '10px 10px 0 0', color: selected ? '#68C6BF' : 'inherit' }} />
             <Input.Group compact style={{ display: 'initial' }}>
-              <Select value={selected === false ? `Custom Die Cuts` : !avail.includes(selected) ? 'Custom Word' : selected} onChange={value => this.handleDieCuts({ index, value })}>
-                {avail.map(option => <Select.Option key={option}>{option} {!selected && additions({ extra: dieCuts.price })}</Select.Option>)}
+              <Select
+                value={selected === false ? `Custom Die Cuts` : !avail.includes(selected) ? 'Custom Word' : selected}
+                onChange={value => this.handleDieCuts({ index, value })}
+                style={{ width: 225 }}
+              >
+                {avail.map(option => {
+                  const cat = option.includes('Package') ? camelize(option) : 'general'
+                  return <Select.Option key={option}>{option} {!selected && additions({ extra: dieCuts[cat].price })}</Select.Option>
+                })}
               </Select>
               {selected !== false && (selected === 'Custom Word' || !selected.length || !avail.includes(selected)) ?
                 <Input
@@ -135,10 +143,10 @@ class Customization extends Component {
                 /> : ''
               }
             </Input.Group>
-            {selected ? additions({ extra: dieCuts.price }) : ''}
+            {selected ? additions({ extra: selected.includes('Package') ? dieCuts[camelize(selected)].price : dieCuts.general.price }) : ''}
           </div>
         )}
-        <br />
+        <Divider />
       </div>
     )
   }
@@ -206,12 +214,13 @@ class Customization extends Component {
     const { extras, category, product } = this.state
     const cat = category.toLowerCase()
     const prod = product.toLowerCase().replace(' ', '')
-    const { trinkets } = prices.main[prod]
+    const { trinkets, dieCuts } = prices.main[prod]
     const xtras = ['loops', 'boa', 'bling', 'extraWidth']
     const baseItem = prices.main[prod][cat].price
     const totalExtras = xtras.filter(x => extras[x]).reduce((acc, xtra) => acc + prices.main[prod][xtra], 0)
     const totalTrinkets = extras.trinkets.reduce((acc, tri) => acc + trinkets[tri].price, 0)
-    const totalCost = baseItem + totalExtras + totalTrinkets
+    const totalDieCuts = extras.dieCuts.reduce((acc, di) => acc + dieCuts[di.includes('Package') ? camelize(di) : 'general'].price, 0)
+    const totalCost = baseItem + totalExtras + totalTrinkets + totalDieCuts
     const total = Number(totalCost.toFixed(2))
 
     return total
@@ -284,7 +293,7 @@ class Customization extends Component {
               {this.activities({ activities, sports })}
               <div style={{ marginTop: 10 }}><b>Additions</b></div>
               <div>{this.trinkets(trinkets)}</div>
-              {/* <div>{this.dieCuts(dieCuts)}</div> */}
+              {dieCuts.general.price && <div>{this.dieCuts(dieCuts)}</div>}
               <div><Checkbox disabled={loops === null} checked={extras.loops} onChange={() => this.handleChange({ category: 'extras', property: 'loops', value: !extras.loops })}><FontAwesomeIcon icon={faRibbon} style={{ color: extras.loops ? '#68C6BF' : 'inherit' }} /> {product.match(/Spirit|Mini|Small/) ? 'Add Single Color Loops' : 'Upgrade To Decorative Loops'}{loops ? additions({ extra: loops }) : ''}</Checkbox></div>
               <div><Checkbox disabled={boa === null} checked={extras.boa} onChange={() => this.handleChange({ category: 'extras', property: 'boa', value: !extras.boa })}><FontAwesomeIcon icon={faFeatherAlt} style={{ color: extras.boa ? '#68C6BF' : 'inherit' }} /> Add Feather Boa {boa ? additions({ extra: boa }) : ''}</Checkbox></div>
               <div><Checkbox disabled={bling === null} checked={extras.bling} onChange={() => this.handleChange({ category: 'extras', property: 'bling', value: !extras.bling })}><FontAwesomeIcon icon={faGem} style={{ color: extras.bling ? '#68C6BF' : 'inherit' }} /> Add Bling Package {bling ? additions({ extra: bling }) : ''}</Checkbox></div>

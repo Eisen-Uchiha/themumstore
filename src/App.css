@@ -44,9 +44,9 @@ li.slick-active button {
 }
 
 .layout.ant-layout {
-  min-height: -moz-available;          /* WebKit-based browsers will ignore this. */
-  min-height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
-  min-height: stretch
+  min-height: -moz-available;
+  min-height: -webkit-fill-available;
+  min-height: stretch;
 }
 
 .ant-layout-content {

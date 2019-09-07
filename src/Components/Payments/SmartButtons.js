@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import scriptLoader from 'react-async-script-loader'
 import { Spin, Input, Tooltip, Icon } from 'antd'
+import { camelize } from '../Shared'
 import prices from '../../price-list'
 
 const CLIENT = {
@@ -77,7 +78,8 @@ class PaypalButton extends Component {
     const extrarray = Object.keys(item.extras)
     const totalExtras = extrarray.reduce((acc, curr) => item.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
     const totalTrinkets = item.extras.trinkets.reduce((acc, tri) => acc + currentPrices.trinkets[tri].price, 0)
-    total = total + baseItem + totalExtras + totalTrinkets
+    const totalDieCuts = item.extras.dieCuts.reduce((acc, di) => acc + currentPrices.dieCuts[di.includes('Package') ? camelize(di) : 'general'].price, 0)
+    total = total + baseItem + totalExtras + totalTrinkets + totalDieCuts
     total = Number(total.toFixed(2))
     return total
   }
@@ -162,7 +164,7 @@ class PaypalButton extends Component {
     const orders = Object.keys(products).map(p => {
       const prod = products[p]
       const { product, category, school, activities, colors, extras, names } = prod
-      const { trinkets } = extras
+      const { trinkets, dieCuts } = extras
 
       const order = {
         'Customer Name': `${details.payer.name.given_name} ${details.payer.name.surname}`,
@@ -182,6 +184,7 @@ class PaypalButton extends Component {
         'Activities': Object.entries(activities).filter(([key, value]) => value).map(([key, value]) => value),
         'Extras': formatExtras(extras),
         'Trinkets': formatTrinkets({ trinkets, product }),
+        'Die Cuts': formatDieCuts({ dieCuts, product }),
         'Status': 'Ordered',
       }
       return order
@@ -313,6 +316,16 @@ function formatTrinkets({ trinkets, product }) {
   })
   const formattedTrinkets = Object.keys(counter).map(tri => `${counter[tri]} ${prices.main[prod].trinkets[tri].name}${counter[tri] > 1 ? 's' : ''}`).join(', ')
   return formattedTrinkets
+}
+
+function formatDieCuts({ dieCuts, product }) {
+  const counter = {}
+  dieCuts.forEach(tri => {
+    if (!counter[tri]) counter[tri] = 0
+    counter[tri] = counter[tri] + 1
+  })
+  const formattedDieCuts = Object.keys(counter).map(tri => `${counter[tri]} ${tri}${counter[tri] > 1 ? 's' : ''}`).join(', ')
+  return formattedDieCuts
 }
 
 function formatPhone(value) {

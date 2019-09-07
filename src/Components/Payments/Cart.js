@@ -3,6 +3,7 @@ import { List, Button, Divider, Icon } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
+import { camelize } from '../Shared'
 import SmartButtons from './SmartButtons'
 import prices from '../../price-list'
 import icons from '../icons'
@@ -63,7 +64,7 @@ class Cart extends Component {
   }
 
   addons = ({ extras, id, color, size }) => {
-    const { loops, boa, bling, extraWidth, trinkets, twoTone } = prices.main[size]
+    const { loops, boa, bling, extraWidth, trinkets, dieCuts } = prices.main[size]
     return (
       <span style={{ padding: '5px', fontSize: '20px' }}>
         {loops !== null && <span style={{ padding: '5px', color: extras.loops && color }} onClick={() => this.handleAddons({ key: 'loops', id })}><FontAwesomeIcon icon={faRibbon} /></span>}
@@ -71,7 +72,7 @@ class Cart extends Component {
         {bling !== null && <span style={{ padding: '5px', color: extras.bling && color }} onClick={() => this.handleAddons({ key: 'bling', id })}><FontAwesomeIcon icon={faGem} /></span>}
         {extraWidth !== null && <span style={{ padding: '5px', color: extras.extraWidth && color }} onClick={() => this.handleAddons({ key: 'extraWidth', id })}><Icon type='column-width' /></span>}
         {trinkets !== null && <span style={{ padding: '5px', color: extras.trinkets.length && color }} onClick={null}><Icon type='thunderbolt' /></span>}
-        {/* {twoTone !== null && <span style={{ padding: '5px' }} onClick={() => this.handleAddons({ key: 'twoTone', id })}><Icon type='switcher' theme={extras.twoTone && 'twoTone'} twoToneColor={extras.twoTone && color} /></span>} */}
+        {dieCuts !== null && <span style={{ padding: '5px' }} ><Icon type='switcher' theme={extras.dieCuts && 'twoTone'} twoToneColor={extras.dieCuts && color} /></span>}
       </span>
     )
   }
@@ -126,7 +127,8 @@ class Cart extends Component {
       const extrarray = Object.keys(obj.extras)
       const totalExtras = extrarray.reduce((acc, curr) => obj.extras[curr] === true ? acc + currentPrices[curr] : acc, 0)
       const totalTrinkets = obj.extras.trinkets.reduce((acc, tri) => acc + currentPrices.trinkets[tri].price, 0)
-      total = total + baseItem + totalExtras + totalTrinkets
+      const totalDieCuts = obj.extras.dieCuts.reduce((acc, di) => acc + currentPrices.dieCuts[di.includes('Package') ? camelize(di) : 'general'].price, 0)
+      total = total + baseItem + totalExtras + totalTrinkets + totalDieCuts
       total = Number(total.toFixed(2))
     }
 
