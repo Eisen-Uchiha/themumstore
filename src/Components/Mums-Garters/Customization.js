@@ -251,17 +251,14 @@ class Customization extends Component {
         <Header style={{ textAlign: 'center' }}><h1>{product} {category.replace('s','')} Customization</h1></Header>
         <Content style={{ background: 'white' }}>
           <div className='cards' style={{ justifyContent: 'center' }}>
-            <div className='card' style={{ textAlign: 'center', margin: '2%' }}>
-              <div>
-                <img
-                  className='customization-image'
-                  src={`/media/current-models/${category.replace('s','')}-${product.replace(' ', '-').toLowerCase()}.jpeg`}
-                  onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
-                  alt=''
-                />
-              </div>
+            <div className='card customization-image' style={{  }}>
+              <img
+                src={`/media/current-models/${category.replace('s','')}-${product.replace(' ', '-').toLowerCase()}.jpeg`}
+                onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
+                alt=''
+              />
             </div>
-            <div className='card' style={{ margin: '2%', minWidth: 'fit-content' }}>
+            <div className='card customization-details'>
               <div><b>School Name</b></div>
               <Input
                 value={school.name}

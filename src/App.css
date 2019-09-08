@@ -11,6 +11,7 @@
   white-space: nowrap;
   padding: 0 20%;
   width: fit-content;
+  width: -moz-fit-content;
 }
 
 .site-font {
@@ -62,6 +63,8 @@ li.slick-active button {
 .slick-slide div, .logo img {
   width: auto !important;
   height: -webkit-fill-available !important;
+  height: -moz-available !important;
+  height: stretch !important;
 }
 
 .ant-card-grid {
@@ -148,8 +151,16 @@ li.slick-active button {
   min-height: 499px;
 }
 
+.product-card-image > img {
+  width: inherit;
+  min-width: -moz-available;
+  min-width: -webkit-fill-available;
+  min-width: stretch;
+}
+
 .product-card-desc {
   width: fit-content;
+  width: -moz-fit-content;
   text-align: center;
   max-width: 50%;
   min-height: 499px;
@@ -190,9 +201,20 @@ li.slick-active button {
 }
 
 .customization-image {
+  text-align: center;
+  margin: 2%;
+}
+
+.customization-image > img {
   width: auto;
   padding: 0 5%;
   max-height: 500px;
+}
+
+.customization-details {
+  margin: 2%;
+  min-width: fit-content;
+  min-width: -moz-fit-content;
 }
 
 .addition-cost {
