@@ -156,7 +156,7 @@ class App extends Component {
                 </MenuItemGroup>
               </SubMenu> */}
           </Header>
-          <div style={{ background: '#F7DC99', textAlign: 'center', padding: '10px 10%', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
+          <div style={{ background: '#F7DC99', textAlign: 'center', padding: '10px 10%', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities in <b>Texas</b></div>
           <Content>
             <Switch>
               <Route exact path="/" component={Home} />
