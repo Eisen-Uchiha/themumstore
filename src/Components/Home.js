@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Carousel, Typography } from 'antd'
+import { Helmet } from 'react-helmet'
 
 const { Content } = Layout
 const { Title, Paragraph } = Typography
@@ -8,6 +9,11 @@ class Home extends Component {
   render() {
     return (
       <Layout style={{ background: '#fff', padding: '0 2%', minHeight: 350 }}>
+        <Helmet>
+          <title>Home Page</title>
+          <meta name="description" content="Home" />
+          <meta name="theme-color" content="#68C6BF" />
+        </Helmet>
         <Content>
           <div style={{ textAlign: "center" }}>
             <h1 className='site-font' style={{ fontSize: "-webkit-xxx-large", margin: '10px 0 0 0' }}>Boutique Mums</h1>

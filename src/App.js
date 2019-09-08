@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import { Layout, Icon, Menu, Badge, Row, Col } from 'antd'
+import { Helmet } from 'react-helmet'
 import Home from './Components/Home'
 import Mums from './Components/Mums-Garters/Mums'
 import Garters from './Components/Mums-Garters/Garters'
@@ -30,6 +31,11 @@ const NoMatch = () => {
   
   return (
     <div style={{ background: 'white', textAlign: 'center', padding: '5%' }}>
+      <Helmet>
+        <title>404 - Not Found</title>
+        <meta name="description" content="Not Found" />
+        <meta name="theme-color" content="#68C6BF" />
+      </Helmet>
       <h1>Sorry, we couldn’t find that page</h1>
       <h3>You'll be redirected back to the home page</h3>
   </div>
