@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import ReactGA from 'react-ga'
 import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip, Divider } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
@@ -185,6 +186,7 @@ class Customization extends Component {
   }
 
   handleCart = () => {
+    ReactGA.event({ category: 'Customization', action: 'Add To Cart' })
     const { modify, ...current } = this.state
     const name = `${current.product.replace(' ', '-')}${current.category.replace('s', '')}`
     const date = new Date().getTime()

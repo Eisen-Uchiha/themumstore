@@ -2,6 +2,8 @@ import React, { Component, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import { Layout, Icon, Menu, Badge, Row, Col } from 'antd'
 import { Helmet } from 'react-helmet'
+import ReactGA from 'react-ga'
+// import createHistory from 'history/createBrowserHistory'
 import Home from './Components/Home'
 import Mums from './Components/Mums-Garters/Mums'
 import Garters from './Components/Mums-Garters/Garters'
@@ -15,8 +17,16 @@ import Customization from './Components/Mums-Garters/Customization'
 import './App.css'
 import Privacy from './Components/Privacy'
 
+ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS)
+
+const trackPageView = () => {
+  ReactGA.set({ page: window.location.pathname })
+  ReactGA.pageview(window.location.pathname)
+  return null
+}
+
 const { Header, Content, Footer } = Layout
-const SubMenu = Menu.SubMenu;
+const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 const oneWeek =  7 * 8.64e+7
 
@@ -158,6 +168,7 @@ class App extends Component {
           </Header>
           <div style={{ background: '#F7DC99', textAlign: 'center', padding: '10px 10%', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities in <b>Texas</b></div>
           <Content>
+            <Route path="/" component={trackPageView} />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/mums" component={Mums} />
