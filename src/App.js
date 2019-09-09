@@ -17,7 +17,6 @@ import Customization from './Components/Mums-Garters/Customization'
 import './App.css'
 import Privacy from './Components/Privacy'
 
-console.log(process.env)
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS)
 
 const trackPageView = () => {
