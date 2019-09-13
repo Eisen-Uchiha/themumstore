@@ -28,7 +28,7 @@ class Customization extends Component {
     super(props)
     const date = new Date().getTime()
     const customStorage = JSON.parse(window.localStorage.getItem('custom')) || { date, details: Object.assign(...failsafe.map(val => ({ [val]: {} }))) }
-    const details = (customStorage.date - date) < oneWeek ? customStorage.details : {}
+    const details = (customStorage.date - date) < oneWeek ? customStorage.details : Object.assign(...failsafe.map(val => ({ [val]: {} })))
     const path = props.match.params
     const category = path[0].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
     const product = path[1].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
@@ -255,7 +255,7 @@ class Customization extends Component {
           <div className='cards' style={{ justifyContent: 'center' }}>
             <div className='card customization-image' style={{  }}>
               <img
-                src={`/media/current-models/${category.replace('s','')}-${product.replace(' ', '-').toLowerCase()}.jpeg`}
+                src={`/media/current-models/${product.replace(' ', '-').toLowerCase()}-${category.replace('s','')}.png`}
                 onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
                 alt=''
               />
