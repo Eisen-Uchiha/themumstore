@@ -42,8 +42,7 @@ const NoMatch = () => {
   return (
     <div style={{ background: 'white', textAlign: 'center', padding: '5%' }}>
       <Helmet>
-        <title>404 - Not Found</title>
-        <meta name="description" content="Not Found" />
+        <meta name="description" content="Page Not Found" />
         <meta name="theme-color" content="#68C6BF" />
       </Helmet>
       <h1>Sorry, we couldn’t find that page</h1>
@@ -145,15 +144,15 @@ class App extends Component {
       <Router>
         <Layout className="layout">
           <Header className='menu-header'>
-          <Row type="flex" justify="start">
-            <Col span={7}>
-              <div className="site-header site-font">Boutique Mums</div>
-            </Col>
-            <Col span={17}>
-              {this.DeskMenu({ menu, cartSize })}
-              {this.MobileMenu({ menu, cartSize })}
-            </Col>
-          </Row>
+            <Row type="flex" justify="start">
+              <Col span={7}>
+                <div className="site-header site-font">Boutique Mums</div>
+              </Col>
+              <Col span={17}>
+                {this.DeskMenu({ menu, cartSize })}
+                {this.MobileMenu({ menu, cartSize })}
+              </Col>
+            </Row>
             {/* <div className="logo">
               <Link to="/"><img alt='' src="/icons/kitty-square.png" onClick={() => this.handleMenu([])} /></Link>
             </div> */}

@@ -169,8 +169,7 @@ class Cart extends Component {
     return (
       <div style={{ margin: '2%', background: 'white', padding: 20 }}>
         <Helmet>
-          <title>Shopping Cart</title>
-          <meta name="description" content="Shopping Cart - Powered by PayPal" />
+          <meta name="description" content="Online Store" />
           <meta name="theme-color" content="#68C6BF" />
         </Helmet>
         <h1 className='cart'>Shopping Cart</h1>

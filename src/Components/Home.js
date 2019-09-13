@@ -10,8 +10,8 @@ class Home extends Component {
     return (
       <Layout style={{ background: '#fff', padding: '0 2%', minHeight: 350 }}>
         <Helmet>
-          <title>Home Page</title>
-          <meta name="description" content="Home" />
+          <title>Custom Mums and Garters</title>
+          <meta name="description" content="Hico, TX" />
           <meta name="theme-color" content="#68C6BF" />
         </Helmet>
         <Content>
