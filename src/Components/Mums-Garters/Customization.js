@@ -26,6 +26,7 @@ const additions = ({ extra, id }) => (
 class Customization extends Component {
   constructor(props) {
     super(props)
+    window.scrollTo(0, 0)
     const date = new Date().getTime()
     const customStorage = JSON.parse(window.localStorage.getItem('custom')) || { date, details: Object.assign(...failsafe.map(val => ({ [val]: {} }))) }
     const details = (customStorage.date - date) < oneWeek ? customStorage.details : Object.assign(...failsafe.map(val => ({ [val]: {} })))

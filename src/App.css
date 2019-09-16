@@ -209,6 +209,7 @@ li.slick-active button {
   width: auto;
   padding: 0 5%;
   max-height: 500px;
+  max-width: inherit;
 }
 
 .customization-details {

@@ -90,10 +90,10 @@ class App extends Component {
           <Link to="/"><Icon type="home" /></Link>
         </Menu.Item>
         <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
-          <Link to="/mums"style={{ color: '#c94dbd' }}><Icon type="woman" />Mums</Link>
+          <Link to="/mums" style={{ color: '#c94dbd' }}><Icon type="woman" />Mums</Link>
         </Menu.Item>
         <Menu.Item key="garters" onClick={() => this.handleMenu(['garters'])}>
-          <Link to="/garters"style={{ color: '#507bcc' }}><Icon type="man" />Garters</Link>
+          <Link to="/garters" style={{ color: '#507bcc' }}><Icon type="man" />Garters</Link>
           {/* <Link to="/garters"><i className='anticon'>{icons.Woman}</i> Garters</Link> */}
         </Menu.Item>
         {/* <SubMenu title="Extras">
