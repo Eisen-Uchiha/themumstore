@@ -150,7 +150,8 @@ class App extends Component {
                 </MenuItemGroup>
               </SubMenu> */}
           </Header>
-          <div style={{ background: '#F7DC99', textAlign: 'center', padding: '10px 10%', fontSize: '1.15em' }}>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
+          <div className='caution-banner'>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
+          <div className='danger-banner'>We've reached our capacity for <b>Hico and Cranfills Gap</b> orders. See you next year, <b>Homecoming 2020!</b></div>
           <Content>
             <Switch>
               <Route exact path="/" component={Home} />

@@ -59,6 +59,20 @@ li.slick-active button {
   padding: 0;
 }
 
+.caution-banner {
+  background: #F7DC99;
+  text-align: center;
+  padding: 10px 10%;
+  font-size: 1.15em;
+}
+
+.danger-banner {
+  background: #F92B00;
+  text-align: center;
+  padding: 20px 10%;
+  font-size: 1.15em;
+}
+
 .slick-slide div, .logo img {
   width: auto !important;
   height: -webkit-fill-available !important;
