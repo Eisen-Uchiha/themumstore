@@ -320,7 +320,7 @@ class Customization extends Component {
         </Content>
           <Footer style={{ background: 'white', textAlign: 'center', padding: '1%', margin: '2% 0 5% 0' }}>
             <h3><b>Total Price:</b> ${total}</h3>
-            {/* COVID - remove cart button */}
+            {/* COVID - Hidden Cart Button */}
             {/* <Button type='primary' onClick={this.handleCart}>{modify ? 'Save Changes' : 'Add To Cart'}</Button> */}
           </Footer>
       </Layout>
