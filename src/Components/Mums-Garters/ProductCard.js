@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card } from 'antd'
+import { Card, Button } from 'antd'
 import { Link } from "react-router-dom";
 
 const products = {
@@ -23,11 +23,11 @@ class ProductCard extends Component {
                 <h3>{name}</h3>
                 <img
                   alt=''
-                  style={{ width: 'inherit', minWidth: '-webkit-fill-available' }}
-                  src={`/media/current-models/${category.replace('s','')}-${name.replace(' ', '-').toLowerCase()}.jpeg`}
+                  src={`/media/current-models/${name.replace(' ', '-').toLowerCase()}-${category.replace('s','')}.png`}
                   onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
                 />
                 <div style={{ padding: 10 }}><b>${price}</b></div>
+                <Button type='primary' onClick={null}>Customize Yours</Button>
               </Card.Grid>
               <Card.Grid className='product-card-desc' style={{ width: 'auto', textAlign: 'center', height: '-webkit-fill-available', maxWidth: '50%' }}>{description}</Card.Grid>
           </Card>

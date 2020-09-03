@@ -1,6 +1,9 @@
 import React, { Component, useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 import { Layout, Icon, Menu, Badge, Row, Col } from 'antd'
+import { Helmet } from 'react-helmet'
+import ReactGA from 'react-ga'
+// import createHistory from 'history/createBrowserHistory'
 import Home from './Components/Home'
 import Mums from './Components/Mums-Garters/Mums'
 import Garters from './Components/Mums-Garters/Garters'
@@ -14,8 +17,16 @@ import Customization from './Components/Mums-Garters/Customization'
 import './App.css'
 import Privacy from './Components/Privacy'
 
+ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS)
+
+const trackPageView = () => {
+  ReactGA.set({ page: window.location.pathname })
+  ReactGA.pageview(window.location.pathname)
+  return null
+}
+
 const { Header, Content, Footer } = Layout
-const SubMenu = Menu.SubMenu;
+const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 const oneWeek =  7 * 8.64e+7
 
@@ -30,6 +41,10 @@ const NoMatch = () => {
   
   return (
     <div style={{ background: 'white', textAlign: 'center', padding: '5%' }}>
+      <Helmet>
+        <meta name="description" content="Page Not Found" />
+        <meta name="theme-color" content="#68C6BF" />
+      </Helmet>
       <h1>Sorry, we couldn’t find that page</h1>
       <h3>You'll be redirected back to the home page</h3>
   </div>
@@ -75,10 +90,10 @@ class App extends Component {
           <Link to="/"><Icon type="home" /></Link>
         </Menu.Item>
         <Menu.Item key="mums" onClick={() => this.handleMenu(['mums'])}>
-          <Link to="/mums"style={{ color: '#c94dbd' }}><Icon type="woman" />Mums</Link>
+          <Link to="/mums" style={{ color: '#c94dbd' }}><Icon type="woman" />Mums</Link>
         </Menu.Item>
         <Menu.Item key="garters" onClick={() => this.handleMenu(['garters'])}>
-          <Link to="/garters"style={{ color: '#507bcc' }}><Icon type="man" />Garters</Link>
+          <Link to="/garters" style={{ color: '#507bcc' }}><Icon type="man" />Garters</Link>
           {/* <Link to="/garters"><i className='anticon'>{icons.Woman}</i> Garters</Link> */}
         </Menu.Item>
         {/* <SubMenu title="Extras">
@@ -129,15 +144,15 @@ class App extends Component {
       <Router>
         <Layout className="layout">
           <Header className='menu-header'>
-          <Row type="flex" justify="start">
-            <Col span={7}>
-              <div className="site-header site-font">Boutique Mums</div>
-            </Col>
-            <Col span={17}>
-              {this.DeskMenu({ menu, cartSize })}
-              {this.MobileMenu({ menu, cartSize })}
-            </Col>
-          </Row>
+            <Row type="flex" justify="start">
+              <Col span={7}>
+                <div className="site-header site-font">Boutique Mums</div>
+              </Col>
+              <Col span={17}>
+                {this.DeskMenu({ menu, cartSize })}
+                {this.MobileMenu({ menu, cartSize })}
+              </Col>
+            </Row>
             {/* <div className="logo">
               <Link to="/"><img alt='' src="/icons/kitty-square.png" onClick={() => this.handleMenu([])} /></Link>
             </div> */}
@@ -150,9 +165,11 @@ class App extends Component {
                 </MenuItemGroup>
               </SubMenu> */}
           </Header>
-          <div className='caution-banner'>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div>
-          <div className='danger-banner'>We've reached our capacity for <b>Hico and Cranfills Gap</b> orders. See you next year, <b>Homecoming 2020!</b></div>
+          {/* <div className='caution-banner'>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div> */}
+          {/* <div className='danger-banner'>We've reached our capacity for <b>Hico and Cranfills Gap</b> orders. See you next year, <b>Homecoming 2020!</b></div> */}
+          <div className='danger-banner'><b>Sorry, no 2020 orders due to COVID-19</b></div>
           <Content>
+            <Route path="/" component={trackPageView} />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/mums" component={Mums} />

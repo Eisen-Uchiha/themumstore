@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Carousel, Typography } from 'antd'
+import { Helmet } from 'react-helmet'
 
 const { Content } = Layout
 const { Title, Paragraph } = Typography
@@ -8,9 +9,15 @@ class Home extends Component {
   render() {
     return (
       <Layout style={{ background: '#fff', padding: '0 2%', minHeight: 350 }}>
+        <Helmet>
+          <title>Custom Mums and Garters</title>
+          <meta name="description" content="Hico, TX" />
+          <meta name="theme-color" content="#68C6BF" />
+        </Helmet>
         <Content>
-          <div style={{ textAlign: "center" }}>
-            <h1 className='site-font' style={{ fontSize: "-webkit-xxx-large", margin: '10px 0 0 0' }}>Boutique Mums</h1>
+          <div style={{ textAlign: 'center' }}>
+            <h1 className='site-font' style={{ fontSize: '-webkit-xxx-large', margin: '10px 0 0 0' }}>Boutique Mums</h1>
+            <h1 className='site-font' style={{ fontSize: '1.25em', margin: '10px 0 0 0' }}>Available for Online Orders</h1>
           </div>
           <div className='cards' style={{ justifyContent: 'center' }}>
               <div className='card' style={{ minWidth: '300px', maxWidth: 450, maxHeight: 350, flex: '1 0 26%', margin: '5% 0' }}>

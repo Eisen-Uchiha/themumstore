@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import ReactGA from 'react-ga'
 import { Layout, Input, Icon, Select, Checkbox, Button, Tooltip, Divider } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
@@ -25,9 +26,10 @@ const additions = ({ extra, id }) => (
 class Customization extends Component {
   constructor(props) {
     super(props)
+    window.scrollTo(0, 0)
     const date = new Date().getTime()
     const customStorage = JSON.parse(window.localStorage.getItem('custom')) || { date, details: Object.assign(...failsafe.map(val => ({ [val]: {} }))) }
-    const details = (customStorage.date - date) < oneWeek ? customStorage.details : {}
+    const details = (customStorage.date - date) < oneWeek ? customStorage.details : Object.assign(...failsafe.map(val => ({ [val]: {} })))
     const path = props.match.params
     const category = path[0].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
     const product = path[1].replace('-', ' ').replace(/\b[\w']+\b/g, txt => { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase() })
@@ -185,6 +187,7 @@ class Customization extends Component {
   }
 
   handleCart = () => {
+    ReactGA.event({ category: 'Customization', action: 'Add To Cart' })
     const { modify, ...current } = this.state
     const name = `${current.product.replace(' ', '-')}${current.category.replace('s', '')}`
     const date = new Date().getTime()
@@ -251,17 +254,14 @@ class Customization extends Component {
         <Header style={{ textAlign: 'center' }}><h1>{product} {category.replace('s','')} Customization</h1></Header>
         <Content style={{ background: 'white' }}>
           <div className='cards' style={{ justifyContent: 'center' }}>
-            <div className='card' style={{ textAlign: 'center', margin: '2%' }}>
-              <div>
-                <img
-                  className='customization-image'
-                  src={`/media/current-models/${category.replace('s','')}-${product.replace(' ', '-').toLowerCase()}.jpeg`}
-                  onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
-                  alt=''
-                />
-              </div>
+            <div className='card customization-image' style={{  }}>
+              <img
+                src={`/media/current-models/${product.replace(' ', '-').toLowerCase()}-${category.replace('s','')}.png`}
+                onError={e => { e.target.onerror = null; e.target.src="https://via.placeholder.com/225x225.png?text=Boutique+Mums" }}
+                alt=''
+              />
             </div>
-            <div className='card' style={{ margin: '2%', minWidth: 'fit-content' }}>
+            <div className='card customization-details'>
               <div><b>School Name</b></div>
               <Input
                 value={school.name}
@@ -320,7 +320,8 @@ class Customization extends Component {
         </Content>
           <Footer style={{ background: 'white', textAlign: 'center', padding: '1%', margin: '2% 0 5% 0' }}>
             <h3><b>Total Price:</b> ${total}</h3>
-            <Button type='primary' onClick={this.handleCart}>{modify ? 'Save Changes' : 'Add To Cart'}</Button>
+            {/* COVID - Hidden Cart Button */}
+            {/* <Button type='primary' onClick={this.handleCart}>{modify ? 'Save Changes' : 'Add To Cart'}</Button> */}
           </Footer>
       </Layout>
     )

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { List, Button, Divider, Icon } from 'antd'
 import { Redirect } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGem, faRibbon, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
 import { camelize } from '../Shared'
@@ -167,6 +168,10 @@ class Cart extends Component {
 
     return (
       <div style={{ margin: '2%', background: 'white', padding: 20 }}>
+        <Helmet>
+          <meta name="description" content="Online Store" />
+          <meta name="theme-color" content="#68C6BF" />
+        </Helmet>
         <h1 className='cart'>Shopping Cart</h1>
         <List
           className='cart-list'
