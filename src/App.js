@@ -165,8 +165,9 @@ class App extends Component {
                 </MenuItemGroup>
               </SubMenu> */}
           </Header>
-          <div className='caution-banner'>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities in <b>Texas</b></div>
-          <div className='danger-banner'>We've reached our capacity for <b>Hico and Cranfills Gap</b> orders. See you next year,  <b>Homecoming 2020!</b></div>
+          {/* <div className='caution-banner'>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities in <b>Texas</b></div>
+          <div className='danger-banner'>We've reached our capacity for <b>Hico and Cranfills Gap</b> orders. See you next year,  <b>Homecoming 2020!</b></div> */}
+          <div className='danger-banner'><b>Sorry, no 2020 orders due to COVID-19</b></div>
           <Content>
             <Route path="/" component={trackPageView} />
             <Switch>
