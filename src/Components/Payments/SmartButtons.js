@@ -144,11 +144,7 @@ class PaypalButton extends Component {
 
   onApprove = (data, actions) => {
     actions.order.capture().then(details => {
-      // console.log(details)
       if (details.status === 'COMPLETED') {
-        // const payment = data
-        // console.log("Payment Approved: ", payment)
-        // console.log(details)
         this.saveOrder({ details })
         this.props.onPayment({ action: 'clear', id: null, paid: true })
         this.setState({ showButtons: false, paid: true, order: details.id })
@@ -157,8 +153,6 @@ class PaypalButton extends Component {
   }
 
   saveOrder = ({ details = {} }) => {
-    // const { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } = process.env
-    // const data = { REACT_APP_AT_API_KEY, REACT_APP_AT_BASE, REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } // Temporary for testing on local server
     const { products } = this.props
 
     const orders = Object.keys(products).map(p => {
@@ -194,11 +188,8 @@ class PaypalButton extends Component {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({ orders }),
-      // body: JSON.stringify({ orders, data }), // For Testing
     }
 
-    // Now set up to run on local and Netlify backend
-    // Proxy is probably interfering with netlify functions' ability to see environment variables
     fetch('/.netlify/functions/order', config)
       .then(response => { console.log(response); return response.json(); })
       .then(json => console.log(json))

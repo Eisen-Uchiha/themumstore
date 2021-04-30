@@ -104,19 +104,13 @@ class Contact extends Component {
   }
 
   sendMessage({ contact = {}, method }) {
-    // const { REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } = process.env
-    // const data = { REACT_APP_MG_API_KEY, REACT_APP_MG_DOMAIN } // Temporary for testing on local server
-  
     const url = `/.netlify/functions/${method}`
     const config = {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
-      // body: JSON.stringify({ contact, data }), // For Testing
       body: JSON.stringify({ contact }),
     }
   
-    // Now set up to run on local and Netlify backend
-    // Proxy is probably interfering with netlify functions' ability to see environment variables
     fetch(url, config)
       .then(response => {
         if (response.status === 200) this.setState({ sent: 'sent' })
@@ -143,7 +137,7 @@ class Contact extends Component {
             <h2>Connect with us:</h2>
             <div><Icon type="facebook" style={{ fontSize: 'xx-large', backgroundColor: 'white', color: '#3b5998' }}/></div>
             <div style={{ marginTop: '10px' }}>For support or any questions:</div>
-            <div>Email us at {<a href="mailto:support@pixpa.com" target="_blank" rel="noopener noreferrer">support@boutiquemums.com</a>}</div>
+            <div>Email us at {<a href="mailto:support@boutiquemums.com" target="_blank" rel="noopener noreferrer">support@boutiquemums.com</a>}</div>
           </div>
         </div>
       </div>

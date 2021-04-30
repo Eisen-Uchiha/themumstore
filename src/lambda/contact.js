@@ -1,13 +1,11 @@
 const Mailgun = require('mailgun-js')
 
-// const sendEmail = async ({ data, contact }) => { // For Testing
 const sendEmail = async ({  contact }) => {
   return new Promise((resolve, reject) => {
     console.log('Sending Contact Email To Admin')
     console.log(contact)
     const { MG_API_KEY, MG_DOMAIN } = process.env;
     const mailgun = Mailgun({ apiKey: MG_API_KEY, domain: MG_DOMAIN })
-    // const mailgun = Mailgun({ apiKey: data.REACT_APP_MG_API_KEY, domain: data.REACT_APP_MG_DOMAIN }) // For Testing
 
     let html = `<div>
       <h1>Message Received</h1>

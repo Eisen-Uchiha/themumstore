@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-ro
 import { Layout, Icon, Menu, Badge, Row, Col } from 'antd'
 import { Helmet } from 'react-helmet'
 import ReactGA from 'react-ga'
-// import createHistory from 'history/createBrowserHistory'
 import Home from './Components/Home'
 import Mums from './Components/Mums-Garters/Mums'
 import Garters from './Components/Mums-Garters/Garters'
@@ -94,15 +93,7 @@ class App extends Component {
         </Menu.Item>
         <Menu.Item key="garters" onClick={() => this.handleMenu(['garters'])}>
           <Link to="/garters" style={{ color: '#507bcc' }}><Icon type="man" />Garters</Link>
-          {/* <Link to="/garters"><i className='anticon'>{icons.Woman}</i> Garters</Link> */}
         </Menu.Item>
-        {/* <SubMenu title="Extras">
-          <MenuItemGroup>
-            <Menu.Item key="extras1" onClick={() => this.handleMenu(['extras1'])}><Link to="/extras1">Extras 1</Link></Menu.Item>
-            <Menu.Item key="extras2" onClick={() => this.handleMenu(['extras2'])}><Link to="/extras2">Extras 2</Link></Menu.Item>
-          </MenuItemGroup>
-        </SubMenu> */}
-        {/* <Menu.Item key="gallery" onClick={() => this.handleMenu(['gallery'])}><Link to="/gallery"><Icon type="picture" />Gallery</Link></Menu.Item> */}
         <Menu.Item key="contact" onClick={() => this.handleMenu(['contact'])}><Link to="/contact"><Icon type="mail" /> Contact</Link></Menu.Item>
         <Menu.Item key="cart" onClick={() => this.handleMenu(['cart'])}><Link to="/cart">{<Badge count={cartSize}><Icon type='shopping' />Cart</Badge>}</Link></Menu.Item>
       </Menu>
@@ -153,21 +144,10 @@ class App extends Component {
                 {this.MobileMenu({ menu, cartSize })}
               </Col>
             </Row>
-            {/* <div className="logo">
-              <Link to="/"><img alt='' src="/icons/kitty-square.png" onClick={() => this.handleMenu([])} /></Link>
-            </div> */}
-            {/* {this.DeskMenu({ menu, cartSize })} */}
-            {/* {this.MobileMenu({ menu, cartSize })} */}
-              {/* <SubMenu title="Extras">
-                <MenuItemGroup>
-                  <Menu.Item key="extras1" onClick={() => this.handleMenu(['extras1'])}><Link to="/extras1">Extras 1</Link></Menu.Item>
-                  <Menu.Item key="extras2" onClick={() => this.handleMenu(['extras2'])}><Link to="/extras2">Extras 2</Link></Menu.Item>
-                </MenuItemGroup>
-              </SubMenu> */}
           </Header>
           {/* <div className='caution-banner'>Currently serving <b>Hico, Iredell, Cranfills Gap, and Hamilton</b> cities</div> */}
           {/* <div className='danger-banner'>We've reached our capacity for <b>Hico and Cranfills Gap</b> orders. See you next year, <b>Homecoming 2020!</b></div> */}
-          <div className='danger-banner'><b>Sorry, no 2020 orders due to COVID-19</b></div>
+          {/* <div className='danger-banner'><b>Sorry, no 2020 orders due to COVID-19</b></div> */}
           <Content>
             <Route path="/" component={trackPageView} />
             <Switch>

@@ -34,7 +34,7 @@ class Home extends Component {
                 <Typography style={{ margin: '8% 0',textAlign: 'center' }}>
                   <Title level={3}>About Me</Title>
                   <Paragraph style={{ padding: '2%' }}>
-                    Welcome to Boutique Mums! My name is Kay Willey and my aim at Boutique Mums is to
+                    Welcome to Boutique Mums! My name is Kay and my aim at Boutique Mums is to
                     create fun AND beautiful mums and garters that make your homecoming special.
                     I believe Homecoming mums and garters should reflect creativity and artistry as well as whimsy.
                     All of Boutique Mums creations are made to order. You can go with one of our basic sizes as-is
