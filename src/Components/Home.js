@@ -17,7 +17,8 @@ class Home extends Component {
         <Content>
           <div style={{ textAlign: 'center' }}>
             <h1 className='site-font' style={{ fontSize: '-webkit-xxx-large', margin: '10px 0 0 0' }}>Boutique Mums</h1>
-            <h1 className='site-font' style={{ fontSize: '1.25em', margin: '10px 0 0 0' }}>Available for Online Orders</h1>
+            <h1 className='site-font' style={{ fontSize: '1.25em', margin: '10px 0 0 0' }}>Closed due to COVID</h1>
+            {/* <h1 className='site-font' style={{ fontSize: '1.25em', margin: '10px 0 0 0' }}>Available for Online Orders</h1> */}
           </div>
           <div className='cards' style={{ justifyContent: 'center' }}>
               <div className='card' style={{ minWidth: '300px', maxWidth: 450, maxHeight: 350, flex: '1 0 26%', margin: '5% 0' }}>
